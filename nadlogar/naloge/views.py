@@ -1,3 +1,18 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 
-# Create your views here.
+from .models import Naloga
+
+
+def index(request):
+    seznam_nalog = Naloga.objects.all()
+    return render(request, 'naloge/index.html', {'seznam_nalog': seznam_nalog})
+
+
+def podrobnosti(request, pk: int):
+    naloga: Naloga = get_object_or_404(Naloga, pk=pk)
+    return render(request, 'naloge/podrobnosti.html', {'naloga': naloga})
+
+
+def primer(request, pk: int):
+    naloga: Naloga = get_object_or_404(Naloga, pk=pk)
+    return render(request, 'naloge/primer.html', {'generator': naloga.generator, 'primer': naloga.ustvari_primer()})
