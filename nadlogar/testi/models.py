@@ -16,5 +16,5 @@ class Test(models.Model):
     def ustvari_nadlogo(self):
         primeri = []
         for naloga in self.naloge.all():
-            primeri.append((naloga.generator, naloga.ustvari_primer()))
+            primeri.append((naloga.ustvari_primer(), naloga))
         return primeri

@@ -15,4 +15,4 @@ def podrobnosti(request, pk: int):
 
 def primer(request, pk: int):
     naloga: Naloga = get_object_or_404(Naloga, pk=pk)
-    return render(request, 'naloge/primer.html', {'generator': naloga.generator, 'primer': naloga.ustvari_primer()})
+    return render(request, 'naloge/primer.html', {'naloga': naloga, 'primer': naloga.ustvari_primer()})

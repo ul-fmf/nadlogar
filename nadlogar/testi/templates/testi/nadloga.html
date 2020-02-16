@@ -1,6 +1,10 @@
+<h2>{{ test.naslov }}</h2>
+
+<p>{{ test.opis }}</p>
+
 {% for primer in nadloga %}
 
     {# NOTE: verjetno bo treba spremeniti katero html datoteko uporabimo za izris primerov nalog. #}
-    {% include "naloge/primer.html" with primer=primer.1 generator=primer.0 %}
+    {% include "naloge/primer.html" with primer=primer.0 naloga=primer.1 %}
 
 {% endfor %}
