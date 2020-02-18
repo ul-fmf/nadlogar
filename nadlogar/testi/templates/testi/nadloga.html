@@ -2,9 +2,9 @@
 
 <p>{{ test.opis }}</p>
 
-{% for primer in nadloga %}
+{% for primer, naloga in nadloga %}
 
     {# NOTE: verjetno bo treba spremeniti katero html datoteko uporabimo za izris primerov nalog. #}
-    {% include "naloge/primer.html" with primer=primer.0 naloga=primer.1 %}
+    {% include naloga.ime_predloge with primer=primer %}
 
 {% endfor %}
