@@ -40,3 +40,10 @@ class Naloga(models.Model):
             }
         else:
             assert False
+
+    def ime_predloge(self):
+        ime = {
+            self.ISKANJE_NICEL_POLINOMA: 'iskanje_nicel_polinoma',
+            self.KRAJSANJE_ULOMKOV: 'krajsanje_ulomkov',
+        }[self.generator]
+        return f'naloge/primeri/{ime}.html'
