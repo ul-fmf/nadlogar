@@ -14,22 +14,39 @@ Nadlogar je projekt, ki nastaja v okviru programerskega kluba [Fakultete za mate
 Na začetku klonirajte repozitorij ter ustvarite virtualno okolje:
 
     git clone git@github.com:ul-fmf/nadlogar.git
-    python3 -m venv venv3
+    cd nadlogar
+    python3 -m venv venv
 
-Po prvi namestitvi, pa tudi na vsake toliko časa, s sledečimi ukazi kodo posodobite, aktivirate virtualno okolje, namestite potrebne pakete ter posodobite bazo:
+Dobiti bi morali sledečo strukturo datotek:
+
+    nadlogar/
+        nadlogar/
+            config/
+            naloge/
+            ...
+        manage.py
+        ...
+        venv/
+            ...
+
+Po prvi namestitvi, pa tudi na vsake toliko časa, greste v mapo `nadlogar/nadlogar/` in s sledečimi ukazi kodo posodobite, aktivirate virtualno okolje, namestite potrebne pakete ter posodobite bazo:
 
     git pull
-    source venv3/bin/activate
+    source venv/bin/activate
     pip install -r requirements.txt
     python manage.py migrate
 
 Če uporabljate Windowse, je drugi ukaz drugačen
 
     git pull
-    venv3\Scripts\activate
+    venv\Scripts\activate
     pip install -r requirements.txt
     python manage.py migrate
 
 Strežnik nato poženete z
 
     python manage.py runserver
+
+Teste poženete z
+
+    python manage.py test
