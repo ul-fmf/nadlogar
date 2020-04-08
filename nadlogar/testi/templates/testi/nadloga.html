@@ -1,0 +1,9 @@
+<h2>{{ test.naslov }}</h2>
+
+<p>{{ test.opis }}</p>
+
+{% for primer, naloga in nadloga %}
+
+    {% include naloga.ime_predloge with primer=primer %}
+
+{% endfor %}

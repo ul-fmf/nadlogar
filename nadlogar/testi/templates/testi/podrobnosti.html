@@ -1,0 +1,6 @@
+<ul>
+    <li>Naslov: {{ test.naslov }}</li>
+    <li>Datum: {{ test.datum }}</li>
+    <li>Opis: {{ test.opis }}</li>
+</ul>
+<a href="{% url 'testi:nadloga' test.id %}">Generiraj nadlogo.</a>
