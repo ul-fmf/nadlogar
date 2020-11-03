@@ -4,10 +4,9 @@ from . import views
 
 app_name = 'naloge'
 urlpatterns = [
-    # primer: /naloge/
-    path('', views.index, name='index'),
-    # primer: /naloge/5/
-    path('<int:pk>/', views.podrobnosti, name='podrobnosti'),
-    # primer: /naloge/5/primer/
-    path('<int:pk>/primer/', views.primer, name='primer'),
+    path('<int:id>/', views.podrobnosti, name='podrobnosti'),
+    path('<int:id>/primer/', views.primer, name='primer'),
+    path('dodaj/<int:test_id>/', views.dodaj, name='dodaj'),
+    path('<int:id>/uredi/', views.uredi, name='uredi'),
+    path('<int:id>/pobrisi/', views.pobrisi, name='pobrisi'),
 ]

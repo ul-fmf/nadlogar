@@ -3,4 +3,20 @@
     <li>Datum: {{ test.datum }}</li>
     <li>Opis: {{ test.opis }}</li>
 </ul>
+<ul>
+    {% for naloga in test.naloge.all %}
+    <li>
+        {{ naloga }}
+        <a href="{% url 'naloge:uredi' naloga.id %}">Uredi</a>
+        <a href="{% url 'naloge:pobrisi' naloga.id %}">Pobriši</a>
+        <a href="{% url 'naloge:primer' naloga.id %}">Primer</a>
+    </li>
+    {% endfor %}
+    <li>
+        <a href="{% url 'naloge:dodaj' test.id %}">Dodaj nalogo</a>
+    </li>
+</ul>
+<a href="{% url 'testi:uredi' test.id %}">Uredi test</a>
+<a href="{% url 'testi:pobrisi' test.id %}">Pobriši test</a>
 <a href="{% url 'testi:nadloga' test.id %}">Generiraj nadlogo.</a>
+<a href="{% url 'testi:seznam' %}">Nazaj na seznam</a>

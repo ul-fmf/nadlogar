@@ -1,9 +1,0 @@
-{% if seznam_testov %}
-    <ul>
-    {% for test in seznam_testov %}
-        <li><a href="{% url 'testi:podrobnosti' test.id %}">{{ test }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>Na voljo ni nobenih testov.</p>
-{% endif %}
