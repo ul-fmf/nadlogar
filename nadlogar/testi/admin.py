@@ -1,12 +1,7 @@
 from django.contrib import admin
 
+from naloge.admin import NalogaInline
 from .models import Test
-from naloge.models import Naloga
-
-
-class NalogaInline(admin.TabularInline):
-    model = Naloga
-    extra = 2
 
 
 class TestAdmin(admin.ModelAdmin):

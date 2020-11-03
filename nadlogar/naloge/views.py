@@ -1,10 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect, render
-
-from naloge.forms import NalogaForm
-
+from .forms import NalogaForm
 from .models import Naloga
 from testi.models import Test
-
 
 def podrobnosti(request, id: int):
     naloga = get_object_or_404(Naloga, id=id)
