@@ -1,6 +1,7 @@
 import random
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
+from django.forms import ModelForm
 
 
 class Naloga(models.Model):
@@ -19,6 +20,15 @@ class Naloga(models.Model):
     def save(self, *args, **kwargs):
         self.content_type = ContentType.objects.get_for_model(type(self))
         super().save(*args, **kwargs)
+
+    @classmethod
+    def form(cls):
+        class NalogaForm(ModelForm):
+            class Meta:
+                model = cls
+                exclude = ['content_type', 'test']
+        return NalogaForm
+
 
     def doloci_tip(self):
         content_type = self.content_type
