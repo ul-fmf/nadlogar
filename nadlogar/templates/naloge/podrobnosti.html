@@ -1,6 +1,5 @@
 <ul>
     <li>Test: {{ naloga.test }}</li>
-    <li>Vrsta naloge: {{ naloga.get_generator_display }}</li>
-    <li>Zahtevnost: {{ naloga.zahtevnost }}</li>
+    <li>Besedilo: {{ besedilo }}</li>
+    <li>Resitev: {{ resitev }}</li>
 </ul>
-<a href="{% url 'naloge:primer' naloga.id %}">Generiraj primer naloge.</a>

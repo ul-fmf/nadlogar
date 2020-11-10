@@ -7,13 +7,13 @@
     {% for naloga in test.naloge.all %}
     <li>
         {{ naloga }}
+        <a href="{% url 'naloge:podrobnosti' naloga.id %}">Podrobnosti</a>
         <a href="{% url 'naloge:uredi' naloga.id %}">Uredi</a>
         <a href="{% url 'naloge:pobrisi' naloga.id %}">Pobriši</a>
-        <a href="{% url 'naloge:primer' naloga.id %}">Primer</a>
     </li>
     {% endfor %}
     <li>
-        <a href="{% url 'naloge:dodaj' test.id %}">Dodaj nalogo</a>
+        <a href="{% url 'naloge:izberi_tip' test.id %}">Dodaj nalogo</a>
     </li>
 </ul>
 <a href="{% url 'testi:uredi' test.id %}">Uredi test</a>

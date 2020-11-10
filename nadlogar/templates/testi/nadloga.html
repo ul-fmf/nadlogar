@@ -2,8 +2,8 @@
 
 <p>{{ test.opis }}</p>
 
-{% for primer, naloga in nadloga %}
+{% for x in nadloga %}
 
-    {% include naloga.ime_predloge with primer=primer %}
+    {{ x }}
 
 {% endfor %}

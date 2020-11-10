@@ -1,49 +1,98 @@
 import random
 from django.db import models
+from django.contrib.contenttypes.models import ContentType
 
 
 class Naloga(models.Model):
-    KRAJSANJE_ULOMKOV = 'UL'
-    ISKANJE_NICEL_POLINOMA = 'PO'
-    GENERATOR = [
-        (KRAJSANJE_ULOMKOV, 'krajšanje ulomkov'),
-        (ISKANJE_NICEL_POLINOMA, 'iskanje ničel polinoma'),
-    ]
     test = models.ForeignKey('testi.Test', on_delete=models.CASCADE)
-    generator = models.CharField(
-        max_length=2,
-        choices=GENERATOR,
-    )
-    zahtevnost = models.PositiveSmallIntegerField()
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    predloga_besedila_naloge = models.TextField(blank=True)
+    predloga_besedila_resitve = models.TextField(blank=True)
 
     class Meta:
         default_related_name = 'naloge'
         verbose_name_plural = 'naloge'
 
     def __str__(self):
-        return f'{self.test}: {self.get_generator_display()}, zahtevnost: {self.zahtevnost}'
+        return f'{self.test}: {self.content_type.name}'
+    
+    def save(self, *args, **kwargs):
+        self.content_type = ContentType.objects.get_for_model(type(self))
+        super().save(*args, **kwargs)
+
+    def doloci_tip(self):
+        content_type = self.content_type
+        if content_type.model_class() == type(self):
+            return self
+        else:
+            return content_type.get_object_for_this_type(naloga_ptr_id=self.id)
+
+    privzeta_predloga_besedila_naloge = ''
+    privzeta_predloga_besedila_resitve = ''
 
     def ustvari_primer(self):
-        if self.generator == self.KRAJSANJE_ULOMKOV:
-            faktor = random.randint(1, self.zahtevnost)
-            return {
-                'okrajsan_stevec': 1,
-                'okrajsan_imenovalec': 3,
-                'neokrajsan_stevec': faktor,
-                'neokrajsan_imenovalec': 3 * faktor,
-            }
-        elif self.generator == self.ISKANJE_NICEL_POLINOMA:
-            nicla = random.randint(1, self.zahtevnost)
-            return {
-                'nicle': [-nicla, nicla],
-                'polinom': f'x^2 - {nicla ** 2}',
-            }
-        else:
-            assert False
+        return {}
+    
+    def besedilo_naloge(self, primer):
+        predloga = self.predloga_besedila_naloge or self.privzeta_predloga_besedila_naloge
+        return predloga.format(**primer)
 
-    def ime_predloge(self):
-        ime = {
-            self.ISKANJE_NICEL_POLINOMA: 'iskanje_nicel_polinoma',
-            self.KRAJSANJE_ULOMKOV: 'krajsanje_ulomkov',
-        }[self.generator]
-        return f'naloge/primeri/{ime}.html'
+    def besedilo_resitve(self, primer):
+        predloga = self.predloga_besedila_resitve or self.privzeta_predloga_besedila_resitve
+        return predloga.format(**primer)
+    
+    def ustvari_primer_in_besedilo(self):
+        primer = self.ustvari_primer()
+        besedilo = self.besedilo_naloge(primer)
+        resitev = self.besedilo_resitve(primer)
+        return primer, besedilo, resitev
+
+
+class KrajsanjeUlomkov(Naloga):
+    najvecji_stevec = models.PositiveSmallIntegerField()
+    najvecji_imenovalec = models.PositiveSmallIntegerField()
+    najvecji_faktor = models.PositiveSmallIntegerField()
+
+    def ustvari_primer(self):
+        stevec = random.randint(1, self.najvecji_stevec)
+        imenovalec = random.randint(1, self.najvecji_imenovalec)
+        faktor = random.randint(1, self.najvecji_faktor)
+        return {
+            'okrajsan_stevec': stevec,
+            'okrajsan_imenovalec': imenovalec,
+            'neokrajsan_stevec': faktor * stevec,
+            'neokrajsan_imenovalec': faktor * imenovalec,
+        }
+
+    privzeta_predloga_besedila_naloge = '''
+        Okrajšaj ulomek $\\frac{{{neokrajsan_stevec}}}{{{neokrajsan_imenovalec}}}$.
+    '''
+
+    privzeta_predloga_besedila_resitve = '''
+        $\\frac{{{okrajsan_stevec}}}{{{okrajsan_imenovalec}}}$
+    '''
+
+
+class IskanjeNicelPolinoma(Naloga):
+    stevilo_nicel = models.PositiveSmallIntegerField()
+    velikost_nicle = models.PositiveSmallIntegerField()
+
+    def ustvari_primer(self):
+        nicla = random.randint(1, self.velikost_nicle)
+        if self.stevilo_nicel % 2 == 0:
+            nicle = {nicla, -nicla}
+        else:
+            nicle = {nicla}
+        polinom = f'x^{self.stevilo_nicel} - {nicla ** self.stevilo_nicel}'
+        return {
+            'nicle': nicle,
+            'polinom': polinom
+        }
+
+    privzeta_predloga_besedila_naloge = '''
+        Poišči vse ničle polonoma ${polinom}$.
+    '''
+
+    privzeta_predloga_besedila_resitve = '''
+        ${nicle}$
+    '''

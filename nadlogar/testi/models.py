@@ -14,7 +14,4 @@ class Test(models.Model):
         return f'{self.naslov} ({self.datum})'
 
     def ustvari_nadlogo(self):
-        primeri = []
-        for naloga in self.naloge.all():
-            primeri.append((naloga.ustvari_primer(), naloga))
-        return primeri
+        return [naloga.doloci_tip().ustvari_primer_in_besedilo() for naloga in self.naloge.all()]

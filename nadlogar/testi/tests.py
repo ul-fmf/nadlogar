@@ -16,8 +16,6 @@ class TestTest(TestCase):
             for _ in range(stevilo_nalog):
                 naloga = Naloga.objects.create(
                     test=test,
-                    generator=Naloga.KRAJSANJE_ULOMKOV,
-                    zahtevnost=1,
                 )
             self.assertEqual(stevilo_nalog, test.naloge.count())
             nadloge = test.ustvari_nadlogo()

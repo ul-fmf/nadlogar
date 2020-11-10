@@ -1,7 +1,7 @@
 import datetime
 from django.test import TestCase
 from testi.models import Test
-from .models import Naloga
+from . import models
 
 class NalogaTest(TestCase):
     def setUp(self):
@@ -13,10 +13,11 @@ class NalogaTest(TestCase):
 
     def test_krajsanje_ulomkov(self):
         """Naloga za krajšanje ulomkov vrne ustrezen slovar"""
-        naloga = Naloga.objects.create(
+        naloga = models.KrajsanjeUlomkov.objects.create(
             test=self.test,
-            generator=Naloga.KRAJSANJE_ULOMKOV,
-            zahtevnost=1,
+            najvecji_stevec=1,
+            najvecji_imenovalec=1,
+            najvecji_faktor=1,
         )
         for _ in range(self.stevilo_preizkusov):
             primer = naloga.ustvari_primer()
@@ -29,15 +30,15 @@ class NalogaTest(TestCase):
 
     def test_iskanje_nicel_polinoma(self):
         """Naloga za iskanje ničel polinoma vrne ustrezen slovar"""
-        naloga = Naloga.objects.create(
+        naloga = models.IskanjeNicelPolinoma.objects.create(
             test=self.test,
-            generator=Naloga.ISKANJE_NICEL_POLINOMA,
-            zahtevnost=1,
+            stevilo_nicel=3,
+            velikost_nicle=20,
         )
         for _ in range(self.stevilo_preizkusov):
             primer = naloga.ustvari_primer()
             nicle = primer.pop('nicle')
             polinom = primer.pop('polinom')
             self.assertEqual(primer, {})
-            self.assertIsInstance(nicle, list)
+            self.assertIsInstance(nicle, set)
             self.assertIsInstance(polinom, str)
