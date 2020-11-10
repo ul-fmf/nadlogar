@@ -1,0 +1,22 @@
+<ul>
+    <li>Naslov: {{ quiz.name }}</li>
+    <li>Datum: {{ quiz.date }}</li>
+    <li>Opis: {{ quiz.opis }}</li>
+</ul>
+<ul>
+    {% for problem in quiz.problems.all %}
+    <li>
+        {{ problem }}
+        <a href="{% url 'problems:details' problem.id %}">Podrobnosti</a>
+        <a href="{% url 'problems:edit' problem.id %}">Uredi</a>
+        <a href="{% url 'problems:delete' problem.id %}">Pobriši</a>
+    </li>
+    {% endfor %}
+    <li>
+        <a href="{% url 'problems:choose_generator' quiz.id %}">Dodaj nalogo</a>
+    </li>
+</ul>
+<a href="{% url 'quizzes:edit'  quiz.id %}">Uredi kviz</a>
+<a href="{% url 'quizzes:delete' quiz.id %}">Pobriši kviz</a>
+<a href="{% url 'quizzes:generate' quiz.id %}">Generiraj nadlogo.</a>
+<a href="{% url 'quizzes:index' %}">Nazaj na seznam</a>

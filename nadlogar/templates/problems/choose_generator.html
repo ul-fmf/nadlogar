@@ -1,0 +1,7 @@
+<ul>
+    {% for content_type in content_types %}
+    <li>
+        <a href="{% url 'problems:create' quiz.id content_type.id %}">{{ content_type.name }}</a>
+    </li>
+    {% endfor %}
+</ul>

@@ -5,77 +5,74 @@ from django.db import models
 from django.forms import ModelForm
 
 
-class Naloga(models.Model):
-    test = models.ForeignKey("testi.Test", on_delete=models.CASCADE)
+class Problem(models.Model):
+    quiz = models.ForeignKey("quizzes.Quiz", on_delete=models.CASCADE)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    predloga_besedila_naloge = models.TextField(blank=True)
-    predloga_besedila_resitve = models.TextField(blank=True)
+    question_template = models.TextField(blank=True)
+    answer_template = models.TextField(blank=True)
 
     class Meta:
-        default_related_name = "naloge"
-        verbose_name_plural = "naloge"
+        default_related_name = "problems"
+        verbose_name_plural = "problems"
 
     def __str__(self):
-        return f"{self.test}: {self.content_type.name}"
+        return f"{self.quiz}: {self.content_type.name}"
 
-    def save(self, *args, **kwargs):
-        if type(self) == Naloga:
-            raise TypeError("Shranjuje se lahko le podrazrede od Naloga")
+    def save(self, **kwargs):
+        if issubclass(Problem, type(self)):
+            raise TypeError(
+                "save() can be called only on instances of Problem sub-models"
+            )
         self.content_type = ContentType.objects.get_for_model(type(self))
-        super().save(*args, **kwargs)
+        super().save(**kwargs)
 
     @classmethod
     def form(cls):
-        class NalogaForm(ModelForm):
+        class ProblemForm(ModelForm):
             class Meta:
                 model = cls
-                exclude = ["content_type", "test"]
+                exclude = ["quiz", "content_type"]
 
-        return NalogaForm
+        return ProblemForm
 
-    def doloci_tip(self):
+    def refine_class(self):
         content_type = self.content_type
         if content_type.model_class() == type(self):
             return self
-        else:
-            return content_type.get_object_for_this_type(naloga_ptr_id=self.id)
+        return content_type.get_object_for_this_type(problem_ptr_id=self.id)
 
-    def ustvari_primer(self):
+    def generate_data(self):
         raise NotImplementedError
 
     @property
-    def privzeta_predloga_besedila_naloge(self):
+    def default_question_template(self):
         raise NotImplementedError
 
     @property
-    def privzeta_predloga_besedila_resitve(self):
+    def default_answer_template(self):
         raise NotImplementedError
 
-    def besedilo_naloge(self, primer):
-        predloga = (
-            self.predloga_besedila_naloge or self.privzeta_predloga_besedila_naloge
-        )
-        return predloga.format(**primer)
+    def answer(self, data):
+        template = self.question_template or self.default_question_template
+        return template.format(**data)
 
-    def besedilo_resitve(self, primer):
-        predloga = (
-            self.predloga_besedila_resitve or self.privzeta_predloga_besedila_resitve
-        )
-        return predloga.format(**primer)
+    def question(self, data):
+        template = self.answer_template or self.default_answer_template
+        return template.format(**data)
 
-    def ustvari_primer_in_besedilo(self):
-        primer = self.ustvari_primer()
-        besedilo = self.besedilo_naloge(primer)
-        resitev = self.besedilo_resitve(primer)
-        return primer, besedilo, resitev
+    def generate_everything(self):
+        data = self.generate_data()
+        question = self.answer(data)
+        answer = self.question(data)
+        return data, question, answer
 
 
-class KrajsanjeUlomkov(Naloga):
+class KrajsanjeUlomkov(Problem):
     najvecji_stevec = models.PositiveSmallIntegerField()
     najvecji_imenovalec = models.PositiveSmallIntegerField()
     najvecji_faktor = models.PositiveSmallIntegerField()
 
-    def ustvari_primer(self):
+    def generate_data(self):
         stevec = random.randint(1, self.najvecji_stevec)
         imenovalec = random.randint(1, self.najvecji_imenovalec)
         faktor = random.randint(1, self.najvecji_faktor)
@@ -86,20 +83,20 @@ class KrajsanjeUlomkov(Naloga):
             "neokrajsan_imenovalec": faktor * imenovalec,
         }
 
-    privzeta_predloga_besedila_naloge = """
+    default_question_template = """
         Okrajšaj ulomek $\\frac{{{neokrajsan_stevec}}}{{{neokrajsan_imenovalec}}}$.
     """
 
-    privzeta_predloga_besedila_resitve = """
+    default_answer_template = """
         $\\frac{{{okrajsan_stevec}}}{{{okrajsan_imenovalec}}}$
     """
 
 
-class IskanjeNicelPolinoma(Naloga):
+class IskanjeNicelPolinoma(Problem):
     stevilo_nicel = models.PositiveSmallIntegerField()
     velikost_nicle = models.PositiveSmallIntegerField()
 
-    def ustvari_primer(self):
+    def generate_data(self):
         nicla = random.randint(1, self.velikost_nicle)
         if self.stevilo_nicel % 2 == 0:
             nicle = {nicla, -nicla}
@@ -108,10 +105,10 @@ class IskanjeNicelPolinoma(Naloga):
         polinom = f"x^{self.stevilo_nicel} - {nicla ** self.stevilo_nicel}"
         return {"nicle": nicle, "polinom": polinom}
 
-    privzeta_predloga_besedila_naloge = """
+    default_question_template = """
         Poišči vse ničle polonoma ${polinom}$.
     """
 
-    privzeta_predloga_besedila_resitve = """
+    default_answer_template = """
         ${nicle}$
     """

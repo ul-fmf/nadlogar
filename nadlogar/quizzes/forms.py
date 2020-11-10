@@ -1,9 +1,9 @@
 from django.forms import ModelForm
 
-from .models import Test
+from .models import Quiz
 
 
-class TestForm(ModelForm):
+class QuizForm(ModelForm):
     class Meta:
-        model = Test
+        model = Quiz
         exclude = []
