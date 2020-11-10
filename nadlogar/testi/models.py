@@ -7,11 +7,14 @@ class Test(models.Model):
     opis = models.TextField(blank=True)
 
     class Meta:
-        ordering = ['datum', 'naslov']
-        verbose_name_plural = 'testi'
+        ordering = ["datum", "naslov"]
+        verbose_name_plural = "testi"
 
     def __str__(self):
-        return f'{self.naslov} ({self.datum})'
+        return f"{self.naslov} ({self.datum})"
 
     def ustvari_nadlogo(self):
-        return [naloga.doloci_tip().ustvari_primer_in_besedilo() for naloga in self.naloge.all()]
+        return [
+            naloga.doloci_tip().ustvari_primer_in_besedilo()
+            for naloga in self.naloge.all()
+        ]

@@ -5,18 +5,18 @@ from django.forms import ModelForm
 
 
 class Naloga(models.Model):
-    test = models.ForeignKey('testi.Test', on_delete=models.CASCADE)
+    test = models.ForeignKey("testi.Test", on_delete=models.CASCADE)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     predloga_besedila_naloge = models.TextField(blank=True)
     predloga_besedila_resitve = models.TextField(blank=True)
 
     class Meta:
-        default_related_name = 'naloge'
-        verbose_name_plural = 'naloge'
+        default_related_name = "naloge"
+        verbose_name_plural = "naloge"
 
     def __str__(self):
-        return f'{self.test}: {self.content_type.name}'
-    
+        return f"{self.test}: {self.content_type.name}"
+
     def save(self, *args, **kwargs):
         self.content_type = ContentType.objects.get_for_model(type(self))
         super().save(*args, **kwargs)
@@ -26,9 +26,9 @@ class Naloga(models.Model):
         class NalogaForm(ModelForm):
             class Meta:
                 model = cls
-                exclude = ['content_type', 'test']
-        return NalogaForm
+                exclude = ["content_type", "test"]
 
+        return NalogaForm
 
     def doloci_tip(self):
         content_type = self.content_type
@@ -37,20 +37,24 @@ class Naloga(models.Model):
         else:
             return content_type.get_object_for_this_type(naloga_ptr_id=self.id)
 
-    privzeta_predloga_besedila_naloge = ''
-    privzeta_predloga_besedila_resitve = ''
+    privzeta_predloga_besedila_naloge = ""
+    privzeta_predloga_besedila_resitve = ""
 
     def ustvari_primer(self):
         return {}
-    
+
     def besedilo_naloge(self, primer):
-        predloga = self.predloga_besedila_naloge or self.privzeta_predloga_besedila_naloge
+        predloga = (
+            self.predloga_besedila_naloge or self.privzeta_predloga_besedila_naloge
+        )
         return predloga.format(**primer)
 
     def besedilo_resitve(self, primer):
-        predloga = self.predloga_besedila_resitve or self.privzeta_predloga_besedila_resitve
+        predloga = (
+            self.predloga_besedila_resitve or self.privzeta_predloga_besedila_resitve
+        )
         return predloga.format(**primer)
-    
+
     def ustvari_primer_in_besedilo(self):
         primer = self.ustvari_primer()
         besedilo = self.besedilo_naloge(primer)
@@ -68,19 +72,19 @@ class KrajsanjeUlomkov(Naloga):
         imenovalec = random.randint(1, self.najvecji_imenovalec)
         faktor = random.randint(1, self.najvecji_faktor)
         return {
-            'okrajsan_stevec': stevec,
-            'okrajsan_imenovalec': imenovalec,
-            'neokrajsan_stevec': faktor * stevec,
-            'neokrajsan_imenovalec': faktor * imenovalec,
+            "okrajsan_stevec": stevec,
+            "okrajsan_imenovalec": imenovalec,
+            "neokrajsan_stevec": faktor * stevec,
+            "neokrajsan_imenovalec": faktor * imenovalec,
         }
 
-    privzeta_predloga_besedila_naloge = '''
+    privzeta_predloga_besedila_naloge = """
         Okrajšaj ulomek $\\frac{{{neokrajsan_stevec}}}{{{neokrajsan_imenovalec}}}$.
-    '''
+    """
 
-    privzeta_predloga_besedila_resitve = '''
+    privzeta_predloga_besedila_resitve = """
         $\\frac{{{okrajsan_stevec}}}{{{okrajsan_imenovalec}}}$
-    '''
+    """
 
 
 class IskanjeNicelPolinoma(Naloga):
@@ -93,16 +97,13 @@ class IskanjeNicelPolinoma(Naloga):
             nicle = {nicla, -nicla}
         else:
             nicle = {nicla}
-        polinom = f'x^{self.stevilo_nicel} - {nicla ** self.stevilo_nicel}'
-        return {
-            'nicle': nicle,
-            'polinom': polinom
-        }
+        polinom = f"x^{self.stevilo_nicel} - {nicla ** self.stevilo_nicel}"
+        return {"nicle": nicle, "polinom": polinom}
 
-    privzeta_predloga_besedila_naloge = '''
+    privzeta_predloga_besedila_naloge = """
         Poišči vse ničle polonoma ${polinom}$.
-    '''
+    """
 
-    privzeta_predloga_besedila_resitve = '''
+    privzeta_predloga_besedila_resitve = """
         ${nicle}$
-    '''
+    """

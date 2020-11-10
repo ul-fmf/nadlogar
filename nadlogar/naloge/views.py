@@ -1,7 +1,8 @@
-from django.shortcuts import get_object_or_404, redirect, render
-from .models import Naloga
-from testi.models import Test
 from django.contrib.contenttypes.models import ContentType
+from django.shortcuts import get_object_or_404, redirect, render
+from testi.models import Test
+
+from .models import Naloga
 
 
 def podrobnosti(request, id: int):
@@ -28,8 +29,8 @@ def izberi_tip(request, test_id: int):
 def dodaj(request, test_id: int, content_type_id: int):
     test = get_object_or_404(Test, id=test_id)
     content_type = ContentType.objects.get_for_id(content_type_id)
-    naloga_form = content_type.model_class().form()
-    form = naloga_form(request.POST)
+    NalogaForm = content_type.model_class().form()
+    form = NalogaForm(request.POST)
     form.instance.test = test
     if form.is_valid():
         naloga: Naloga = form.save()
@@ -39,8 +40,8 @@ def dodaj(request, test_id: int, content_type_id: int):
 
 def uredi(request, id: int):
     naloga = get_object_or_404(Naloga, id=id).doloci_tip()
-    naloga_form = naloga.form()
-    form = naloga_form(request.POST or None, instance=naloga)
+    NalogaForm = naloga.form()
+    form = NalogaForm(request.POST or None, instance=naloga)
     if form.is_valid():
         naloga: Naloga = form.save()
         return redirect("testi:podrobnosti", id=naloga.test.id)

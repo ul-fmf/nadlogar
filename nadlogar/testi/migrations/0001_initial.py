@@ -7,21 +7,28 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Test',
+            name="Test",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('naslov', models.CharField(max_length=255)),
-                ('datum', models.DateField()),
-                ('opis', models.TextField(blank=True)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("naslov", models.CharField(max_length=255)),
+                ("datum", models.DateField()),
+                ("opis", models.TextField(blank=True)),
             ],
             options={
-                'verbose_name_plural': 'testi',
-                'ordering': ['datum', 'naslov'],
+                "verbose_name_plural": "testi",
+                "ordering": ["datum", "naslov"],
             },
         ),
     ]
