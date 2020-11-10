@@ -1,6 +1,6 @@
 import datetime
 from django.test import TestCase
-from naloge.models import Naloga
+from naloge.models import KrajsanjeUlomkov
 from .models import Test
 
 
@@ -14,7 +14,12 @@ class TestTest(TestCase):
                 naslov="Testni test", datum=datetime.date.today()
             )
             for _ in range(stevilo_nalog):
-                Naloga.objects.create(test=test)
+                KrajsanjeUlomkov.objects.create(
+                    test=test,
+                    najvecji_stevec=10,
+                    najvecji_imenovalec=10,
+                    najvecji_faktor=10,
+                )
             self.assertEqual(stevilo_nalog, test.naloge.count())
             nadloge = test.ustvari_nadlogo()
             self.assertEqual(stevilo_nalog, len(nadloge))

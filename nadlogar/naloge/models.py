@@ -1,6 +1,7 @@
 import random
-from django.db import models
+
 from django.contrib.contenttypes.models import ContentType
+from django.db import models
 from django.forms import ModelForm
 
 
@@ -18,6 +19,8 @@ class Naloga(models.Model):
         return f"{self.test}: {self.content_type.name}"
 
     def save(self, *args, **kwargs):
+        if type(self) == Naloga:
+            raise TypeError("Shranjuje se lahko le podrazrede od Naloga")
         self.content_type = ContentType.objects.get_for_model(type(self))
         super().save(*args, **kwargs)
 
@@ -37,11 +40,16 @@ class Naloga(models.Model):
         else:
             return content_type.get_object_for_this_type(naloga_ptr_id=self.id)
 
-    privzeta_predloga_besedila_naloge = ""
-    privzeta_predloga_besedila_resitve = ""
-
     def ustvari_primer(self):
-        return {}
+        raise NotImplementedError
+
+    @property
+    def privzeta_predloga_besedila_naloge(self):
+        raise NotImplementedError
+
+    @property
+    def privzeta_predloga_besedila_resitve(self):
+        raise NotImplementedError
 
     def besedilo_naloge(self, primer):
         predloga = (
