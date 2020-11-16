@@ -30,9 +30,9 @@ def create(request, quiz_id: int, content_type_id: int):
     quiz = get_object_or_404(Quiz, id=quiz_id)
     content_type = ContentType.objects.get_for_id(content_type_id)
     ProblemForm = content_type.model_class().form()
-    form = ProblemForm(request.POST)
-    form.instance.quiz = quiz
+    form = ProblemForm(request.POST or None)
     if form.is_valid():
+        form.instance.quiz = quiz
         problem: Problem = form.save()
         return redirect("quizzes:details", quiz_id=problem.quiz.id)
     return render(request, "problems/problem_form.html", {"form": form})

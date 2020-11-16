@@ -24,7 +24,7 @@ def generate(request, quiz_id: int):
 
 
 def create(request):
-    form = QuizForm(request.POST)
+    form = QuizForm(request.POST or None)
     if form.is_valid():
         quiz: Quiz = form.save()
         return redirect("quizzes:details", quiz_id=quiz.id)

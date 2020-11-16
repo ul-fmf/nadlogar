@@ -1,30 +1,42 @@
 import random
 
 from django.contrib.contenttypes.models import ContentType
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.forms import ModelForm
 
 
+class ProblemText(models.Model):
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    question = models.TextField(blank=True)
+    answer = models.TextField(blank=True)
+
+    def __str__(self):
+        return f"{self.content_type.name}: {self.question} / {self.answer}"
+
+    def render(self, data):
+        question = self.question.format(**data)
+        answer = self.answer.format(**data)
+        return question, answer
+
+
 class Problem(models.Model):
     quiz = models.ForeignKey("quizzes.Quiz", on_delete=models.CASCADE)
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    question_template = models.TextField(blank=True)
-    answer_template = models.TextField(blank=True)
+    content_type = models.ForeignKey(ContentType, on_delete=models.PROTECT)
+    text = models.ForeignKey("problems.ProblemText", on_delete=models.PROTECT)
 
     class Meta:
         default_related_name = "problems"
-        verbose_name_plural = "problems"
 
     def __str__(self):
         return f"{self.quiz}: {self.content_type.name}"
 
-    def save(self, **kwargs):
+    def clean(self):
         if issubclass(Problem, type(self)):
-            raise TypeError(
-                "save() can be called only on instances of Problem sub-models"
-            )
+            raise ValidationError("Problems must have a non-trivial generator")
         self.content_type = ContentType.objects.get_for_model(type(self))
-        super().save(**kwargs)
+        if self.content_type != self.text.content_type:
+            raise ValidationError("Generators of the problem and its text must match")
 
     @classmethod
     def form(cls):
@@ -44,26 +56,9 @@ class Problem(models.Model):
     def generate_data(self):
         raise NotImplementedError
 
-    @property
-    def default_question_template(self):
-        raise NotImplementedError
-
-    @property
-    def default_answer_template(self):
-        raise NotImplementedError
-
-    def answer(self, data):
-        template = self.question_template or self.default_question_template
-        return template.format(**data)
-
-    def question(self, data):
-        template = self.answer_template or self.default_answer_template
-        return template.format(**data)
-
     def generate_everything(self):
         data = self.generate_data()
-        question = self.answer(data)
-        answer = self.question(data)
+        question, answer = self.text.render(data)
         return data, question, answer
 
 
@@ -83,14 +78,6 @@ class KrajsanjeUlomkov(Problem):
             "neokrajsan_imenovalec": faktor * imenovalec,
         }
 
-    default_question_template = """
-        Okrajšaj ulomek $\\frac{{{neokrajsan_stevec}}}{{{neokrajsan_imenovalec}}}$.
-    """
-
-    default_answer_template = """
-        $\\frac{{{okrajsan_stevec}}}{{{okrajsan_imenovalec}}}$
-    """
-
 
 class IskanjeNicelPolinoma(Problem):
     stevilo_nicel = models.PositiveSmallIntegerField()
@@ -104,11 +91,3 @@ class IskanjeNicelPolinoma(Problem):
             nicle = {nicla}
         polinom = f"x^{self.stevilo_nicel} - {nicla ** self.stevilo_nicel}"
         return {"nicle": nicle, "polinom": polinom}
-
-    default_question_template = """
-        Poišči vse ničle polonoma ${polinom}$.
-    """
-
-    default_answer_template = """
-        ${nicle}$
-    """
