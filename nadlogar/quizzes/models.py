@@ -5,6 +5,7 @@ class Quiz(models.Model):
     name = models.CharField(max_length=255)
     date = models.DateField()
     description = models.TextField(blank=True)
+    student_group = models.ForeignKey("students.StudentGroup", on_delete=models.PROTECT)
 
     class Meta:
         ordering = ["date", "name"]

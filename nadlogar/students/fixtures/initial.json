@@ -1,0 +1,72 @@
+[
+    {
+        "model": "students.studentgroup",
+        "pk": 1,
+        "fields": {
+            "name": "1. a"
+        }
+    },
+    {
+        "model": "students.studentgroup",
+        "pk": 2,
+        "fields": {
+            "name": "5. c"
+        }
+    },
+    {
+        "model": "students.student",
+        "pk": 1,
+        "fields": {
+            "name": "Anka",
+            "group": 1
+        }
+    },
+    {
+        "model": "students.student",
+        "pk": 2,
+        "fields": {
+            "name": "Betka",
+            "group": 1
+        }
+    },
+    {
+        "model": "students.student",
+        "pk": 3,
+        "fields": {
+            "name": "Cvetka",
+            "group": 1
+        }
+    },
+    {
+        "model": "students.student",
+        "pk": 4,
+        "fields": {
+            "name": "Darka",
+            "group": 1
+        }
+    },
+    {
+        "model": "students.student",
+        "pk": 5,
+        "fields": {
+            "name": "Avgust",
+            "group": 2
+        }
+    },
+    {
+        "model": "students.student",
+        "pk": 6,
+        "fields": {
+            "name": "Bruno",
+            "group": 2
+        }
+    },
+    {
+        "model": "students.student",
+        "pk": 7,
+        "fields": {
+            "name": "Ciril",
+            "group": 2
+        }
+    }
+]
