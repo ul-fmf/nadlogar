@@ -15,6 +15,5 @@ class Quiz(models.Model):
 
     def generate_everything(self):
         return [
-            problem.refine_class().generate_everything()
-            for problem in self.problems.all()
+            problem.downcast().generate_everything() for problem in self.problems.all()
         ]

@@ -35,7 +35,7 @@ class Problem(models.Model):
 
         return ProblemForm
 
-    def refine_class(self):
+    def downcast(self):
         content_type = self.content_type
         if content_type.model_class() == type(self):
             return self

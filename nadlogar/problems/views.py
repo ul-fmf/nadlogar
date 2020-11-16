@@ -6,7 +6,7 @@ from .models import Problem
 
 
 def details(request, problem_id: int):
-    problem = get_object_or_404(Problem, id=problem_id).refine_class()
+    problem = get_object_or_404(Problem, id=problem_id).downcast()
     _, question, answer = problem.generate_everything()
     return render(
         request,
@@ -39,7 +39,7 @@ def create(request, quiz_id: int, content_type_id: int):
 
 
 def edit(request, problem_id: int):
-    problem = get_object_or_404(Problem, id=problem_id).refine_class()
+    problem = get_object_or_404(Problem, id=problem_id).downcast()
     ProblemForm = problem.form()
     form = ProblemForm(request.POST or None, instance=problem)
     if form.is_valid():
