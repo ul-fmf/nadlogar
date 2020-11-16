@@ -3,11 +3,20 @@ import random
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.forms import ModelForm
+
+
+def limit_content_type_choices():
+    problem_subclasses = Problem.__subclasses__()
+    content_types = ContentType.objects.get_for_models(*problem_subclasses).values()
+    return {"id__in": {content_type.id for content_type in content_types}}
 
 
 class ProblemText(models.Model):
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    content_type = models.ForeignKey(
+        ContentType,
+        on_delete=models.CASCADE,
+        limit_choices_to=limit_content_type_choices,
+    )
     question = models.TextField(blank=True)
     answer = models.TextField(blank=True)
 
@@ -22,7 +31,11 @@ class ProblemText(models.Model):
 
 class Problem(models.Model):
     quiz = models.ForeignKey("quizzes.Quiz", on_delete=models.CASCADE)
-    content_type = models.ForeignKey(ContentType, on_delete=models.PROTECT)
+    content_type = models.ForeignKey(
+        ContentType,
+        on_delete=models.PROTECT,
+        limit_choices_to=limit_content_type_choices,
+    )
     text = models.ForeignKey("problems.ProblemText", on_delete=models.PROTECT)
 
     class Meta:
@@ -35,17 +48,8 @@ class Problem(models.Model):
         if issubclass(Problem, type(self)):
             raise ValidationError("Problems must have a non-trivial generator")
         self.content_type = ContentType.objects.get_for_model(type(self))
-        if self.content_type != self.text.content_type:
+        if hasattr(self, "text") and self.content_type != self.text.content_type:
             raise ValidationError("Generators of the problem and its text must match")
-
-    @classmethod
-    def form(cls):
-        class ProblemForm(ModelForm):
-            class Meta:
-                model = cls
-                exclude = ["quiz", "content_type"]
-
-        return ProblemForm
 
     def downcast(self):
         content_type = self.content_type

@@ -8,12 +8,17 @@
     <li>
         {{ problem }}
         <a href="{% url 'problems:details' problem.id %}">Podrobnosti</a>
-        <a href="{% url 'problems:edit' problem.id %}">Uredi</a>
+        <a href="{% url 'problems:edit_parameters' problem.id %}">Uredi parametre</a>
+        <a href="{% url 'problems:edit_text' problem.id %}">Uredi besedilo</a>
         <a href="{% url 'problems:delete' problem.id %}">Pobriši</a>
     </li>
     {% endfor %}
     <li>
-        <a href="{% url 'problems:choose_generator' quiz.id %}">Dodaj nalogo</a>
+        <form method="post" action="{% url 'problems:create' %}">
+            <input type="hidden" name="quiz" value="{{ quiz.id }}">
+            {% csrf_token %}
+            <button>Dodaj nalogo</button>
+        </form>
     </li>
 </ul>
 <a href="{% url 'quizzes:edit'  quiz.id %}">Uredi kviz</a>
