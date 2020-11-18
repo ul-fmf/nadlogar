@@ -1,0 +1,22 @@
+<ul>
+    <li>Ime: {{ group.name }}</li>
+</ul>
+<ul>
+    {% for student in group.students.all %}
+    <li>
+        {{ student }}
+        <a href="{% url 'students:edit_student' student.id %}">Uredi parametre</a>
+        <a href="{% url 'students:delete_student' student.id %}">Pobriši</a>
+    </li>
+    {% endfor %}
+    <li>
+        <form method="post" action="{% url 'students:create_student' %}">
+            <input type="hidden" name="group" value="{{ group.id }}">
+            {% csrf_token %}
+            <button>Dodaj učenca</button>
+        </form>
+    </li>
+</ul>
+<a href="{% url 'students:edit_group' group.id %}">Uredi skupino</a>
+<a href="{% url 'students:delete_group' group.id %}">Pobriši skupino</a>
+<a href="{% url 'students:index' %}">Nazaj na seznam</a>

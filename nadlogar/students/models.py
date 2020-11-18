@@ -16,6 +16,7 @@ class Student(models.Model):
     group = models.ForeignKey("students.StudentGroup", on_delete=models.CASCADE)
 
     class Meta:
+        default_related_name = "students"
         ordering = ["group", "name"]
 
     def __str__(self):
