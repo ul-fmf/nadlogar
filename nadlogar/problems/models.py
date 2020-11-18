@@ -29,6 +29,10 @@ class ProblemText(models.Model):
         return question, answer
 
 
+class GeneratedDataIncorrect(Exception):
+    pass
+
+
 class Problem(models.Model):
     quiz = models.ForeignKey("quizzes.Quiz", on_delete=models.CASCADE)
     content_type = models.ForeignKey(
@@ -57,11 +61,25 @@ class Problem(models.Model):
             return self
         return content_type.get_object_for_this_type(problem_ptr_id=self.id)
 
-    def generate_data(self):
+    def generate(self):
         raise NotImplementedError
 
-    def generate_everything(self):
-        data = self.generate_data()
+    def validate(self, condition):
+        if not condition:
+            raise GeneratedDataIncorrect
+
+    def generate_data(self, seed):
+        random.seed(seed)
+        generator = self.downcast()
+        while True:
+            try:
+                return generator.generate()
+            except GeneratedDataIncorrect:
+                pass
+
+    def generate_everything(self, student=None):
+        seed = (self.id, None if student is None else student.id)
+        data = self.generate_data(seed)
         question, answer = self.text.render(data)
         return data, question, answer
 
@@ -71,7 +89,7 @@ class KrajsanjeUlomkov(Problem):
     najvecji_imenovalec = models.PositiveSmallIntegerField()
     najvecji_faktor = models.PositiveSmallIntegerField()
 
-    def generate_data(self):
+    def generate(self):
         stevec = random.randint(1, self.najvecji_stevec)
         imenovalec = random.randint(1, self.najvecji_imenovalec)
         faktor = random.randint(1, self.najvecji_faktor)
@@ -87,7 +105,7 @@ class IskanjeNicelPolinoma(Problem):
     stevilo_nicel = models.PositiveSmallIntegerField()
     velikost_nicle = models.PositiveSmallIntegerField()
 
-    def generate_data(self):
+    def generate(self):
         nicla = random.randint(1, self.velikost_nicle)
         if self.stevilo_nicel % 2 == 0:
             nicle = {nicla, -nicla}

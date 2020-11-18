@@ -15,6 +15,11 @@ class Quiz(models.Model):
         return f"{self.name} ({self.date})"
 
     def generate_everything(self):
-        return [
-            problem.downcast().generate_everything() for problem in self.problems.all()
-        ]
+        students = self.student_group.students.all()
+        student_quizzes = {student: [] for student in students}
+        for problem in self.problems.all():
+            for student in students:
+                student_quizzes[student].append(
+                    problem.generate_everything(student)
+                )
+        return student_quizzes

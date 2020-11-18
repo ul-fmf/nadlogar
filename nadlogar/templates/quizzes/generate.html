@@ -2,8 +2,14 @@
 
 <p>{{ quiz.opis }}</p>
 
-{% for x in generated_problems %}
+{% for student, student_quiz in generated_problems.items %}
 
-{{ x }}
+<h3>{{ student.name }}</h3>
+
+{% for _, question, answer in student_quiz %}
+<h4>{{ forloop.counter }}. naloga</h4>
+<p>{{ question }}</p>
+<small>{{ answer }}</small>
+{% endfor %}
 
 {% endfor %}

@@ -2,14 +2,16 @@ from django import forms
 from django.contrib.contenttypes.models import ContentType
 from quizzes.models import Quiz
 
-from .models import Problem
+from .models import limit_content_type_choices
 
 
 class ProblemForm(forms.Form):
     quiz = forms.ModelChoiceField(
         queryset=Quiz.objects.all(), widget=forms.HiddenInput()
     )
-    content_type = forms.ModelChoiceField(queryset=ContentType.objects.all())
+    content_type = forms.ModelChoiceField(
+        queryset=ContentType.objects.all(), limit_choices_to=limit_content_type_choices
+    )
 
 
 def problem_parameters_form(cls, *args, **kwargs):
