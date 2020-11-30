@@ -55,9 +55,9 @@ def details(request, problem_id: int):
 
 
 def edit_parameters(request, problem_id: int):
-    problem = get_object_or_404(Problem, id=problem_id)
+    problem = get_object_or_404(Problem, id=problem_id).downcast()
     form = problem_parameters_form(
-        type(problem.downcast()), request.POST or None, instance=problem
+        type(problem), request.POST or None, instance=problem
     )
     if request.method == "POST" and form.is_valid():
         problem: Problem = form.save()
@@ -66,10 +66,8 @@ def edit_parameters(request, problem_id: int):
 
 
 def edit_text(request, problem_id: int):
-    problem = get_object_or_404(Problem, id=problem_id)
-    form = problem_text_form(
-        type(problem.downcast()), request.POST or None, instance=problem
-    )
+    problem = get_object_or_404(Problem, id=problem_id).downcast()
+    form = problem_text_form(type(problem), request.POST or None, instance=problem)
     if request.method == "POST" and form.is_valid():
         problem: Problem = form.save()
         return redirect("quizzes:details", quiz_id=problem.quiz.id)
