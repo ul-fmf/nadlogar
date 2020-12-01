@@ -1,0 +1,92 @@
+{% extends 'main.html' %}
+
+{% block contents %}
+<div class="content">
+    <h1 class="title">{{ quiz.name }}</h1>
+    <h2 class="subtitle">
+        {{ quiz.date }},
+        <a href="{% url 'students:view_group' quiz.student_group.id %}">{{ quiz.student_group }}</a>
+    </h2>
+
+    {% if quiz.description %}
+    <p>{{ quiz.description }}</p>
+    {% endif %}
+
+    <div class="field has-addons">
+        <p class="control">
+            <a class="button is-primary" href="{% url 'quizzes:generate' quiz.id %}">
+                <span class="icon is-small">
+                    <i class="fas fa-download"></i>
+                </span>
+                <span>Prenesi nadlogo</span>
+            </a>
+        </p>
+        <p class="control">
+            <a class="button" href="{% url 'quizzes:edit_quiz' quiz.id %}">
+                <span class="icon is-small">
+                    <i class="fas fa-edit"></i>
+                </span>
+                <span>Uredi</span>
+            </a>
+        </p>
+        <p class="control">
+        <form method="POST" action="{% url 'quizzes:delete_quiz' quiz.id %}">
+            {% csrf_token %}
+            <button class="button is-danger is-outlined">
+                <span class="icon is-small">
+                    <i class="fas fa-trash"></i>
+                </span>
+                <span>Pobriši</span>
+            </button>
+        </form>
+        </p>
+    </div>
+
+    {% for problem, data, question, answer in quiz.problem_examples %}
+    <h3>
+        {{ forloop.counter }}. naloga
+    </h3>
+    <div class="field has-addons">
+        <p class="control">
+            <a class="button is-small" href="{% url 'problems:edit_parameters' problem.id %}">
+                <span class="icon is-small">
+                    <i class="fas fa-sliders-h"></i>
+                </span>
+            </a>
+        </p>
+        <p class="control">
+            <a class="button is-small" href="{% url 'problems:edit_text' problem.id %}">
+                <span class="icon is-small">
+                    <i class="fas fa-comments"></i>
+                </span>
+            </a>
+        </p>
+        <p class="control">
+        <form method="POST" action="{% url 'problems:delete_problem' problem.id %}">
+            {% csrf_token %}
+            <button class="button is-small is-danger is-outlined">
+                <span class="icon is-small">
+                    <i class="fas fa-trash"></i>
+                </span>
+            </button>
+        </form>
+        </p>
+    </div>
+    <p>{{ question }}</p>
+    <small>
+        <h4>Rešitev</h4>
+        <p>{{ answer }}</p>
+    </small>
+    {% endfor %}
+</div>
+<form action="{% url 'problems:create_problem' %}">
+    <input type="hidden" name="quiz" value="{{ quiz.id }}">
+    {% csrf_token %}
+    <button class="button is-outlined">
+        <span class="icon is-small">
+            <i class="fas fa-plus"></i>
+        </span>
+        <span>Dodaj nalogo</span>
+    </button>
+</form>
+{% endblock contents %}

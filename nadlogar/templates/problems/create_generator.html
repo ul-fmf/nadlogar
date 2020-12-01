@@ -1,5 +1,13 @@
-<form>
-    {{ form.as_ul }}
-    {% csrf_token %}
-    <button>Pošlji</button>
-</form>
+{% extends 'form.html' %}
+
+{% block title %}
+Izberi vrsto naloge
+{% endblock title %}
+
+{% block form_body %}
+{{ form.as_ul }}
+{% endblock form_body %}
+
+{% block submit %}
+Izberi
+{% endblock submit %}

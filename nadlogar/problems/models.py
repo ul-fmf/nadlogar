@@ -14,7 +14,7 @@ def limit_content_type_choices():
 class ProblemText(models.Model):
     content_type = models.ForeignKey(
         ContentType,
-        on_delete=models.CASCADE,
+        on_delete=models.PROTECT,
         limit_choices_to=limit_content_type_choices,
     )
     question = models.TextField(blank=True)

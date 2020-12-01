@@ -1,0 +1,150 @@
+{% extends 'main.html' %}
+
+{% block contents %}
+<div class="content">
+    <h1 class="title">
+        {{ group.name }}
+    </h1>
+
+    <div class="field has-addons">
+        <p class="control">
+            <a class="button" href="{% url 'students:edit_group' group.id %}">
+                <span class="icon is-small">
+                    <i class="fas fa-edit"></i>
+                </span>
+                <span>Uredi</span>
+            </a>
+        </p>
+        <p class="control">
+        <form method="POST" action="{% url 'students:delete_group' group.id %}">
+            {% csrf_token %}
+            <button class="button is-danger is-outlined">
+                <span class="icon is-small">
+                    <i class="fas fa-trash"></i>
+                </span>
+                <span>Pobriši</span>
+            </button>
+        </form>
+        </p>
+    </div>
+
+    <h2>Kvizi</h2>
+    <table class="table is-fullwidth">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Ime</th>
+                <th>Datum</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for quiz in group.quiz_set.all %}
+            <tr>
+                <th>{{ forloop.counter }}</th>
+                <td><a href="{% url 'quizzes:view_quiz' quiz.id %}">{{ quiz.name }}</a></td>
+                <td>{{ quiz.date }}</td>
+                <td>
+                    <div class="field has-addons">
+                        <p class="control">
+                            <a class="button is-small" href="{% url 'quizzes:generate' quiz.id %}">
+                                <span class="icon is-small">
+                                    <i class="fas fa-download"></i>
+                                </span>
+                            </a>
+                        </p>
+                        <p class="control">
+                            <a class="button is-small" href="{% url 'quizzes:edit_quiz' quiz.id %}">
+                                <span class="icon is-small">
+                                    <i class="fas fa-edit"></i>
+                                </span>
+                            </a>
+                        </p>
+                        <p class="control">
+                        <form method="POST" action="{% url 'quizzes:delete_quiz' quiz.id %}">
+                            {% csrf_token %}
+                            <button class="button is-small is-danger is-outlined">
+                                <span class="icon is-small">
+                                    <i class="fas fa-trash"></i>
+                                </span>
+                            </button>
+                        </form>
+                        </p>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <th></th>
+                <td>
+                    <form action="{% url 'quizzes:create_quiz' %}">
+                        <input type="hidden" name="student_group" value="{{ group.id }}">
+                        {% csrf_token %}
+                        <button class="button is-outlined">
+                            <span class="icon is-small">
+                                <i class="fas fa-plus"></i>
+                            </span>
+                            <span>Dodaj kviz</span></button>
+                    </form>
+                </td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Učenci</h2>
+    <table class="table is-fullwidth">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Ime</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in group.students.all %}
+            <tr>
+                <th>{{ forloop.counter }}</th>
+                <td>{{ student.name }}</td>
+                <td>
+                    <div class="field has-addons">
+                        <p class="control">
+                            <a class="button is-small" href="{% url 'students:edit_student' student.id %}">
+                                <span class="icon is-small">
+                                    <i class="fas fa-edit"></i>
+                                </span>
+                            </a>
+                        </p>
+                        <p class="control">
+                        <form method="POST" action="{% url 'students:delete_student' student.id %}">
+                            {% csrf_token %}
+                            <button class="button is-small is-danger is-outlined">
+                                <span class="icon is-small">
+                                    <i class="fas fa-trash"></i>
+                                </span>
+                            </button>
+                        </form>
+                        </p>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <th></th>
+                <td>
+                    <form action="{% url 'students:create_student' %}">
+                        <input type="hidden" name="group" value="{{ group.id }}">
+                        {% csrf_token %}
+                        <button class="button is-outlined">
+                            <span class="icon is-small">
+                                <i class="fas fa-plus"></i>
+                            </span>
+                            <span>Dodaj učenca</span></button>
+                    </form>
+                </td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock contents %}

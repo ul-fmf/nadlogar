@@ -1,0 +1,96 @@
+{% extends 'bulma.html' %}
+
+{% block body %}
+<nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item" href="{% url 'homepage' %}">
+            <strong>Nadlogar</strong>
+        </a>
+
+        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbar">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+
+    <div id="navbar" class="navbar-menu">
+        <div class="navbar-start">
+            <a class="navbar-item">
+                Pomoč
+            </a>
+        </div>
+
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <div class="buttons">
+                    <a class="button" href="https://github.com/ul-fmf/nadlogar/">
+                        <span class="icon">
+                            <i class="fab fa-github"></i>
+                        </span>
+                        <span>GitHub</span>
+                    </a>
+                    <a class="button is-light" disabled>
+                        Prijava
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+<section class="section">
+    <div class="columns">
+        <div class="column is-one-quarter">
+            <nav class="panel">
+                <p class="panel-heading">
+                    Kvizi
+                </p>
+                {% for my_quiz in my_quizzes %}
+                <a class="panel-block {% if my_quiz == quiz %}is-active{% endif %}"
+                    href="{% url 'quizzes:view_quiz' my_quiz.id %}">
+                    <span class=" panel-icon">
+                        <i class="fas fa-book" aria-hidden="true"></i>
+                    </span>
+                    {{ my_quiz.name }}
+                </a>
+                {% endfor %}
+                <div class="panel-block">
+                    <a class="button is-link is-outlined is-fullwidth is-small" href="{% url 'quizzes:create_quiz' %}">
+                        <span class="icon is-small">
+                            <i class="fas fa-plus"></i>
+                        </span>
+                        <span>Dodaj kviz</span>
+                    </a>
+                </div>
+            </nav>
+            <nav class="panel">
+                <p class="panel-heading">
+                    Skupine
+                </p>
+                {% for my_group in my_groups %}
+                <a class="panel-block {% if my_group == group %}is-active{% endif %}"
+                    href="{% url 'students:view_group' my_group.id %}">
+                    <span class=" panel-icon">
+                        <i class="fas fa-users" aria-hidden="true"></i>
+                    </span>
+                    {{ my_group.name }}
+                </a>
+                {% endfor %}
+                <div class="panel-block">
+                    <a class="button is-link is-outlined is-fullwidth is-small"
+                        href="{% url 'students:create_group' %}">
+                        <span class="icon is-small">
+                            <i class="fas fa-plus"></i>
+                        </span>
+                        <span>Dodaj skupino</span>
+                    </a>
+                </div>
+            </nav>
+        </div>
+        <div class="column">
+            {% block contents %}
+            {% endblock contents %}
+        </div>
+    </div>
+</section>
+{% endblock body %}

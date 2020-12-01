@@ -4,37 +4,36 @@ from .forms import QuizForm
 from .models import Quiz
 
 
-def index(request):
-    quizzes = Quiz.objects.all()
-    return render(request, "quizzes/index.html", {"quizzes": quizzes})
-
-
-def create(request):
-    form = QuizForm(request.POST or None)
+def create_quiz(request):
+    form = QuizForm(request.POST or request.GET or None)
     if form.is_valid():
         quiz: Quiz = form.save()
-        return redirect("quizzes:details", quiz_id=quiz.id)
-    return render(request, "quizzes/quiz_form.html", {"form": form})
+        return redirect("quizzes:view_quiz", quiz_id=quiz.id)
+    return render(request, "quizzes/create_quiz.html", {"form": form})
 
 
-def details(request, quiz_id: int):
+def view_quiz(request, quiz_id: int):
     quiz = get_object_or_404(Quiz, id=quiz_id)
-    return render(request, "quizzes/details.html", {"quiz": quiz})
+    return render(
+        request,
+        "quizzes/view_quiz.html",
+        {"quiz": quiz},
+    )
 
 
-def edit(request, quiz_id: int):
+def edit_quiz(request, quiz_id: int):
     quiz = get_object_or_404(Quiz, id=quiz_id)
     form = QuizForm(request.POST or None, instance=quiz)
     if form.is_valid():
         quiz: Quiz = form.save()
-        return redirect("quizzes:details", quiz_id=quiz.id)
-    return render(request, "quizzes/quiz_form.html", {"form": form})
+        return redirect("quizzes:view_quiz", quiz_id=quiz.id)
+    return render(request, "quizzes/edit_quiz.html", {"form": form})
 
 
-def delete(request, quiz_id: int):
+def delete_quiz(request, quiz_id: int):
     quiz = get_object_or_404(Quiz, id=quiz_id)
     quiz.delete()
-    return redirect("quizzes:index")
+    return redirect("homepage")
 
 
 def generate(request, quiz_id: int):

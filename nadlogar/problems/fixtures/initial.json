@@ -7,8 +7,8 @@
                 "problems",
                 "krajsanjeulomkov"
             ],
-            "question": "Okraj\u0161aj ulomek $\\\\frac{{{neokrajsan_stevec}}}{{{neokrajsan_imenovalec}}}$.",
-            "answer": "$\\\\frac{{{okrajsan_stevec}}}{{{okrajsan_imenovalec}}}$"
+            "question": "Okraj\u0161aj ulomek $\\frac{{{neokrajsan_stevec}}}{{{neokrajsan_imenovalec}}}$.",
+            "answer": "$\\frac{{{okrajsan_stevec}}}{{{okrajsan_imenovalec}}}$"
         }
     },
     {
@@ -20,7 +20,7 @@
                 "iskanjenicelpolinoma"
             ],
             "question": "Poi\u0161\u010di vse ni\u010dle polonoma ${polinom}$.",
-            "answer": "${nicle}$"
+            "answer": "$\\{{{nicle}\\}}$"
         }
     }
 ]

@@ -1,3 +1,6 @@
+{% extends 'main.html' %}
+
+{% block contents %}
 <h2>{{ quiz.naslov }}</h2>
 
 <p>{{ quiz.opis }}</p>
@@ -13,3 +16,4 @@
 {% endfor %}
 
 {% endfor %}
+{% endblock contents %}

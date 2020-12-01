@@ -5,7 +5,7 @@ class Quiz(models.Model):
     name = models.CharField(max_length=255)
     date = models.DateField()
     description = models.TextField(blank=True)
-    student_group = models.ForeignKey("students.StudentGroup", on_delete=models.PROTECT)
+    student_group = models.ForeignKey("students.StudentGroup", on_delete=models.CASCADE)
 
     class Meta:
         ordering = ["date", "name"]
@@ -19,7 +19,12 @@ class Quiz(models.Model):
         student_quizzes = {student: [] for student in students}
         for problem in self.problems.all():
             for student in students:
-                student_quizzes[student].append(
-                    problem.generate_everything(student)
-                )
+                student_quizzes[student].append(problem.generate_everything(student))
         return student_quizzes
+
+    def problem_examples(self):
+        examples = []
+        for problem in self.problems.all():
+            data, question, answer = problem.generate_everything()
+            examples.append((problem, data, question, answer))
+        return examples

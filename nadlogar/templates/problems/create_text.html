@@ -1,11 +1,21 @@
-<form method="POST">
-    {{ form.text.errors }}
-    {{ form.text.label_tag }}
-    {{ form.text }}
-    {{ form.non_field_errors }}
-    {% for field in form.hidden_fields %}
-    {{ field }}
-    {% endfor %}
-    {% csrf_token %}
-    <button>Pošlji</button>
-</form>
+{% extends 'form.html' %}
+
+{% block method %}POST{% endblock method %}
+
+{% block title %}
+Izberi besedilo
+{% endblock title %}
+
+{% block form_body %}
+{{ form.text.errors }}
+{{ form.text.label_tag }}
+{{ form.text }}
+{{ form.non_field_errors }}
+{% for field in form.hidden_fields %}
+{{ field }}
+{% endfor %}
+{% endblock form_body %}
+
+{% block submit %}
+Ustvari
+{% endblock submit %}

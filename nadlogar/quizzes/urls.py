@@ -4,10 +4,9 @@ from . import views
 
 app_name = "quizzes"
 urlpatterns = [
-    path("", views.index, name="index"),
-    path("create/", views.create, name="create"),
-    path("<int:quiz_id>/", views.details, name="details"),
-    path("<int:quiz_id>/edit/", views.edit, name="edit"),
-    path("<int:quiz_id>/delete/", views.delete, name="delete"),
+    path("create/", views.create_quiz, name="create_quiz"),
+    path("<int:quiz_id>/", views.view_quiz, name="view_quiz"),
+    path("<int:quiz_id>/edit/", views.edit_quiz, name="edit_quiz"),
+    path("<int:quiz_id>/delete/", views.delete_quiz, name="delete_quiz"),
     path("<int:quiz_id>/generate/", views.generate, name="generate"),
 ]

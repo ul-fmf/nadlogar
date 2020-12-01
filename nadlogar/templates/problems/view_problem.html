@@ -1,5 +1,9 @@
+{% extends 'main.html' %}
+
+{% block contents %}
 <ul>
     <li>Test: {{ problem.quiz }}</li>
     <li>Besedilo: {{ question }}</li>
     <li>Resitev: {{ answer }}</li>
 </ul>
+{% endblock contents %}
