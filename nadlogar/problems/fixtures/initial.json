@@ -22,5 +22,17 @@
             "question": "Poi\u0161\u010di vse ni\u010dle polonoma ${polinom}$.",
             "answer": "$\\{{{nicle}\\}}$"
         }
+    },
+    {
+        "model": "problems.problemtext",
+        "pk": 3,
+        "fields": {
+            "content_type": [
+                "problems",
+                "prostobesedilo"
+            ],
+            "question": "{vprasanje}",
+            "answer": "{odgovor}"
+        }
     }
 ]

@@ -84,6 +84,17 @@ class Problem(models.Model):
         return data, question, answer
 
 
+class ProstoBesedilo(Problem):
+    vprasanje = models.TextField()
+    odgovor = models.TextField()
+
+    def generate(self):
+        return {
+            "vprasanje": self.vprasanje,
+            "odgovor": self.odgovor,
+        }
+
+
 class KrajsanjeUlomkov(Problem):
     najvecji_stevec = models.PositiveSmallIntegerField()
     najvecji_imenovalec = models.PositiveSmallIntegerField()
