@@ -55,6 +55,10 @@ class Problem(models.Model):
         if hasattr(self, "text") and self.content_type != self.text.content_type:
             raise ValidationError("Generators of the problem and its text must match")
 
+    def save(self, *args, **kwargs):
+        self.content_type = ContentType.objects.get_for_model(type(self))
+        super().save(*args, **kwargs)
+
     def downcast(self):
         content_type = self.content_type
         if content_type.model_class() == type(self):
