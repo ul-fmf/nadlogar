@@ -50,3 +50,7 @@ Strežnik nato poženete z
 Teste poženete z
 
     python manage.py test
+
+Za navodila glede dodajanja funkcionalnosti in popravljanja napak glejte
+[CONTRIBUTING.md](CONTRIBUTING.md).
+
