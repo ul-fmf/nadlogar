@@ -9,7 +9,7 @@ def create_group(request):
     if form.is_valid():
         group: StudentGroup = form.save()
         return redirect("students:view_group", group_id=group.id)
-    return render(request, "students/group_form.html", {"form": form})
+    return render(request, "students/create_group.html", {"form": form})
 
 
 def view_group(request, group_id: int):
