@@ -1,0 +1,11 @@
+
+input, optgroup, select, textarea {
+    width: -webkit-fill-available;
+    font-size: 1rem;
+    height: 2em;
+}
+
+#btn-cancel{
+    float: right;
+    background: #777777;
+}

@@ -1,4 +1,5 @@
 {% extends 'form.html' %}
+{% load crispy_forms_tags %}
 
 {% block method %}POST{% endblock method %}
 
@@ -7,13 +8,12 @@ Izberi besedilo
 {% endblock title %}
 
 {% block form_body %}
-{{ form.text.errors }}
-{{ form.text.label_tag }}
-{{ form.text }}
-{{ form.non_field_errors }}
-{% for field in form.hidden_fields %}
-{{ field }}
-{% endfor %}
+    {{ form.text.label_tag }}
+    {{ form.text }}
+    {{ form.non_field_errors }}
+    {% for field in form.hidden_fields %}
+        {{ field|as_crispy_field }}
+    {% endfor %}
 {% endblock form_body %}
 
 {% block submit %}

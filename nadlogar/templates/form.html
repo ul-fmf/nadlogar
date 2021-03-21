@@ -1,5 +1,14 @@
 {% extends 'bulma.html' %}
 
+{% load crispy_forms_tags %}
+{% crispy form form.helper %}
+
+{% block css_import %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'formstyle.css' %}">
+{% endblock css_import %}
+
+
 {% block body %}
 <div class="modal is-active">
     <form method="{% block method %}GET{% endblock method %}">
@@ -15,13 +24,14 @@
             </header>
             <section class="modal-card-body">
                 {% block form_body %}
-                {{ form.as_ul }}
+                {{ form|crispy }}
                 {% endblock form_body %}
                 {% csrf_token %}
             </section>
             <footer class="modal-card-foot">
                 {% block actions %}
-                <button class="button is-fullwidth is-primary">{% block submit %}Cancel{% endblock submit %}</button>
+                <button id="btn-cancel" type="reset" class="button is-fullwidth is-primary" onclick="javascript:history.back();">Nazaj</button>
+                <button class="button is-fullwidth is-primary">{% block submit %}Potrdi{% endblock submit %}</button>
                 {% endblock actions %}
             </footer>
         </div>

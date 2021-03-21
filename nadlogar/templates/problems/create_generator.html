@@ -1,11 +1,12 @@
 {% extends 'form.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %}
 Izberi vrsto naloge
 {% endblock title %}
 
 {% block form_body %}
-{{ form.as_ul }}
+{{ form|crispy }}
 {% endblock form_body %}
 
 {% block submit %}
