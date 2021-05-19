@@ -1,4 +1,5 @@
 {% extends 'bulma.html' %}
+{% load bulma %}
 
 {% block body %}
 <div class="modal is-active">
@@ -14,9 +15,57 @@
                 {% endif %}
             </header>
             <section class="modal-card-body">
-                {% block form_body %}
-                {{ form.as_ul }}
-                {% endblock form_body %}
+                {% for error in form.non_field_errors %}
+                <div class="notification is-danger is-light">
+                    {{ error }}
+                </div>
+                {% endfor %}
+
+                {% block form_fields %}
+
+                {% for field in form.visible_fields %}
+                <div class="field">
+                    {% if field.widget_type != "checkbox" %}
+                    <label class="label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {% endif %}
+
+                    {% if field.widget_type == "textarea" %}
+                    {{ field|add_class:"textarea"|is_danger_if_errors}}
+                    {% elif field.widget_type == "select" %}
+                    <div class="select {% if field.errors %}is-danger{% endif %}">
+                        {{ field }}
+                    </div>
+                    {% elif field.widget_type == "selectmultiple" %}
+                    <div class="select is-multiple {% if field.errors %}is-danger{% endif %}">
+                        {{ field }}
+                    </div>
+                    {% elif field.widget_type == "checkbox" %}
+                    <label class="label" for="{{ field.id_for_label }}">
+                        {{ field }}
+                        {{ field.label }}
+                    </label>
+                    {% else %}
+                    <div class="control">
+                        {{ field|add_class:"input"|is_danger_if_errors }}
+                    </div>
+                    {% endif %}
+
+                    {% for error in field.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                    {% endfor %}
+
+                    {% if field.help_text %}
+                    <p class="help">{{ field.help_text }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+
+                {% endblock form_fields %}
+
+                {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+                {% endfor %}
+
                 {% csrf_token %}
             </section>
             <footer class="modal-card-foot">
