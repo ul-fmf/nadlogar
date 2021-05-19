@@ -27,4 +27,4 @@ jobs:
         pip install -r nadlogar/requirements.txt
     - name: Run Tests
       run: |
-        python nadlogar/manage.py test
+        python nadlogar/manage.py test nadlogar
