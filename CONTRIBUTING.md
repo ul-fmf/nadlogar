@@ -13,14 +13,18 @@ delovati. Pri vsakem PR:
 * commiti v PRju so zaključene celote (če je potrebno kaj popraviti, uredite obstoječi commit in
   ne naredite novega)
 * sprememba naj bo ena sama in koda naj bo čimbolj berljiva
-* PR mora na githubu dobiti kljukico, da so vsi avtomatski testi ok (po #15 in #25). To vključuje
-  - test stila kode
-  - test generiranja dokumentacije
+* PR mora na githubu dobiti kljukico, da so vsi avtomatski testi ok. To vključuje
   - test funkcionalnosti
+  - test stila kode
+  - test generiranja dokumentacije (po #25)
 
 Te tri teste lahko poženete tudi lokalno (glejte ukaze v [.github/workflows/](.github/workflows/)).
-Za poganjanje je potrebno imeti instaliran `black` in `sphinx`. Morebitne napake popravite tako, da
-uredite svoje commite (ne dodati na koncu enega commita, ki popravi vse napake). Enako velja za
-spremembe med procesom pregleda.
+Za poganjanje je potrebno imeti instaliran `black` in `sphinx`. Kodo lahko samodejno oblikujete v
+urejevalniku, lahko pa tudi poženete
+
+    python -m black .
+
+Morebitne napake popravite tako, da uredite svoje commite (ne dodati na koncu enega commita, ki
+popravi vse napake). Enako velja za spremembe med procesom pregleda.
 
 Po prvem uspešno sprejetem PRju boste tudi dodani na seznam razvijalcev.
