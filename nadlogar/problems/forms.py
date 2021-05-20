@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.contenttypes.models import ContentType
+from django.forms.models import ModelChoiceIterator
 from quizzes.models import Quiz
 
 from .models import ProblemText, limit_content_type_choices
@@ -32,10 +33,16 @@ def problem_parameters_form(content_type, *args, **kwargs):
     return ProblemParametersForm(*args, **kwargs)
 
 
-def problem_text_form(content_type, *args, **kwargs):
+def problem_text_form(problem, *args, **kwargs):
+    data = problem.generate()
+
+    class ProblemTextChoiceIterator(ModelChoiceIterator):
+        def choice(self, obj):
+            return (self.field.prepare_value(obj), obj.render(data))
+
     class ProblemTextForm(forms.ModelForm):
         class Meta:
-            model = content_type.model_class()
+            model = type(problem)
             exclude = []
 
         def __init__(self, *args, **kwargs):
@@ -43,6 +50,8 @@ def problem_text_form(content_type, *args, **kwargs):
             for field_name in self.fields:
                 if field_name != "text":
                     self.fields[field_name].widget = forms.HiddenInput()
-            self.fields["text"].queryset = content_type.problemtext_set
+            self.fields["text"].queryset = problem.content_type.problemtext_set
+            self.fields["text"].iterator = ProblemTextChoiceIterator
+            self.fields["text"].empty_label = None
 
     return ProblemTextForm(*args, **kwargs)

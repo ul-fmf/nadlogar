@@ -21,7 +21,7 @@ def create_parameters(request, content_type):
         content_type, request.POST or request.GET or None
     )
     if parameters_form.is_valid():
-        return create_text(request, content_type)
+        return create_text(request, parameters_form.instance)
     return render(
         request,
         "problems/create_parameters.html",
@@ -29,9 +29,9 @@ def create_parameters(request, content_type):
     )
 
 
-def create_text(request, content_type):
+def create_text(request, problem):
     text_form = problem_text_form(
-        content_type, request.POST or request.GET or None, initial={"text": None}
+        problem, request.POST or request.GET or None, initial={"text": None}
     )
     if request.method == "POST" and text_form.is_valid():
         problem = text_form.save()
@@ -56,9 +56,7 @@ def edit_parameters(request, problem_id: int):
 
 def edit_text(request, problem_id: int):
     problem = get_object_or_404(Problem, id=problem_id).downcast()
-    form = problem_text_form(
-        problem.content_type, request.POST or None, instance=problem
-    )
+    form = problem_text_form(problem, request.POST or None, instance=problem)
     if request.method == "POST" and form.is_valid():
         problem: Problem = form.save()
         return redirect("quizzes:view_quiz", quiz_id=problem.quiz.id)

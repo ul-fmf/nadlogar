@@ -72,11 +72,7 @@
         </form>
         </p>
     </div>
-    <p>{{ question }}</p>
-    <small>
-        <h4>Rešitev</h4>
-        <p>{{ answer }}</p>
-    </small>
+    {% include "problems/_question_and_answer.html" %}
     {% endfor %}
 </div>
 <form action="{% url 'problems:create_problem' %}">

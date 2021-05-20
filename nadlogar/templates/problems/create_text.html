@@ -6,6 +6,23 @@
 Izberi besedilo
 {% endblock title %}
 
+{% block form_fields %}
+<div class="control">
+    {% for value, key in form.fields.text.choices %}
+    <label class="radio">
+        {% if form.initial.text == value %}
+        <input type="radio" name="{{ form.text.html_name }}" value="{{ value }}" checked>
+        {% else %}
+        <input type="radio" name="{{ form.text.html_name }}" value="{{ value }}">
+        {% endif %}
+        <div style="display: inline-block; vertical-align: top;">
+            {% include "problems/_question_and_answer.html" with question=key.0 answer=key.1 %}
+        </div>
+    </label>
+    {% endfor %}
+</div>
+{% endblock form_fields %}
+
 {% block submit %}
 Ustvari
 {% endblock submit %}
