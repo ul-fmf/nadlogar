@@ -1,4 +1,5 @@
 import random
+import sympy
 
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
@@ -128,3 +129,60 @@ class IskanjeNicelPolinoma(Problem):
             nicle = {nicla}
         polinom = f"x^{self.stevilo_nicel} - {nicla ** self.stevilo_nicel}"
         return {"nicle": nicle, "polinom": polinom}
+
+
+class RazstaviVieta(Problem):
+    maksimalna_vrednost = models.PositiveSmallIntegerField()
+    vodilni_koeficient = models.BooleanField()
+
+    def generate(self):
+        x1 = random.randint(-self.maksimalna_vrednost, self.maksimalna_vrednost)
+        x2 = random.randint(-self.maksimalna_vrednost, self.maksimalna_vrednost)
+        a = (
+            random.choice([1, -1]) * random.randint(2, 4)
+            if self.vodilni_koeficient
+            else 1
+        )
+
+        x = sympy.symbols("x")
+        razstavljen = sympy.Mul(a, (x - x1), (x - x2), evaluate=False).simplify()
+        izraz = razstavljen.expand()
+
+        return {"izraz": sympy.latex(izraz), "razstavljen": sympy.latex(razstavljen)}
+
+
+class RazstaviRazliko(Problem):
+    najmanjsa_potenca = models.PositiveSmallIntegerField()
+    najvecja_potenca = models.PositiveSmallIntegerField()
+    linearna_kombinacija = models.BooleanField()
+
+    def generate(self):
+        if self.najmanjsa_potenca > self.najvecja_potenca:
+            self.najmanjsa_potenca, self.najvecja_potenca = self.najvecja_potenca, self.najmanjsa_potenca
+
+        potenca = random.randint(self.najmanjsa_potenca, self.najvecja_potenca)
+        if potenca == 2:
+            do = 10
+        else:
+            do = 5
+        simboli = ['a', 'b', 'c', 'x', 'y', 'z', 'v', 't']
+        izbran_simbol = random.choice(simboli)
+        x = sympy.symbols(izbran_simbol)
+        simboli.remove(izbran_simbol)
+        if not self.linearna_kombinacija:
+            a = 1
+            b = random.choice([x for x in range(-do, do) if x != 0])
+            y = 1
+            m = 1
+            n = 1
+        else:
+            a = random.randint(1, do)
+            b = random.choice([x for x in range(-do, do) if x != 0])
+            n = random.randint(1, 3)
+            m = random.randint(1, 3)
+            y = sympy.symbols(random.choice(simboli))
+        izraz = (a * x ** n) ** potenca - (b * y ** m) ** potenca
+        razstavljen = sympy.factor(izraz)
+
+        return {'izraz': sympy.latex(izraz), 'razstavljen': sympy.latex(razstavljen)}
+
