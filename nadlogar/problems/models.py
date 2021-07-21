@@ -158,14 +158,17 @@ class RazstaviRazliko(Problem):
 
     def generate(self):
         if self.najmanjsa_potenca > self.najvecja_potenca:
-            self.najmanjsa_potenca, self.najvecja_potenca = self.najvecja_potenca, self.najmanjsa_potenca
+            self.najmanjsa_potenca, self.najvecja_potenca = (
+                self.najvecja_potenca,
+                self.najmanjsa_potenca,
+            )
 
         potenca = random.randint(self.najmanjsa_potenca, self.najvecja_potenca)
         if potenca == 2:
             do = 10
         else:
             do = 5
-        simboli = ['a', 'b', 'c', 'x', 'y', 'z', 'v', 't']
+        simboli = ["a", "b", "c", "x", "y", "z", "v", "t"]
         izbran_simbol = random.choice(simboli)
         x = sympy.symbols(izbran_simbol)
         simboli.remove(izbran_simbol)
@@ -184,5 +187,4 @@ class RazstaviRazliko(Problem):
         izraz = (a * x ** n) ** potenca - (b * y ** m) ** potenca
         razstavljen = sympy.factor(izraz)
 
-        return {'izraz': sympy.latex(izraz), 'razstavljen': sympy.latex(razstavljen)}
-
+        return {"izraz": sympy.latex(izraz), "razstavljen": sympy.latex(razstavljen)}
