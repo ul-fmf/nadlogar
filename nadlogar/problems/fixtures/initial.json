@@ -34,5 +34,29 @@
             "question": "{vprasanje}",
             "answer": "{odgovor}"
         }
+    },
+    {
+        "model": "problems.problemtext",
+        "pk": 4,
+        "fields": {
+            "content_type": [
+                "problems",
+                "razstavivieta"
+            ],
+            "question": "Razstavi izraz ${izraz}$",
+            "answer": "${resitev}$"
+        }
+    },
+    {
+    "model": "problems.problemtext",
+    "pk": 5,
+    "fields": {
+        "content_type": [
+            "problems",
+            "razstavirazliko"
+        ],
+        "question": "Razstavi izraz ${izraz}$",
+        "answer": "${razstavljen}$"
     }
+}
 ]
