@@ -1,6 +1,6 @@
 import random
-import sympy
 
+import sympy
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -90,8 +90,13 @@ class Problem(models.Model):
 
 
 class ProstoBesedilo(Problem):
-    vprasanje = models.TextField()
-    odgovor = models.TextField()
+    """Problem s poljubnim fiksnim vprašanjem in odgovorom, namenjen ročno sestavljenim nalogam."""
+
+    vprasanje = models.TextField("vprašanje", help_text="Poljubno besedilo vprašanja.")
+    odgovor = models.TextField("odgovor", help_text="Poljubno besedilo odgovora.")
+
+    class Meta:
+        verbose_name = "prosto besedilo"
 
     def generate(self):
         return {
@@ -101,9 +106,23 @@ class ProstoBesedilo(Problem):
 
 
 class KrajsanjeUlomkov(Problem):
-    najvecji_stevec = models.PositiveSmallIntegerField()
-    najvecji_imenovalec = models.PositiveSmallIntegerField()
-    najvecji_faktor = models.PositiveSmallIntegerField()
+    """Problem, v katerem je treba okrajšati dani ulomek."""
+
+    najvecji_stevec = models.PositiveSmallIntegerField(
+        "največji števec",
+        help_text="Največji števec, ki se bo pojavljal v okrajšanem ulomku.",
+    )
+    najvecji_imenovalec = models.PositiveSmallIntegerField(
+        "največji imenovalec",
+        help_text="Največji imenovalec, ki se bo pojavljal v okrajšanem ulomku.",
+    )
+    najvecji_faktor = models.PositiveSmallIntegerField(
+        "največji faktor",
+        help_text="Največji faktor med neokrajšanim in okrajšanim ulomkom.",
+    )
+
+    class Meta:
+        verbose_name = "krajšanje ulomkov"
 
     def generate(self):
         stevec = random.randint(1, self.najvecji_stevec)
@@ -118,8 +137,18 @@ class KrajsanjeUlomkov(Problem):
 
 
 class IskanjeNicelPolinoma(Problem):
-    stevilo_nicel = models.PositiveSmallIntegerField()
-    velikost_nicle = models.PositiveSmallIntegerField()
+    """Problem, v katerem je treba poiskati ničle danega polinoma."""
+
+    stevilo_nicel = models.PositiveSmallIntegerField(
+        "število ničel", help_text="Največje število ničel polinoma (vedno bo vsaj 1)."
+    )
+    velikost_nicle = models.PositiveSmallIntegerField(
+        "velikost ničle",
+        help_text="Največja velikost ničle glede na absolutno vrednost.",
+    )
+
+    class Meta:
+        verbose_name = "iskanje ničel polinoma"
 
     def generate(self):
         nicla = random.randint(1, self.velikost_nicle)
@@ -132,8 +161,18 @@ class IskanjeNicelPolinoma(Problem):
 
 
 class RazstaviVieta(Problem):
-    maksimalna_vrednost = models.PositiveSmallIntegerField()
-    vodilni_koeficient = models.BooleanField()
+    """Problem za razstavljanje s pomočjo Vietovega pravila."""
+
+    maksimalna_vrednost = models.PositiveSmallIntegerField(
+        "maksimalna vrednost",
+        help_text="Največja možna vrednost razstavljenega člena glede na absolutno vrednost",
+    )
+    vodilni_koeficient = models.BooleanField(
+        "vodilni koeficient", help_text="Ali naj bo vodilni koeficient različen od 1?"
+    )
+
+    class Meta:
+        verbose_name = "razstavi Vieta"
 
     def generate(self):
         x1 = random.randint(-self.maksimalna_vrednost, self.maksimalna_vrednost)
@@ -152,9 +191,21 @@ class RazstaviVieta(Problem):
 
 
 class RazstaviRazliko(Problem):
-    najmanjsa_potenca = models.PositiveSmallIntegerField()
-    najvecja_potenca = models.PositiveSmallIntegerField()
-    linearna_kombinacija = models.BooleanField()
+    """Problem za razstavljanje razlike kvadratov, kubov in višjih potenc."""
+
+    najmanjsa_potenca = models.PositiveSmallIntegerField(
+        "najmanjša potenca", help_text="Najmanjša možna potenca za razstavljanje."
+    )
+    najvecja_potenca = models.PositiveSmallIntegerField(
+        "največja potenca", help_text="Največja možna potenca za razstavljanje."
+    )
+    linearna_kombinacija = models.BooleanField(
+        "linearna kombinacija",
+        help_text="Ali naj naloga vsebuje linearno kombinacijo dveh neznank ali enostaven dvočlenik?",
+    )
+
+    class Meta:
+        verbose_name = "razstavi razliko"
 
     def generate(self):
         if self.najmanjsa_potenca > self.najvecja_potenca:
