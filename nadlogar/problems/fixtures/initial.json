@@ -44,19 +44,19 @@
                 "razstavivieta"
             ],
             "question": "Razstavi izraz ${izraz}$",
-            "answer": "${resitev}$"
+            "answer": "${razstavljen}$"
         }
     },
     {
-    "model": "problems.problemtext",
-    "pk": 5,
-    "fields": {
-        "content_type": [
-            "problems",
-            "razstavirazliko"
-        ],
-        "question": "Razstavi izraz ${izraz}$",
-        "answer": "${razstavljen}$"
+        "model": "problems.problemtext",
+        "pk": 5,
+        "fields": {
+            "content_type": [
+                "problems",
+                "razstavirazliko"
+            ],
+            "question": "Razstavi izraz ${izraz}$",
+            "answer": "${razstavljen}$"
+        }
     }
-}
 ]
