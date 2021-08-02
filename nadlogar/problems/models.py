@@ -333,3 +333,51 @@ class OperacijeMnozic(Problem):
             "brez": sympy.latex(brez),
             "kartezicno": sympy.latex(kartezicno),
         }
+
+
+class IzpeljaneMnozice(Problem):
+    """Problem za zapis komplementa, unije in razlike množic ter izpis elementov izpeljane množice pri podani univerzalni množici."""
+
+    class Meta:
+        verbose_name = "izpeljane množice"
+
+    def generate(self):
+        k = sympy.symbols("k")
+        a = random.randint(2, 5)
+        b = random.randint(-4, 4)
+        c = random.randint(2, 5)
+        d = random.randint(-4, 4)
+        if abs(b) == a or abs(d) == c:
+            raise GeneratedDataIncorrect
+        velikost_univerzalne = random.randint(12, 20)
+        univerzalna = sympy.FiniteSet(*range(1, velikost_univerzalne + 1))
+        navodilo_A = a * k + b
+        navodilo_B = c * k + d
+        mnozica_A = [
+            a * x + b
+            for x in range(1, velikost_univerzalne + 1)
+            if 0 < a * x + b <= velikost_univerzalne
+        ]
+        mnozica_B = [
+            c * x + d
+            for x in range(1, velikost_univerzalne + 1)
+            if 0 < c * x + d <= velikost_univerzalne
+        ]
+        A = sympy.FiniteSet(*mnozica_A)
+        B = sympy.FiniteSet(*mnozica_B)
+        C = sympy.FiniteSet(*random.sample(set(univerzalna), 8))
+        A_unija_B = A.union(B)
+        C_komplement = sympy.Complement(univerzalna, C)
+        B_brez_A = sympy.Complement(B, A)
+
+        return {
+            "navodilo_A": sympy.latex(navodilo_A),
+            "navodilo_B": sympy.latex(navodilo_B),
+            "A": sympy.latex(A),
+            "B": sympy.latex(B),
+            "C": sympy.latex(C),
+            "A_unija_B": sympy.latex(A_unija_B),
+            "C_komplement": sympy.latex(C_komplement),
+            "B_brez_A": sympy.latex(B_brez_A),
+            "velikost_univerzalne": sympy.latex(velikost_univerzalne),
+        }
