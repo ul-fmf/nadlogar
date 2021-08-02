@@ -239,3 +239,45 @@ class RazstaviRazliko(Problem):
         razstavljen = sympy.factor(izraz)
 
         return {"izraz": sympy.latex(izraz), "razstavljen": sympy.latex(razstavljen)}
+
+
+class ElementiMnozice(Problem):
+    """Problem za izpis elementov množice iz podanega predpisa."""
+
+    POGOJ = ["|", "<", "<="]
+    POGOJ_LATEX = {"|": r"\mid", "<": r"\lt", "<=": r"\le"}
+
+    linearna_kombinacija = models.BooleanField(
+        "linearna kombinacija",
+        help_text="Ali naj naloga vsebuje linearno kombinacijo?",
+        choices=[(True, "Da"), (False, "Ne")],
+    )
+
+    class Meta:
+        verbose_name = "elementi množice"
+
+    def generate(self):
+        pogoj = random.choice(self.POGOJ)
+        n = sympy.symbols("n")
+        if not self.linearna_kombinacija:
+            a = 1
+            b = 0
+        else:
+            a = random.randint(1, 3)
+            b = random.randint(-2, 2)
+        if pogoj == "|":
+            stevilo = random.randint(15, 45)
+            ustrezni = sympy.divisors(stevilo)
+        elif pogoj == "<":
+            stevilo = random.randint(5, 12)
+            ustrezni = list(range(1, stevilo))
+        elif pogoj == "<=":
+            stevilo = random.randint(5, 8)
+            ustrezni = list(range(1, stevilo + 1))
+        mnozica = sympy.FiniteSet(*[a * x + b for x in ustrezni if a * x + b > 0])
+        return {
+            "n": sympy.latex(sympy.simplify(a * n + b)),
+            "pogoj": self.POGOJ_LATEX[pogoj],
+            "stevilo": sympy.latex(stevilo),
+            "mnozica": sympy.latex(mnozica),
+        }
