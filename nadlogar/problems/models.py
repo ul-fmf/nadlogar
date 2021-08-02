@@ -303,3 +303,33 @@ class PotencnaMnozica(Problem):
         mnozica = sympy.FiniteSet(*random.choice(mnozice)[:velikost])
         potencna = mnozica.powerset()
         return {"mnozica": sympy.latex(mnozica), "potencna": sympy.latex(potencna)}
+
+
+class OperacijeMnozic(Problem):
+    """Naloga za zapis unije, preseka, razlike, in kartezičnega produkta množic."""
+
+    class Meta:
+        verbose_name = "operacije z množicami"
+
+    @staticmethod
+    def generiraj_mnozico(velikost, od, do):
+        """Pripravi naključno množico dane velikosti."""
+        izbor = [x for x in range(od, do + 1)]
+        mnozica = sympy.FiniteSet(*random.sample(izbor, velikost))
+        return mnozica
+
+    def generate(self):
+        A = self.generiraj_mnozico(random.randint(3, 4), 1, 6)
+        B = self.generiraj_mnozico(random.randint(3, 4), 1, 6)
+        unija = A.union(B)
+        presek = A.intersection(B)
+        brez = sympy.Complement(A, B)
+        kartezicno = sympy.FiniteSet(*A * B)
+        return {
+            "A": sympy.latex(A),
+            "B": sympy.latex(B),
+            "unija": sympy.latex(unija),
+            "presek": sympy.latex(presek),
+            "brez": sympy.latex(brez),
+            "kartezicno": sympy.latex(kartezicno),
+        }
