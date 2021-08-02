@@ -281,3 +281,25 @@ class ElementiMnozice(Problem):
             "stevilo": sympy.latex(stevilo),
             "mnozica": sympy.latex(mnozica),
         }
+
+
+class PotencnaMnozica(Problem):
+    """Problem za izpis potenčne množice od dane množice."""
+
+    class Meta:
+        verbose_name = "potenčna množica"
+
+    def generate(self):
+        velikost = random.randint(2, 3)
+        mnozice = [
+            ["a", "b", "c"],
+            [1, 2, 3],
+            ["x", "y", "z"],
+            ["alpha", "beta", "gamma"],
+            ["Pi", "Phi", "Xi"],
+            [3, 6, 9],
+            [3, 7, 42],
+        ]
+        mnozica = sympy.FiniteSet(*random.choice(mnozice)[:velikost])
+        potencna = mnozica.powerset()
+        return {"mnozica": sympy.latex(mnozica), "potencna": sympy.latex(potencna)}
