@@ -58,5 +58,53 @@
             "question": "Razstavi izraz ${izraz}$",
             "answer": "${razstavljen}$"
         }
+    },
+    {
+        "model": "problems.problemtext",
+        "pk": 6,
+        "fields": {
+            "content_type": [
+                "problems",
+                "elementimnozice"
+            ],
+            "question": "Zapiši elemente množice $ \\mathcal{{A}} = \\{{ {n};  (n \\in \\mathbb{{N}}) \\land (n {pogoj} {stevilo} ) \\}}$.",
+            "answer": "$ \\mathcal{{A}} ={mnozica}$"
+        }
+    },
+    {
+        "model": "problems.problemtext",
+        "pk": 7,
+        "fields": {
+            "content_type": [
+                "problems",
+                "potencnamnozica"
+            ],
+            "question": "Zapiši potenčno množico množice $ \\mathcal{{A}} ={mnozica}$",
+            "answer": "$\\mathcal{{P}}( \\mathcal{{A}} ) ={potencna}$"
+        }
+    },
+    {
+        "model": "problems.problemtext",
+        "pk": 8,
+        "fields": {
+            "content_type": [
+                "problems",
+                "operacijemnozic"
+            ],
+            "question": "Dani sta množici $ \\mathcal{{A}} ={A}$ in $ \\mathcal{{B}} ={B}$.\r\n    Zapiši množice $ \\mathcal{{A}} \\cup  \\mathcal{{B}} $, $ \\mathcal{{A}} \\cap  \\mathcal{{B}} $, $ \\mathcal{{A}} - \\mathcal{{B}} $ in $ \\mathcal{{A}} \\times  \\mathcal{{B}} $.",
+            "answer": "$ \\mathcal{{A}} \\cup  \\mathcal{{B}} ={unija}$, $ \\mathcal{{A}} \\cap  \\mathcal{{B}} ={presek}$, $ \\mathcal{{A}} - \\mathcal{{B}} ={brez}$, $ \\mathcal{{A}} \\times  \\mathcal{{B}} ={kartezicno}$"
+        }
+    },
+    {
+        "model": "problems.problemtext",
+        "pk": 9,
+        "fields": {
+            "content_type": [
+                "problems",
+                "izpeljanemnozice"
+            ],
+            "question": "Dana je univerzalna množica $ \\mathcal{{U}} =\\mathbb{{N}}_{{ {velikost_univerzalne} }}$ in njene pomnožice $ \\mathcal{{A}} =\\{{ {navodilo_A}; k \\in \\mathbb{{N}} \\}}$, $ \\mathcal{{B}} = \\{{ {navodilo_B}; k \\in \\mathbb{{N}} \\}}$, $ \\mathcal{{C}} ={C}$. Zapiši elemente množic $ \\mathcal{{A}} $, $ \\mathcal{{B}} $, $ \\mathcal{{A}}  \\cup  \\mathcal{{B}} $, $ \\mathcal{{C}} ^{{\\mathsf{{c}} }}$ in $ \\mathcal{{B}}  -  \\mathcal{{A}} $.",
+            "answer": "$ \\mathcal{{A}} ={A}$, $ \\mathcal{{B}} ={B}$, $ \\mathcal{{A}}  \\cup  \\mathcal{{B}}  ={A_unija_B}$, $ \\mathcal{{C}} ^{{\\mathsf{{c}} }}={C_komplement}$,  $ \\mathcal{{B}}  -  \\mathcal{{A}}  ={B_brez_A}$"
+        }
     }
 ]
