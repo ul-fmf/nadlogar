@@ -424,3 +424,39 @@ class PotencaDvoclenika(Problem):
             "izraz": sympy.latex(izraz),
             "resitev": sympy.latex(sympy.expand(izraz)),
         }
+
+
+class PotencaTroclenika(Problem):
+    """Problem za potenciranje tročlenika."""
+
+    najmanjsa_potenca = models.PositiveSmallIntegerField(
+        "najmanjša potenca", help_text="Najmanjša možna potenca tročlenika."
+    )
+    najvecja_potenca = models.PositiveSmallIntegerField(
+        "največja potenca", help_text="Največja možna potenca dvočlenika."
+    )
+    linearna_kombinacija = models.BooleanField(
+        "linearna kombinacija",
+        help_text="Ali naj naloga vsebuje linearno kombinacijo treh neznank ali enostaven tročlenik?",
+    )
+
+    class Meta:
+        verbose_name = "potenciranje tročlenika"
+
+    def generate(self):
+        potenca = random.randint(self.najmanjsa_potenca, self.najvecja_potenca)
+        simboli = [sympy.symbols(x) for x in ["a", "b", "c", "x", "y", "z", "v", "t"]]
+        x, y, z = random.sample(simboli, 3)
+        a = random.randint(1, 4)
+        b = random.choice([x for x in range(-4, 4) if x != 0])
+        c = random.choice([x for x in range(-4, 4) if x != 0])
+        if not self.linearna_kombinacija:
+            a = 1
+            b = 1
+            z = 1
+
+        izraz = sympy.Pow(a * x + b * y + c * z, potenca, evaluate=False)
+        return {
+            "izraz": sympy.latex(izraz),
+            "resitev": sympy.latex(sympy.expand(izraz)),
+        }
