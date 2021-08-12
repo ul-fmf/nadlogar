@@ -381,3 +381,46 @@ class IzpeljaneMnozice(Problem):
             "B_brez_A": sympy.latex(B_brez_A),
             "velikost_univerzalne": sympy.latex(velikost_univerzalne),
         }
+
+
+class PotencaDvoclenika(Problem):
+    """Problem za potenciranje dvočlenika."""
+
+    najmanjsa_potenca = models.PositiveSmallIntegerField(
+        "najmanjša potenca", help_text="Najmanjša možna potenca dvočlenika."
+    )
+    najvecja_potenca = models.PositiveSmallIntegerField(
+        "največja potenca", help_text="Največja možna potenca dvočlenika."
+    )
+    linearna_kombinacija = models.BooleanField(
+        "linearna kombinacija",
+        help_text="Ali naj naloga vsebuje linearno kombinacijo dveh neznank ali enostaven dvočlenik?",
+    )
+
+    class Meta:
+        verbose_name = "potenciranje dvočlenika"
+
+    def generate(self):
+        potenca = random.randint(self.najmanjsa_potenca, self.najvecja_potenca)
+        simboli = ["a", "b", "c", "x", "y", "z", "v", "t"]
+        izbran_simbol = random.choice(simboli)
+        x = sympy.symbols(izbran_simbol)
+        simboli.remove(izbran_simbol)
+        if not self.linearna_kombinacija:
+            a = 1
+            b = random.choice([x for x in range(-5, 5) if x != 0])
+            n = 1
+            y = 1
+            m = 1
+        else:
+            a = random.randint(1, 5)
+            b = random.choice([x for x in range(-5, 5) if x != 0])
+            n = random.randint(2, 5)
+            m = random.randint(1, 5)
+            y = sympy.symbols(random.choice(simboli))
+
+        izraz = sympy.Pow(a * x ** n + b * y ** m, potenca, evaluate=False)
+        return {
+            "izraz": sympy.latex(izraz),
+            "resitev": sympy.latex(sympy.expand(izraz)),
+        }
