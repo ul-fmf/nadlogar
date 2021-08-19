@@ -8,11 +8,6 @@
         <div class="modal-card">
             <header class="modal-card-head">
                 <p class="modal-card-title">{% block title %}{% endblock title %}</p>
-                {% if request.META.HTTP_REFERER %}
-                <a class="delete" aria-label="close" href="{{ request.META.HTTP_REFERER }}"></a>
-                {% else %}
-                <a class="delete" aria-label="close" href="{% url 'homepage' %}"></a>
-                {% endif %}
             </header>
             <section class="modal-card-body">
                 {% for error in form.non_field_errors %}
@@ -70,7 +65,7 @@
             </section>
             <footer class="modal-card-foot">
                 {% block actions %}
-                <button class="button is-fullwidth is-primary">{% block submit %}Cancel{% endblock submit %}</button>
+                <button class="button is-fullwidth is-primary">{% block submit %}Pošlji{% endblock submit %}</button>
                 {% endblock actions %}
             </footer>
         </div>
