@@ -1,35 +1,17 @@
-import datetime
-
-from django.contrib.contenttypes.models import ContentType
 from django.test import TestCase
-from quizzes.models import Quiz
-from students.models import StudentGroup
-
-from . import models
+from model_bakery import baker
 
 
 class ProblemTest(TestCase):
     def setUp(self):
-        self.student_group = StudentGroup.objects.create(name="Testna skupina")
-        self.quiz = Quiz.objects.create(
-            name="Testni kviz",
-            date=datetime.date.today(),
-            student_group=self.student_group,
-        )
         self.stevilo_preizkusov = 100
+        self.quiz = baker.make("Quiz")
 
     def test_krajsanje_ulomkov(self):
         """Generator za krajšanje ulomkov vrne ustrezen slovar"""
-        problem_text = models.ProblemText.objects.create(
-            content_type=ContentType.objects.get_for_model(models.KrajsanjeUlomkov)
-        )
-        problem = models.KrajsanjeUlomkov.objects.create(
-            quiz=self.quiz,
-            text=problem_text,
-            najvecji_stevec=1,
-            najvecji_imenovalec=1,
-            najvecji_faktor=1,
-        )
+        # Don't forget to add quiz=self.quiz, otherwise model_bakery
+        # will create a new quiz (and student group) for each problem.
+        problem = baker.make("KrajsanjeUlomkov", quiz=self.quiz)
         for seed in range(self.stevilo_preizkusov):
             primer = problem.generate_data(seed)
             a = primer.pop("okrajsan_stevec")
@@ -41,15 +23,9 @@ class ProblemTest(TestCase):
 
     def test_iskanje_nicel_polinoma(self):
         """Generator za iskanje ničel polinoma vrne ustrezen slovar"""
-        problem_text = models.ProblemText.objects.create(
-            content_type=ContentType.objects.get_for_model(models.IskanjeNicelPolinoma)
-        )
-        problem = models.IskanjeNicelPolinoma.objects.create(
-            quiz=self.quiz,
-            text=problem_text,
-            stevilo_nicel=3,
-            velikost_nicle=20,
-        )
+        # Don't forget to add quiz=self.quiz, otherwise model_bakery
+        # will create a new quiz (and student group) for each problem.
+        problem = baker.make("IskanjeNicelPolinoma", quiz=self.quiz)
         for seed in range(self.stevilo_preizkusov):
             primer = problem.generate_data(seed)
             nicle = primer.pop("nicle")
