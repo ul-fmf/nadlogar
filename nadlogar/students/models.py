@@ -1,8 +1,13 @@
+from django.conf import settings
 from django.db import models
 
 
 class StudentGroup(models.Model):
     name = models.CharField(max_length=255)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.PROTECT,
+    )
 
     class Meta:
         ordering = ["name"]
