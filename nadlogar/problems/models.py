@@ -12,6 +12,28 @@ def limit_content_type_choices():
     return {"id__in": {content_type.id for content_type in content_types}}
 
 
+def generiraj_kompleksna_stevila(kolicina):
+    stevila_r = random.choices(
+        [x for x in range(-5, 6) if x != 0],
+        k=kolicina,  # Izbere naključne realne dele
+    )
+    stevila_i = random.choices(
+        [x for x in range(-5, 6) if x != 0],
+        k=kolicina,  # Izbere naključne imaginarne dele
+    )
+    stevila = [r + i * sympy.I for r, i in zip(stevila_r, stevila_i)]
+
+    if len(stevila) != len(
+        set(stevila)
+    ):  # preveri, da so vsa števila medsebojno različna
+        raise GeneratedDataIncorrect
+
+    if kolicina == 1:
+        stevila = stevila[0]
+
+    return stevila
+
+
 class ProblemText(models.Model):
     content_type = models.ForeignKey(
         ContentType,
