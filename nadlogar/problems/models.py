@@ -602,3 +602,22 @@ class KompleksniUlomek(Problem):
             "izraz": sympy.latex(izraz),
             "resitev": sympy.latex(resitev),
         }
+
+
+class MnozenjeKompleksnih(Problem):
+    """Problem za množenje kompleksnih števil."""
+
+    class Meta:
+        verbose_name = "množenje kompleksnih števil"
+
+    def generate(self):
+        kolicina = 2
+        stevila = generiraj_kompleksna_stevila(kolicina)
+
+        izraz = sympy.Mul(*stevila, evaluate=False)
+        resitev = sympy.simplify(izraz)
+
+        return {
+            "izraz": sympy.latex(izraz),
+            "resitev": sympy.latex(resitev),
+        }
