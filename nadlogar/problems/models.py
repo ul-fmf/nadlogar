@@ -575,3 +575,30 @@ class VsotaKompleksnih(Problem):
             "izraz": sympy.latex(izraz),
             "resitev": sympy.latex(resitev),
         }
+
+
+class KompleksniUlomek(Problem):
+    """Problem za seštevanje in racionalizacijo kompleksnih ulomkov."""
+
+    class Meta:
+        verbose_name = "seštevanje in racionalizacija kompleksnih ulomkov"
+
+    def generate(self):
+        kolicina = 4
+        stevila = generiraj_kompleksna_stevila(kolicina)
+
+        izraz = sympy.Add(
+            sympy.Mul(
+                stevila[0], sympy.Pow(stevila[1], -1, evaluate=False), evaluate=False
+            ),
+            sympy.Mul(
+                stevila[2], sympy.Pow(stevila[3], -1, evaluate=False), evaluate=False
+            ),
+            evaluate=False,
+        )
+        resitev = sympy.simplify(izraz)
+
+        return {
+            "izraz": sympy.latex(izraz),
+            "resitev": sympy.latex(resitev),
+        }
