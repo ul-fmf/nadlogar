@@ -533,3 +533,45 @@ class PotencaVecclenika(Problem):
             "izraz": sympy.latex(izraz),
             "resitev": sympy.latex(sympy.expand(izraz)),
         }
+
+
+class VsotaKompleksnih(Problem):
+    """Problem za seštevanje in odštevanje kompleksnih števil."""
+
+    class Meta:
+        verbose_name = "vsota in razlika kompleksnih števil"
+
+    def generate(self):
+        kolicina = 3
+        koeficienti_s = random.choices(
+            range(1, 5),
+            weights=(3, 1, 1, 1),
+            k=kolicina,  # Izbere naključne števce, prednost ima 1
+        )
+        koeficienti_i = random.choices(
+            range(1, 5),
+            weights=(7, 1, 1, 1),
+            k=kolicina,  # Izbere naključne imenovalce, prednost ima 1
+        )
+        koeficienti_p = random.choices(
+            (-1, 1),
+            weights=(1, 2),
+            k=kolicina,  # Izbere naključne predznake, prednost ima pozitiven
+        )
+        koeficienti = [
+            p * sympy.Rational(s, i)
+            for p, s, i in zip(koeficienti_p, koeficienti_s, koeficienti_i)
+        ]
+
+        stevila = generiraj_kompleksna_stevila(kolicina)
+
+        izraz = sympy.Add(
+            *[sympy.Mul(k, z, evaluate=False) for k, z in zip(koeficienti, stevila)],
+            evaluate=False,
+        )
+        resitev = sympy.simplify(izraz)
+
+        return {
+            "izraz": sympy.latex(izraz),
+            "resitev": sympy.latex(resitev),
+        }
