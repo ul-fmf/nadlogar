@@ -682,3 +682,15 @@ class KompleksnaEnacba(Problem):
             "absolutna": sympy.latex(absolutna),
         }
 
+
+class NarisiKompleksna(Problem):
+    """Problem za risanje kompleksnih števil v kompleksno ravnino."""
+
+    class Meta:
+        verbose_name = "risanje kompleksnih števil"
+
+    def generate(self):
+        kolicina = 4
+        stevila = generiraj_kompleksna_stevila(kolicina)
+        koordinate = ["({0}, {1})".format(sympy.re(z), sympy.im(z)) for z in stevila]
+        return {"stevila": [sympy.latex(z) for z in stevila], "koordinate": koordinate}
