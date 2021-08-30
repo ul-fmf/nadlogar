@@ -621,3 +621,29 @@ class MnozenjeKompleksnih(Problem):
             "izraz": sympy.latex(izraz),
             "resitev": sympy.latex(resitev),
         }
+
+
+class RacunanjeKompleksno(Problem):
+    """Problem za računanje absolutne vrednosti, potenciranja in konjugiranje kompleksnega števila ter višje potence kompleksne enote i."""
+
+    class Meta:
+        verbose_name = "računanje z kompleksno enoto"
+
+    def generate(self):
+        z = sympy.symbols("z")
+        z0 = generiraj_kompleksna_stevila(1)
+        izraz = (
+            sympy.Pow(z, random.randint(2, 3))
+            + sympy.Mul(
+                sympy.Pow(sympy.I, random.randint(1991, 2018), evaluate=False),
+                sympy.conjugate(z),
+                evaluate=False,
+            )
+            + abs(z) ** 2
+        )
+        resitev = sympy.simplify(izraz.subs(z, z0))
+        return {
+            "stevilo": sympy.latex(z0),
+            "izraz": sympy.latex(izraz),
+            "resitev": sympy.latex(resitev),
+        }
