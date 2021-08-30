@@ -647,3 +647,38 @@ class RacunanjeKompleksno(Problem):
             "izraz": sympy.latex(izraz),
             "resitev": sympy.latex(resitev),
         }
+
+
+class KompleksnaEnacba(Problem):
+    """Problem za množenja, konjugiranja, absolutne vrednosti in komponent kompleksnih števil."""
+
+    konjugirana_vrednost = models.BooleanField(
+        "konjugirana vrednost",
+        help_text="Ali naj naloga vsebuje konjugirano vrednost?",
+        choices=[(True, "Da"), (False, "Ne")],
+    )
+
+    class Meta:
+        verbose_name = "enačbe s kompleksnimi števili"
+
+    def generate(self):
+        z = sympy.symbols("z")
+        resitev, z1 = generiraj_kompleksna_stevila(2)
+        if not self.konjugirana_vrednost:
+            enacba = z1 * z
+        else:
+            z2 = generiraj_kompleksna_stevila(1)
+            enacba = z1 * z + z2 * sympy.conjugate(z)
+        z3 = sympy.simplify(enacba.subs(z, resitev))
+        im = sympy.im(resitev)
+        re = sympy.re(resitev)
+        absolutna = abs(resitev)
+
+        return {
+            "enacba": sympy.latex(sympy.Eq(enacba, z3)),
+            "resitev": sympy.latex(resitev),
+            "imaginarna": sympy.latex(im),
+            "realna": sympy.latex(re),
+            "absolutna": sympy.latex(absolutna),
+        }
+
