@@ -2,7 +2,9 @@ from .models import Quiz
 
 
 def my_quizzes(request):
-    return {
-        "my_quizzes": Quiz.objects.all(),
-        "quiz": None,
-    }
+    if request.user.is_authenticated:
+        return {
+            "my_quizzes": Quiz.objects.filter(student_group__user=request.user),
+        }
+    else:
+        return {}

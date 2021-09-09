@@ -6,7 +6,7 @@ from .models import Student, StudentGroup
 class StudentGroupForm(ModelForm):
     class Meta:
         model = StudentGroup
-        exclude = []
+        exclude = ["user"]
 
 
 class StudentForm(ModelForm):
