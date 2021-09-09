@@ -40,3 +40,25 @@ class DeliteljVeckratnik(Problem):
             "najvecji_delitelj": najvecji_delitelj,
             "najmanjsi_veckratnik": najmanjsi_veckratnik,
         }
+
+
+class EvklidovAlgoritem(Problem):
+    """Problem za izračun največjega skupnega delitelja dveh števil z evklidovim algoritmom."""
+
+    class Meta:
+        verbose_name = "evklidov algoritem"
+
+    def generate(self):
+        stevilo_malo = random.randint(50, 199)
+        stevilo_veliko = random.randint(200, 1000)
+        if not (
+            stevilo_veliko % stevilo_malo != 0
+            and stevilo_malo % (stevilo_veliko % stevilo_malo) != 0
+        ):  # Da se ne konča že v prvih dveh korakih
+            raise GeneratedDataIncorrect
+        najvecji_delitelj = sympy.gcd(stevilo_malo, stevilo_veliko)
+        return {
+            "stevilo1": stevilo_malo,
+            "stevilo2": stevilo_veliko,
+            "najvecji_delitelj": najvecji_delitelj,
+        }
