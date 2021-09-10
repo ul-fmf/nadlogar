@@ -142,5 +142,29 @@
             "question": "Potenciraj izraz ${izraz}$",
             "answer": "${resitev}$"
         }
+    },
+    {
+        "model": "problems.problemtext",
+        "pk": 19,
+        "fields": {
+            "content_type": [
+                "problems",
+                "deliteljveckratnik"
+            ],
+            "question": "Določi največji skupni delitelj in najmanjši skupni večkratnik števil ${stevilo1}$ in ${stevilo2}$.",
+            "answer": "$D( {stevilo1},{stevilo2} )={najvecji_delitelj}$, $v( {stevilo1},{stevilo2} )={najmanjsi_veckratnik}$"
+        }
+    },
+    {
+        "model": "problems.problemtext",
+        "pk": 20,
+        "fields": {
+            "content_type": [
+                "problems",
+                "evklidovalgoritem"
+            ],
+            "question": "Z Evklidovim algoritmom poišči največji skupni delitelj števil ${stevilo1}$ in ${stevilo2}$.",
+            "answer": "$D({stevilo1},{stevilo2})={najvecji_delitelj}$"
+        }
     }
 ]
