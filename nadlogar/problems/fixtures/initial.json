@@ -145,6 +145,78 @@
     },
     {
         "model": "problems.problemtext",
+        "pk": 13,
+        "fields": {
+            "content_type": [
+                "problems",
+                "vsotakompleksnih"
+            ],
+            "question": "Izračunaj $z={izraz}$.",
+            "answer": "$z={resitev}$"
+        }
+    },
+    {
+        "model": "problems.problemtext",
+        "pk": 14,
+        "fields": {
+            "content_type": [
+                "problems",
+                "kompleksniulomek"
+            ],
+            "question": "Izračunaj $z={izraz}$.",
+            "answer": "$z={resitev}$"
+        }
+    },
+    {
+        "model": "problems.problemtext",
+        "pk": 15,
+        "fields": {
+            "content_type": [
+                "problems",
+                "mnozenjekompleksnih"
+            ],
+            "question": "Izračunaj $z={izraz}$.",
+            "answer": "$z={resitev}$"
+        }
+    },
+    {
+        "model": "problems.problemtext",
+        "pk": 16,
+        "fields": {
+            "content_type": [
+                "problems",
+                "racunanjekompleksno"
+            ],
+            "question": "Dano je kompleksno število $z={stevilo}$. Izračunaj število $w={izraz}$.",
+            "answer": "$w={resitev}$"
+        }
+    },
+    {
+        "model": "problems.problemtext",
+        "pk": 17,
+        "fields": {
+            "content_type": [
+                "problems",
+                "kompleksnaenacba"
+            ],
+            "question": "Katero kompleksno število $z$ zadošča enačbi ${enacba}$? Zapiši $\\operatorname{{Re}}(z)$ in $\\operatorname{{Im}}(z)$ ter izračunaj $\\left| z \\right|$.",
+            "answer": "$z={resitev}$, $\\operatorname{{Re}}(z)={realna}$, $\\operatorname{{Im}}(z)={imaginarna}$, $\\left|z\\right|={absolutna}$"
+        }
+    },
+    {
+        "model": "problems.problemtext",
+        "pk": 18,
+        "fields": {
+            "content_type": [
+                "problems",
+                "narisikompleksna"
+            ],
+            "question": "V kompleksno ravnino nariši števila $z_1={stevila[0]}$, $z_2={stevila[1]}$, $z_3={stevila[2]}$ in $z_4={stevila[3]}$.",
+            "answer": "$z_1={koordinate[0]}$, $z_2={koordinate[1]}$, $z_3={koordinate[2]}$ in $z_4={koordinate[3]}$"
+        }
+    },
+    {
+        "model": "problems.problemtext",
         "pk": 19,
         "fields": {
             "content_type": [
