@@ -7,9 +7,12 @@ class RazstaviVieta(Problem):
     maksimalna_vrednost = models.PositiveSmallIntegerField(
         "maksimalna vrednost",
         help_text="Največja možna vrednost razstavljenega člena glede na absolutno vrednost",
+        default=15,
     )
     vodilni_koeficient = models.BooleanField(
-        "vodilni koeficient", help_text="Ali naj bo vodilni koeficient različen od 1?"
+        "vodilni koeficient",
+        help_text="Ali naj bo vodilni koeficient različen od 1?",
+        default=True,
     )
 
     class Meta:
@@ -35,14 +38,19 @@ class RazstaviRazliko(Problem):
     """Problem za razstavljanje razlike kvadratov, kubov in višjih potenc."""
 
     najmanjsa_potenca = models.PositiveSmallIntegerField(
-        "najmanjša potenca", help_text="Najmanjša možna potenca za razstavljanje."
+        "najmanjša potenca",
+        help_text="Najmanjša možna potenca za razstavljanje.",
+        default=2,
     )
     najvecja_potenca = models.PositiveSmallIntegerField(
-        "največja potenca", help_text="Največja možna potenca za razstavljanje."
+        "največja potenca",
+        help_text="Največja možna potenca za razstavljanje.",
+        default=4,
     )
     linearna_kombinacija = models.BooleanField(
         "linearna kombinacija",
         help_text="Ali naj naloga vsebuje linearno kombinacijo dveh neznank ali enostaven dvočlenik?",
+        default=True,
     )
 
     class Meta:

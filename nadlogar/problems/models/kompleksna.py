@@ -144,6 +144,7 @@ class KompleksnaEnacba(Problem):
         "konjugirana vrednost",
         help_text="Ali naj naloga vsebuje konjugirano vrednost?",
         choices=[(True, "Da"), (False, "Ne")],
+        default=True,
     )
 
     class Meta:

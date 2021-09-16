@@ -1,5 +1,8 @@
+from django.db.models.fields import NOT_PROVIDED
 from django.test import TestCase
 from model_bakery import baker
+
+from .models import Problem
 
 
 class ProblemTest(TestCase):
@@ -33,3 +36,21 @@ class ProblemTest(TestCase):
             self.assertEqual(primer, {})
             self.assertIsInstance(nicle, set)
             self.assertIsInstance(polinom, str)
+
+
+class GeneratorTest(TestCase):
+    def test_default_arguments(self):
+        for generator in Problem.__subclasses__():
+            for field in generator._meta.get_fields():
+                if field.name not in [
+                    "id",
+                    "document",
+                    "content_type",
+                    "text",
+                    "problem_ptr",
+                ]:
+                    self.assertNotEqual(
+                        field.default,
+                        NOT_PROVIDED,
+                        f"{generator.__name__}, {field.name}",
+                    )

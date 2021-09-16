@@ -7,16 +7,19 @@ class DeliteljVeckratnik(Problem):
     minimalna_vrednost = models.PositiveSmallIntegerField(
         "minimalna vrednost",
         help_text="Najmanjša možna vrednost katerega izmed števil",
+        default=20,
     )
 
     maksimalna_vrednost = models.PositiveSmallIntegerField(
         "maksimalna vrednost",
         help_text="Največja možna vrednost katerega izmed števil",
+        default=500,
     )
 
     maksimalni_prafaktor = models.PositiveSmallIntegerField(
         "maksimalni prafaktor",
         help_text="Zgornja meja za prafaktorje števil",
+        default=11,
     )
 
     class Meta:

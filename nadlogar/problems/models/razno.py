@@ -4,8 +4,12 @@ from .meta import *
 class ProstoBesedilo(Problem):
     """Problem s poljubnim fiksnim vprašanjem in odgovorom, namenjen ročno sestavljenim nalogam."""
 
-    vprasanje = models.TextField("vprašanje", help_text="Poljubno besedilo vprašanja.")
-    odgovor = models.TextField("odgovor", help_text="Poljubno besedilo odgovora.")
+    vprasanje = models.TextField(
+        "vprašanje", help_text="Poljubno besedilo vprašanja.", default=""
+    )
+    odgovor = models.TextField(
+        "odgovor", help_text="Poljubno besedilo odgovora.", default=""
+    )
 
     class Meta:
         verbose_name = "prosto besedilo"
@@ -23,14 +27,17 @@ class KrajsanjeUlomkov(Problem):
     najvecji_stevec = models.PositiveSmallIntegerField(
         "največji števec",
         help_text="Največji števec, ki se bo pojavljal v okrajšanem ulomku.",
+        default=20,
     )
     najvecji_imenovalec = models.PositiveSmallIntegerField(
         "največji imenovalec",
         help_text="Največji imenovalec, ki se bo pojavljal v okrajšanem ulomku.",
+        default=20,
     )
     najvecji_faktor = models.PositiveSmallIntegerField(
         "največji faktor",
         help_text="Največji faktor med neokrajšanim in okrajšanim ulomkom.",
+        default=20,
     )
 
     class Meta:
@@ -52,11 +59,14 @@ class IskanjeNicelPolinoma(Problem):
     """Problem, v katerem je treba poiskati ničle danega polinoma."""
 
     stevilo_nicel = models.PositiveSmallIntegerField(
-        "število ničel", help_text="Največje število ničel polinoma (vedno bo vsaj 1)."
+        "število ničel",
+        help_text="Največje število ničel polinoma (vedno bo vsaj 1).",
+        default=3,
     )
     velikost_nicle = models.PositiveSmallIntegerField(
         "velikost ničle",
         help_text="Največja velikost ničle glede na absolutno vrednost.",
+        default=9,
     )
 
     class Meta:

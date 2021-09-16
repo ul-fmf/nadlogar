@@ -11,6 +11,7 @@ class ElementiMnozice(Problem):
         "linearna kombinacija",
         help_text="Ali naj naloga vsebuje linearno kombinacijo?",
         choices=[(True, "Da"), (False, "Ne")],
+        default=True,
     )
 
     class Meta:

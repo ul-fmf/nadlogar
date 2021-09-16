@@ -5,14 +5,19 @@ class PotencaDvoclenika(Problem):
     """Problem za potenciranje dvočlenika."""
 
     najmanjsa_potenca = models.PositiveSmallIntegerField(
-        "najmanjša potenca", help_text="Najmanjša možna potenca dvočlenika."
+        "najmanjša potenca",
+        help_text="Najmanjša možna potenca dvočlenika.",
+        default=2,
     )
     najvecja_potenca = models.PositiveSmallIntegerField(
-        "največja potenca", help_text="Največja možna potenca dvočlenika."
+        "največja potenca",
+        help_text="Največja možna potenca dvočlenika.",
+        default=4,
     )
     linearna_kombinacija = models.BooleanField(
         "linearna kombinacija",
         help_text="Ali naj naloga vsebuje linearno kombinacijo dveh neznank ali enostaven dvočlenik?",
+        default=True,
     )
 
     class Meta:
@@ -48,14 +53,19 @@ class PotencaTroclenika(Problem):
     """Problem za potenciranje tročlenika."""
 
     najmanjsa_potenca = models.PositiveSmallIntegerField(
-        "najmanjša potenca", help_text="Najmanjša možna potenca tročlenika."
+        "najmanjša potenca",
+        help_text="Najmanjša možna potenca tročlenika.",
+        default=2,
     )
     najvecja_potenca = models.PositiveSmallIntegerField(
-        "največja potenca", help_text="Največja možna potenca dvočlenika."
+        "največja potenca",
+        help_text="Največja možna potenca dvočlenika.",
+        default=4,
     )
     linearna_kombinacija = models.BooleanField(
         "linearna kombinacija",
         help_text="Ali naj naloga vsebuje linearno kombinacijo treh neznank ali enostaven tročlenik?",
+        default=True,
     )
 
     class Meta:
@@ -84,20 +94,29 @@ class PotencaVecclenika(Problem):
     """Problem za potenciranje veččlenika."""
 
     najmanjsa_potenca = models.PositiveSmallIntegerField(
-        "najmanjša potenca", help_text="Najmanjša možna potenca veččlenika."
+        "najmanjša potenca",
+        help_text="Najmanjša možna potenca veččlenika.",
+        default=2,
     )
     najvecja_potenca = models.PositiveSmallIntegerField(
-        "največja potenca", help_text="Največja možna potenca veččlenika."
+        "največja potenca",
+        help_text="Največja možna potenca veččlenika.",
+        default=4,
     )
     najmanj_clenov = models.PositiveSmallIntegerField(
-        "najmanj členov", help_text="Najmanjše možno število členov v veččleniku."
+        "najmanj členov",
+        help_text="Najmanjše možno število členov v veččleniku.",
+        default=2,
     )
     najvec_clenov = models.PositiveSmallIntegerField(
-        "največ členov", help_text="Največje možno število členov v veččleniku."
+        "največ členov",
+        help_text="Največje možno število členov v veččleniku.",
+        default=4,
     )
     linearna_kombinacija = models.BooleanField(
         "linearna kombinacija",
         help_text="Ali naj naloga vsebuje linearno kombinacijo neznank ali enostaven veččlenik?",
+        default=True,
     )
 
     class Meta:
