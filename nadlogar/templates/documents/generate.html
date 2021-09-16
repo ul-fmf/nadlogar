@@ -1,19 +1,15 @@
 {% extends 'main.html' %}
 
 {% block contents %}
-<h2>{{ document.naslov }}</h2>
-
-<p>{{ document.opis }}</p>
-
-{% for student, student_document in generated_problems.items %}
-
-<h3>{{ student.name }}</h3>
-
-{% for _, rendered_text in student_document %}
-<h4>{{ forloop.counter }}. naloga</h4>
-<p>{{ rendered_text.question }}</p>
-<small>{{ rendered_text.answer }}</small>
-{% endfor %}
-
-{% endfor %}
+<div class="content">
+    <h2>{{ document.naslov }}</h2>
+    <p>{{ document.opis }}</p>
+    {% for file_name, file_contents in generated_files %}
+    <h3><code>{{ file_name }}</code></h3>
+    <blockquote>
+        {{ file_contents }}
+    </blockquote>
+    <hr/>
+    {% endfor %}
+</div>
 {% endblock contents %}
