@@ -40,29 +40,11 @@
 </nav>
 <section class="section">
     <div class="columns">
+        <div class="column">
+            {% block contents %}
+            {% endblock contents %}
+        </div>
         <div class="column is-one-quarter">
-            <nav class="panel">
-                <p class="panel-heading">
-                    Dokumenti
-                </p>
-                {% for my_document in my_documents %}
-                <a class="panel-block {% if my_document == document %}is-active{% endif %}"
-                    href="{% url 'documents:view_document' my_document.id %}">
-                    <span class=" panel-icon">
-                        <i class="fas fa-book" aria-hidden="true"></i>
-                    </span>
-                    {{ my_document.name }}
-                </a>
-                {% endfor %}
-                <div class="panel-block">
-                    <a class="button is-link is-outlined is-fullwidth is-small" href="{% url 'documents:create_document' %}">
-                        <span class="icon is-small">
-                            <i class="fas fa-plus"></i>
-                        </span>
-                        <span>Nov dokument</span>
-                    </a>
-                </div>
-            </nav>
             <nav class="panel">
                 <p class="panel-heading">
                     Skupine
@@ -86,10 +68,6 @@
                     </a>
                 </div>
             </nav>
-        </div>
-        <div class="column">
-            {% block contents %}
-            {% endblock contents %}
         </div>
     </div>
 </section>
