@@ -27,7 +27,7 @@ class ProblemText(models.Model):
     def render(self, data):
         question = self.question.format(**data)
         answer = self.answer.format(**data)
-        return question, answer
+        return {"question": question, "answer": answer}
 
 
 class GeneratedDataIncorrect(Exception):
@@ -82,8 +82,8 @@ class Problem(models.Model):
             except GeneratedDataIncorrect:
                 pass
 
-    def generate_everything(self, student=None):
+    def generate_data_and_text(self, student=None):
         seed = (self.id, None if student is None else student.id)
         data = self.generate_data(seed)
-        question, answer = self.text.render(data)
-        return data, question, answer
+        rendered_text = self.text.render(data)
+        return data, rendered_text

@@ -42,7 +42,7 @@
         </p>
     </div>
 
-    {% for problem, data, question, answer in document.problem_examples %}
+    {% for problem, data, rendered_text in document.problem_examples %}
     <h3>
         {{ forloop.counter }}. naloga
     </h3>
@@ -72,7 +72,7 @@
         </form>
         </p>
     </div>
-    {% include "problems/_question_and_answer.html" %}
+    {% include "problems/_rendered_text.html" %}
     {% endfor %}
 </div>
 <form action="{% url 'problems:create_problem' %}">

@@ -62,5 +62,5 @@ def generate(request, document_id: int):
     return render(
         request,
         "documents/generate.html",
-        {"document": document, "generated_problems": document.generate_everything()},
+        {"document": document, "generated_problems": document.generate_data_and_text()},
     )

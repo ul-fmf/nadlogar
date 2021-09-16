@@ -16,17 +16,19 @@ class Document(models.Model):
     def __str__(self):
         return f"{self.name} ({self.date})"
 
-    def generate_everything(self):
+    def generate_data_and_text(self):
         students = self.student_group.students.all()
         student_documents = {student: [] for student in students}
         for problem in self.problems.all():
             for student in students:
-                student_documents[student].append(problem.generate_everything(student))
+                student_documents[student].append(
+                    problem.generate_data_and_text(student)
+                )
         return student_documents
 
     def problem_examples(self):
         examples = []
         for problem in self.problems.all():
-            data, question, answer = problem.generate_everything()
-            examples.append((problem, data, question, answer))
+            data, rendered_text = problem.generate_data_and_text()
+            examples.append((problem, data, rendered_text))
         return examples

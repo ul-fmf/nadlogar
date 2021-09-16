@@ -9,10 +9,10 @@
 
 <h3>{{ student.name }}</h3>
 
-{% for _, question, answer in student_document %}
+{% for _, rendered_text in student_document %}
 <h4>{{ forloop.counter }}. naloga</h4>
-<p>{{ question }}</p>
-<small>{{ answer }}</small>
+<p>{{ rendered_text.question }}</p>
+<small>{{ rendered_text.answer }}</small>
 {% endfor %}
 
 {% endfor %}

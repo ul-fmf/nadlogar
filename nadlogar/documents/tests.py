@@ -24,7 +24,7 @@ class DocumentTest(TestCase):
                     document=document,
                 )
             self.assertEqual(stevilo_nalog, document.problems.count())
-            nadloge = document.generate_everything()
+            nadloge = document.generate_data_and_text()
             self.assertEqual(self.stevilo_studentov, len(nadloge))
             for nadloge_studenta in nadloge.values():
                 self.assertEqual(stevilo_nalog, len(nadloge_studenta))

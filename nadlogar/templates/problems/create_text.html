@@ -8,7 +8,7 @@ Izberi besedilo
 
 {% block form_fields %}
 <div class="control">
-    {% for value, key in form.fields.text.choices %}
+    {% for value, rendered_text in form.fields.text.choices %}
     <label class="radio">
         {% if form.initial.text == value %}
         <input type="radio" name="{{ form.text.html_name }}" value="{{ value }}" checked>
@@ -16,7 +16,7 @@ Izberi besedilo
         <input type="radio" name="{{ form.text.html_name }}" value="{{ value }}">
         {% endif %}
         <div style="display: inline-block; vertical-align: top;">
-            {% include "problems/_question_and_answer.html" with question=key.0 answer=key.1 %}
+            {% include "problems/_rendered_text.html" %}
         </div>
     </label>
     {% endfor %}
