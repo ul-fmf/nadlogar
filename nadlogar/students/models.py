@@ -3,7 +3,7 @@ from django.db import models
 
 
 class StudentGroup(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField("ime", max_length=255)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.PROTECT,
@@ -17,8 +17,10 @@ class StudentGroup(models.Model):
 
 
 class Student(models.Model):
-    name = models.CharField(max_length=255)
-    group = models.ForeignKey("students.StudentGroup", on_delete=models.CASCADE)
+    name = models.CharField("ime", max_length=255)
+    group = models.ForeignKey(
+        "students.StudentGroup", verbose_name="skupina", on_delete=models.CASCADE
+    )
 
     class Meta:
         default_related_name = "students"

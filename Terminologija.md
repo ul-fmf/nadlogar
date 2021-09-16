@@ -1,3 +1,5 @@
+# Terminologija
+
 ## Generator
 
 Program, ki v odvisnosti od parametrov sestavi podatke problema, npr. `poisci_nicle_polinoma(stopnja_polinoma, max_koeficient)`

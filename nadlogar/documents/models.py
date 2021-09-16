@@ -2,10 +2,12 @@ from django.db import models
 
 
 class Document(models.Model):
-    name = models.CharField(max_length=255)
-    date = models.DateField()
-    description = models.TextField(blank=True)
-    student_group = models.ForeignKey("students.StudentGroup", on_delete=models.CASCADE)
+    name = models.CharField("ime", max_length=255)
+    date = models.DateField("datum")
+    description = models.TextField("opis", blank=True)
+    student_group = models.ForeignKey(
+        "students.StudentGroup", verbose_name="skupina", on_delete=models.CASCADE
+    )
 
     class Meta:
         ordering = ["date", "name"]
