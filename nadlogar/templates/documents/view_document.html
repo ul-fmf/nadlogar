@@ -48,16 +48,9 @@
     </h3>
     <div class="field has-addons">
         <p class="control">
-            <a class="button is-small" href="{% url 'problems:edit_parameters' problem.id %}">
+            <a class="button is-small" href="{% url 'problems:edit_problem' problem.id %}">
                 <span class="icon is-small">
-                    <i class="fas fa-sliders-h"></i>
-                </span>
-            </a>
-        </p>
-        <p class="control">
-            <a class="button is-small" href="{% url 'problems:edit_text' problem.id %}">
-                <span class="icon is-small">
-                    <i class="fas fa-comments"></i>
+                    <i class="fas fa-edit"></i>
                 </span>
             </a>
         </p>
@@ -75,14 +68,10 @@
     {% include "problems/_rendered_text.html" %}
     {% endfor %}
 </div>
-<form action="{% url 'problems:create_problem' %}">
-    <input type="hidden" name="document" value="{{ document.id }}">
-    {% csrf_token %}
-    <button class="button is-outlined">
-        <span class="icon is-small">
-            <i class="fas fa-plus"></i>
-        </span>
-        <span>Nova naloga</span>
-    </button>
-</form>
+<a class="button is-outlined" href="{% url 'problems:choose_problem' document.id %}">
+    <span class="icon is-small">
+        <i class="fas fa-plus"></i>
+    </span>
+    <span>Nova naloga</span>
+</a>
 {% endblock contents %}

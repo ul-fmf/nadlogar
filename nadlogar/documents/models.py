@@ -72,6 +72,7 @@ class Document(models.Model):
         students = self.student_group.students.all()
         student_problem_texts = {student: [] for student in students}
         for index, problem in enumerate(self.problems.all(), 1):
+            problem = problem.downcast()
             for student in students:
                 _data, rendered_text = problem.generate_data_and_text(student)
                 rendered_text["index"] = index
@@ -80,6 +81,7 @@ class Document(models.Model):
 
     def problem_examples(self):
         for problem in self.problems.all():
+            problem = problem.downcast()
             data, rendered_text = problem.generate_data_and_text()
             yield (problem, data, rendered_text)
 

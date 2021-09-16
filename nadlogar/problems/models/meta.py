@@ -6,9 +6,13 @@ from django.core.exceptions import ValidationError
 from django.db import models
 
 
-def limit_content_type_choices():
+def problem_content_types():
     problem_subclasses = Problem.__subclasses__()
-    content_types = ContentType.objects.get_for_models(*problem_subclasses).values()
+    return ContentType.objects.get_for_models(*problem_subclasses)
+
+
+def limit_content_type_choices():
+    content_types = problem_content_types().values()
     return {"id__in": {content_type.id for content_type in content_types}}
 
 
@@ -75,10 +79,9 @@ class Problem(models.Model):
 
     def generate_data(self, seed):
         random.seed(seed)
-        generator = self.downcast()
         while True:
             try:
-                return generator.generate()
+                return self.generate()
             except GeneratedDataIncorrect:
                 pass
 

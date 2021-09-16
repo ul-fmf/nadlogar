@@ -1,0 +1,31 @@
+{% extends 'form.html' %}
+
+{% block title %}
+Izberi tip problema
+{% endblock title %}
+
+{% block action %}
+{% url 'problems:create_problem' %}
+{% endblock action %}
+
+{% block form_fields %}
+<div class="field">
+    <label class="label" for="{{ field.id_for_label }}">Tip problema</label>
+    <div class="control">
+        {% for content_type_id, description in content_types %}
+        <label class="radio">
+            <input type="radio" name="content_type" value="{{ content_type_id }}">
+            <div style="display: inline-block; vertical-align: top;">
+                {{ description }}
+            </div>
+        </label>
+        {% endfor %}
+    </div>
+</div>
+<input type="hidden" name="document" value="{{ document_id }}">
+{% csrf_token %}
+{% endblock form_fields %}
+
+{% block submit %}
+Izberi
+{% endblock submit %}

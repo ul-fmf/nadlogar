@@ -3,7 +3,7 @@
 
 {% block body %}
 <div class="modal is-active">
-    <form method="{% block method %}GET{% endblock method %}">
+    <form method="{% block method %}GET{% endblock method %}" action="{% block action %}{% endblock action %}">
         <div class="modal-background"></div>
         <div class="modal-card">
             <header class="modal-card-head">
@@ -19,6 +19,7 @@
                 {% block form_fields %}
 
                 {% for field in form.visible_fields %}
+                {% if not field.field.custom_display %}
                 <div class="field">
                     {% if field.widget_type != "checkbox" %}
                     <label class="label" for="{{ field.id_for_label }}">{{ field.label }}</label>
@@ -53,6 +54,7 @@
                     <p class="help">{{ field.help_text }}</p>
                     {% endif %}
                 </div>
+                {% endif %}
                 {% endfor %}
 
                 {% endblock form_fields %}

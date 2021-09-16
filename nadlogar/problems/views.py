@@ -1,9 +1,10 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404, redirect, render
 
-from .forms import ProblemForm, problem_parameters_form, problem_text_form
-from .models import Problem
+from .forms import problem_form
+from .models import Problem, problem_content_types
 
 
 def _get_problem_if_allowed(request, problem_id):
@@ -17,67 +18,44 @@ def _get_problem_if_allowed(request, problem_id):
 
 
 @login_required
+def choose_problem(request, document_id):
+    content_types = [
+        (content_type.id, generator._meta.verbose_name)
+        for generator, content_type in problem_content_types().items()
+    ]
+    return render(
+        request,
+        "problems/choose_problem.html",
+        {"document_id": document_id, "content_types": content_types},
+    )
+
+
+@login_required
 def create_problem(request):
-    problem_form = ProblemForm(request.POST or request.GET or None)
-    if problem_form.is_valid():
-        content_type = problem_form.cleaned_data["content_type"]
-        return create_parameters(request, content_type)
-    return render(
-        request,
-        "problems/create_generator.html",
-        {"form": problem_form},
+    content_type_id = request.GET.get("content_type") or request.POST.get(
+        "content_type"
     )
-
-
-@login_required
-def create_parameters(request, content_type):
-    parameters_form = problem_parameters_form(
-        content_type, request.POST or request.GET or None
-    )
-    if parameters_form.is_valid():
-        return create_text(request, parameters_form.instance)
-    return render(
-        request,
-        "problems/create_parameters.html",
-        {"form": parameters_form},
-    )
-
-
-@login_required
-def create_text(request, problem):
-    text_form = problem_text_form(
-        problem, request.POST or request.GET or None, initial={"text": None}
-    )
-    if request.method == "POST" and text_form.is_valid():
-        problem = text_form.save()
+    content_type = get_object_or_404(ContentType, id=content_type_id)
+    form = problem_form(content_type, request.POST or request.GET or None)
+    if form.is_valid():
+        problem: Problem = form.save()
+        print(problem)
         return redirect("documents:view_document", document_id=problem.document.id)
     return render(
         request,
-        "problems/create_text.html",
-        {"form": text_form},
+        "problems/create_problem.html",
+        {"form": form},
     )
 
 
 @login_required
-def edit_parameters(request, problem_id: int):
+def edit_problem(request, problem_id: int):
     problem = _get_problem_if_allowed(request, problem_id).downcast()
-    form = problem_parameters_form(
-        problem.content_type, request.POST or None, instance=problem
-    )
+    form = problem_form(problem.content_type, request.POST or None, instance=problem)
     if request.method == "POST" and form.is_valid():
         problem: Problem = form.save()
         return redirect("documents:view_document", document_id=problem.document.id)
-    return render(request, "problems/edit_parameters.html", {"form": form})
-
-
-@login_required
-def edit_text(request, problem_id: int):
-    problem = _get_problem_if_allowed(request, problem_id).downcast()
-    form = problem_text_form(problem, request.POST or None, instance=problem)
-    if request.method == "POST" and form.is_valid():
-        problem: Problem = form.save()
-        return redirect("documents:view_document", document_id=problem.document.id)
-    return render(request, "problems/edit_text.html", {"form": form})
+    return render(request, "problems/edit_problem.html", {"form": form})
 
 
 @login_required
