@@ -14,10 +14,10 @@ Vzorec, v katerega vstavimo podatke problema, npr. `"Poiščite vse ničle polin
 
 Generator (npr. `poisci_nicle_polinoma`) skupaj s konkretnimi parametri, npr. `stopnja_polinoma = 3`, `max_koeficent = 9`, ter besedilom.
 
-## Kviz
+## Dokument
 
-Seznam problemov in morebitni dodatni parametri (datum, seznam učencev, predloga kviza, …)
+Seznam problemov in morebitni dodatni parametri (datum, seznam učencev, predloga dokumenta, …)
 
 ## Nadloga
 
-Nekaj, kar zgeneriramo iz kviza, torej konkretni problemi za konkretne učence.
+Nekaj, kar zgeneriramo iz dokumenta, torej konkretni problemi za konkretne učence.

@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name="Quiz",
+            name="Document",
             fields=[
                 (
                     "id",
@@ -37,7 +37,7 @@ class Migration(migrations.Migration):
                 ),
             ],
             options={
-                "verbose_name_plural": "quizzes",
+                "verbose_name_plural": "documents",
                 "ordering": ["date", "name"],
             },
         ),

@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class Quiz(models.Model):
+class Document(models.Model):
     name = models.CharField(max_length=255)
     date = models.DateField()
     description = models.TextField(blank=True)
@@ -9,18 +9,18 @@ class Quiz(models.Model):
 
     class Meta:
         ordering = ["date", "name"]
-        verbose_name_plural = "quizzes"
+        verbose_name_plural = "documents"
 
     def __str__(self):
         return f"{self.name} ({self.date})"
 
     def generate_everything(self):
         students = self.student_group.students.all()
-        student_quizzes = {student: [] for student in students}
+        student_documents = {student: [] for student in students}
         for problem in self.problems.all():
             for student in students:
-                student_quizzes[student].append(problem.generate_everything(student))
-        return student_quizzes
+                student_documents[student].append(problem.generate_everything(student))
+        return student_documents
 
     def problem_examples(self):
         examples = []

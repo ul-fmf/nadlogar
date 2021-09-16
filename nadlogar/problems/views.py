@@ -8,9 +8,9 @@ from .models import Problem
 
 def _get_problem_if_allowed(request, problem_id):
     problem = get_object_or_404(
-        Problem.objects.select_related("quiz__student_group__user"), id=problem_id
+        Problem.objects.select_related("document__student_group__user"), id=problem_id
     )
-    if problem.quiz.student_group.user == request.user:
+    if problem.document.student_group.user == request.user:
         return problem
     else:
         raise PermissionDenied
@@ -50,7 +50,7 @@ def create_text(request, problem):
     )
     if request.method == "POST" and text_form.is_valid():
         problem = text_form.save()
-        return redirect("quizzes:view_quiz", quiz_id=problem.quiz.id)
+        return redirect("documents:view_document", document_id=problem.document.id)
     return render(
         request,
         "problems/create_text.html",
@@ -66,7 +66,7 @@ def edit_parameters(request, problem_id: int):
     )
     if request.method == "POST" and form.is_valid():
         problem: Problem = form.save()
-        return redirect("quizzes:view_quiz", quiz_id=problem.quiz.id)
+        return redirect("documents:view_document", document_id=problem.document.id)
     return render(request, "problems/edit_parameters.html", {"form": form})
 
 
@@ -76,7 +76,7 @@ def edit_text(request, problem_id: int):
     form = problem_text_form(problem, request.POST or None, instance=problem)
     if request.method == "POST" and form.is_valid():
         problem: Problem = form.save()
-        return redirect("quizzes:view_quiz", quiz_id=problem.quiz.id)
+        return redirect("documents:view_document", document_id=problem.document.id)
     return render(request, "problems/edit_text.html", {"form": form})
 
 
@@ -84,4 +84,4 @@ def edit_text(request, problem_id: int):
 def delete_problem(request, problem_id: int):
     problem = _get_problem_if_allowed(request, problem_id)
     problem.delete()
-    return redirect("quizzes:view_quiz", quiz_id=problem.quiz.id)
+    return redirect("documents:view_document", document_id=problem.document.id)

@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ("quizzes", "0001_initial"),
+        ("documents", "0001_initial"),
         ("contenttypes", "0002_remove_content_type_name"),
     ]
 
@@ -37,11 +37,11 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 (
-                    "quiz",
+                    "document",
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
                         related_name="problems",
-                        to="quizzes.Quiz",
+                        to="documents.Document",
                     ),
                 ),
             ],

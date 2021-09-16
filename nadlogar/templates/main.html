@@ -43,23 +43,23 @@
         <div class="column is-one-quarter">
             <nav class="panel">
                 <p class="panel-heading">
-                    Kvizi
+                    Dokumenti
                 </p>
-                {% for my_quiz in my_quizzes %}
-                <a class="panel-block {% if my_quiz == quiz %}is-active{% endif %}"
-                    href="{% url 'quizzes:view_quiz' my_quiz.id %}">
+                {% for my_document in my_documents %}
+                <a class="panel-block {% if my_document == document %}is-active{% endif %}"
+                    href="{% url 'documents:view_document' my_document.id %}">
                     <span class=" panel-icon">
                         <i class="fas fa-book" aria-hidden="true"></i>
                     </span>
-                    {{ my_quiz.name }}
+                    {{ my_document.name }}
                 </a>
                 {% endfor %}
                 <div class="panel-block">
-                    <a class="button is-link is-outlined is-fullwidth is-small" href="{% url 'quizzes:create_quiz' %}">
+                    <a class="button is-link is-outlined is-fullwidth is-small" href="{% url 'documents:create_document' %}">
                         <span class="icon is-small">
                             <i class="fas fa-plus"></i>
                         </span>
-                        <span>Dodaj kviz</span>
+                        <span>Dodaj dokument</span>
                     </a>
                 </div>
             </nav>

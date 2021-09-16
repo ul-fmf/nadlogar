@@ -1,14 +1,14 @@
 from django import forms
 from django.contrib.contenttypes.models import ContentType
 from django.forms.models import ModelChoiceIterator
-from quizzes.models import Quiz
+from documents.models import Document
 
 from .models import ProblemText, limit_content_type_choices
 
 
 class ProblemForm(forms.Form):
-    quiz = forms.ModelChoiceField(
-        queryset=Quiz.objects.all(), widget=forms.HiddenInput()
+    document = forms.ModelChoiceField(
+        queryset=Document.objects.all(), widget=forms.HiddenInput()
     )
     content_type = forms.ModelChoiceField(queryset=ContentType.objects.all())
 
@@ -27,7 +27,7 @@ def problem_parameters_form(content_type, *args, **kwargs):
 
         def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)
-            self.fields["quiz"].widget = forms.HiddenInput()
+            self.fields["document"].widget = forms.HiddenInput()
             self.fields["content_type"].widget = forms.HiddenInput()
 
     return ProblemParametersForm(*args, **kwargs)

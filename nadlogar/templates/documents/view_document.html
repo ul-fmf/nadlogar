@@ -2,19 +2,19 @@
 
 {% block contents %}
 <div class="content">
-    <h1 class="title">{{ quiz.name }}</h1>
+    <h1 class="title">{{ document.name }}</h1>
     <h2 class="subtitle">
-        {{ quiz.date }},
-        <a href="{% url 'students:view_group' quiz.student_group.id %}">{{ quiz.student_group }}</a>
+        {{ document.date }},
+        <a href="{% url 'students:view_group' document.student_group.id %}">{{ document.student_group }}</a>
     </h2>
 
-    {% if quiz.description %}
-    <p>{{ quiz.description }}</p>
+    {% if document.description %}
+    <p>{{ document.description }}</p>
     {% endif %}
 
     <div class="field has-addons">
         <p class="control">
-            <a class="button is-primary" href="{% url 'quizzes:generate' quiz.id %}">
+            <a class="button is-primary" href="{% url 'documents:generate' document.id %}">
                 <span class="icon is-small">
                     <i class="fas fa-download"></i>
                 </span>
@@ -22,7 +22,7 @@
             </a>
         </p>
         <p class="control">
-            <a class="button" href="{% url 'quizzes:edit_quiz' quiz.id %}">
+            <a class="button" href="{% url 'documents:edit_document' document.id %}">
                 <span class="icon is-small">
                     <i class="fas fa-edit"></i>
                 </span>
@@ -30,7 +30,7 @@
             </a>
         </p>
         <p class="control">
-        <form method="POST" action="{% url 'quizzes:delete_quiz' quiz.id %}">
+        <form method="POST" action="{% url 'documents:delete_document' document.id %}">
             {% csrf_token %}
             <button class="button is-danger is-outlined">
                 <span class="icon is-small">
@@ -42,7 +42,7 @@
         </p>
     </div>
 
-    {% for problem, data, question, answer in quiz.problem_examples %}
+    {% for problem, data, question, answer in document.problem_examples %}
     <h3>
         {{ forloop.counter }}. naloga
     </h3>
@@ -76,7 +76,7 @@
     {% endfor %}
 </div>
 <form action="{% url 'problems:create_problem' %}">
-    <input type="hidden" name="quiz" value="{{ quiz.id }}">
+    <input type="hidden" name="document" value="{{ document.id }}">
     {% csrf_token %}
     <button class="button is-outlined">
         <span class="icon is-small">

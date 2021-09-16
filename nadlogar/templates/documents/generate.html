@@ -1,15 +1,15 @@
 {% extends 'main.html' %}
 
 {% block contents %}
-<h2>{{ quiz.naslov }}</h2>
+<h2>{{ document.naslov }}</h2>
 
-<p>{{ quiz.opis }}</p>
+<p>{{ document.opis }}</p>
 
-{% for student, student_quiz in generated_problems.items %}
+{% for student, student_document in generated_problems.items %}
 
 <h3>{{ student.name }}</h3>
 
-{% for _, question, answer in student_quiz %}
+{% for _, question, answer in student_document %}
 <h4>{{ forloop.counter }}. naloga</h4>
 <p>{{ question }}</p>
 <small>{{ answer }}</small>

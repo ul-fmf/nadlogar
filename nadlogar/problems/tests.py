@@ -5,13 +5,13 @@ from model_bakery import baker
 class ProblemTest(TestCase):
     def setUp(self):
         self.stevilo_preizkusov = 100
-        self.quiz = baker.make("Quiz")
+        self.document = baker.make("Document")
 
     def test_krajsanje_ulomkov(self):
         """Generator za krajšanje ulomkov vrne ustrezen slovar"""
-        # Don't forget to add quiz=self.quiz, otherwise model_bakery
-        # will create a new quiz (and student group) for each problem.
-        problem = baker.make("KrajsanjeUlomkov", quiz=self.quiz)
+        # Don't forget to add document=self.document, otherwise model_bakery
+        # will create a new document (and student group) for each problem.
+        problem = baker.make("KrajsanjeUlomkov", document=self.document)
         for seed in range(self.stevilo_preizkusov):
             primer = problem.generate_data(seed)
             a = primer.pop("okrajsan_stevec")
@@ -23,9 +23,9 @@ class ProblemTest(TestCase):
 
     def test_iskanje_nicel_polinoma(self):
         """Generator za iskanje ničel polinoma vrne ustrezen slovar"""
-        # Don't forget to add quiz=self.quiz, otherwise model_bakery
-        # will create a new quiz (and student group) for each problem.
-        problem = baker.make("IskanjeNicelPolinoma", quiz=self.quiz)
+        # Don't forget to add document=self.document, otherwise model_bakery
+        # will create a new document (and student group) for each problem.
+        problem = baker.make("IskanjeNicelPolinoma", document=self.document)
         for seed in range(self.stevilo_preizkusov):
             primer = problem.generate_data(seed)
             nicle = primer.pop("nicle")

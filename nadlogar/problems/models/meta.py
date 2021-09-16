@@ -35,7 +35,7 @@ class GeneratedDataIncorrect(Exception):
 
 
 class Problem(models.Model):
-    quiz = models.ForeignKey("quizzes.Quiz", on_delete=models.CASCADE)
+    document = models.ForeignKey("documents.Document", on_delete=models.CASCADE)
     content_type = models.ForeignKey(
         ContentType,
         on_delete=models.PROTECT,
@@ -47,7 +47,7 @@ class Problem(models.Model):
         default_related_name = "problems"
 
     def __str__(self):
-        return f"{self.quiz}: {self.content_type.name}"
+        return f"{self.document}: {self.content_type.name}"
 
     def clean(self):
         if issubclass(Problem, type(self)):
