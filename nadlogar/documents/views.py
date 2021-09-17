@@ -18,14 +18,17 @@ def _get_document_if_allowed(request, document_id):
 
 @login_required
 def create_document(request):
-    form = DocumentForm(request.user, request.POST or request.GET or None)
-    if form.is_valid():
-        document: Document = form.save(commit=False)
-        if document.student_group.user == request.user:
-            document.save()
-            return redirect("documents:view_document", document_id=document.id)
-        else:
-            raise PermissionDenied
+    if request.method == "POST":
+        form = DocumentForm(request.user, request.POST or None)
+        if form.is_valid():
+            document: Document = form.save(commit=False)
+            if document.student_group.user == request.user:
+                document.save()
+                return redirect("documents:view_document", document_id=document.id)
+            else:
+                raise PermissionDenied
+    else:
+        form = DocumentForm(request.user, initial=request.GET.dict())
     return render(request, "documents/create_document.html", {"form": form})
 
 

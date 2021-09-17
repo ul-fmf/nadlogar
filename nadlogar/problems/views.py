@@ -36,11 +36,13 @@ def create_problem(request):
         "content_type"
     )
     content_type = get_object_or_404(ContentType, id=content_type_id)
-    form = problem_form(content_type, request.POST or request.GET or None)
-    if form.is_valid():
-        problem: Problem = form.save()
-        print(problem)
-        return redirect("documents:view_document", document_id=problem.document.id)
+    if request.method == "POST":
+        form = problem_form(content_type, request.POST or None)
+        if form.is_valid():
+            problem: Problem = form.save()
+            return redirect("documents:view_document", document_id=problem.document.id)
+    else:
+        form = problem_form(content_type, initial=request.GET.dict())
     return render(
         request,
         "problems/create_problem.html",
