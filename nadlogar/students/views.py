@@ -50,7 +50,7 @@ def delete_group(request, group_id: int):
 
 def _get_student_if_allowed(request, student_id):
     student = get_object_or_404(
-        Student.objects.select_related("student_group__user"), id=student_id
+        Student.objects.select_related("group__user"), id=student_id
     )
     if student.group.user == request.user:
         return student
@@ -60,17 +60,24 @@ def _get_student_if_allowed(request, student_id):
 
 @login_required
 def create_student(request):
-    form = StudentForm(request.POST or None)
-    if form.is_valid():
-        student: Student = form.save()
-        return redirect("students:view_group", group_id=student.group.id)
+    if request.method == "POST":
+        form = StudentForm(request.user, request.POST or None)
+        if form.is_valid():
+            student: Student = form.save()
+            if student.group.user == request.user:
+                student.save()
+                return redirect("students:view_group", group_id=student.group.id)
+            else:
+                raise PermissionDenied
+    else:
+        form = StudentForm(request.user, initial=request.GET.dict())
     return render(request, "students/create_student.html", {"form": form})
 
 
 @login_required
 def edit_student(request, student_id: int):
     student = _get_student_if_allowed(request, student_id)
-    form = StudentForm(request.POST or None, instance=student)
+    form = StudentForm(request.user, request.POST or None, instance=student)
     if form.is_valid():
         student: Student = form.save()
         return redirect("students:view_group", group_id=student.group.id)
