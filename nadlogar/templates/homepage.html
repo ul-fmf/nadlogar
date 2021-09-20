@@ -59,5 +59,46 @@
             {% endfor %}
         </tbody>
     </table>
+    <h2>Moje skupine</h2>
+    <table class="table is-fullwidth">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Ime</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for group in groups %}
+            <tr>
+                <th>{{ forloop.counter }}</th>
+                <td><a href="{{ group.get_absolute_url }}">{{ group.name }}</a></td>
+                <td>
+                    <div class="field has-addons">
+                        <p class="control">
+                            <a class="button is-small"
+                                href="{% url 'students:edit_group' group.id %}">
+                                <span class="icon is-small">
+                                    <i class="fas fa-edit"></i>
+                                </span>
+                            </a>
+                        </p>
+                        <p class="control">
+                        <form method="POST"
+                            action="{% url 'students:delete_group' group.id %}">
+                            {% csrf_token %}
+                            <button class="button is-small is-danger is-outlined">
+                                <span class="icon is-small">
+                                    <i class="fas fa-trash"></i>
+                                </span>
+                            </button>
+                        </form>
+                        </p>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 {% endblock contents %}

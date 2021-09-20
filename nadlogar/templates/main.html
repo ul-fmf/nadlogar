@@ -42,43 +42,10 @@
     <nav class="breadcrumb is-large" aria-label="breadcrumbs">
         <ul>
             {% block breadcrumbs %}
-            <li><a href="#">Bulma</a></li>
-            <li><a href="#">Documentation</a></li>
-            <li><a href="#">Components</a></li>
-            <li class="is-active"><a href="#" aria-current="page">Breadcrumb</a></li>
             {% endblock breadcrumbs %}
         </ul>
     </nav>
-    <div class="columns">
-        <div class="column">
-            {% block contents %}
-            {% endblock contents %}
-        </div>
-        <div class="column is-one-quarter">
-            <nav class="panel">
-                <p class="panel-heading">
-                    Skupine
-                </p>
-                {% for my_group in my_groups %}
-                <a class="panel-block {% if my_group == group %}is-active{% endif %}"
-                    href="{{ my_group.get_absolute_url }}">
-                    <span class=" panel-icon">
-                        <i class="fas fa-users" aria-hidden="true"></i>
-                    </span>
-                    {{ my_group.name }}
-                </a>
-                {% endfor %}
-                <div class="panel-block">
-                    <a class="button is-link is-outlined is-fullwidth is-small"
-                        href="{% url 'students:create_group' %}">
-                        <span class="icon is-small">
-                            <i class="fas fa-plus"></i>
-                        </span>
-                        <span>Nova skupina</span>
-                    </a>
-                </div>
-            </nav>
-        </div>
-    </div>
+    {% block contents %}
+    {% endblock contents %}
 </section>
 {% endblock body %}
