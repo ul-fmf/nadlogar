@@ -33,7 +33,7 @@ def create_group(request):
         group: StudentGroup = form.save(commit=False)
         group.user = request.user
         group.save()
-        return redirect("students:view_group", group_id=group.id)
+        return redirect(group.get_absolute_url())
     return render(request, "students/create_group.html", {"form": form})
 
 
@@ -49,7 +49,7 @@ def edit_group(request, group_id: int):
     form = StudentGroupForm(request.POST or None, instance=group)
     if form.is_valid():
         group: StudentGroup = form.save()
-        return redirect("students:view_group", group_id=group.id)
+        return redirect(group.get_absolute_url())
     return render(request, "students/edit_group.html", {"group": group, "form": form})
 
 
@@ -68,7 +68,7 @@ def create_student(request, group_id: int):
         student: Student = form.save(commit=False)
         student.group = group
         student.save()
-        return redirect("students:view_group", group_id=student.group.id)
+        return redirect(student.group.get_absolute_url())
     return render(
         request, "students/create_student.html", {"group": group, "form": form}
     )
@@ -80,7 +80,7 @@ def edit_student(request, group_id: int, student_id: int):
     form = StudentForm(request.POST or None, instance=student)
     if form.is_valid():
         student: Student = form.save()
-        return redirect("students:view_group", group_id=student.group.id)
+        return redirect(student.group.get_absolute_url())
     return render(request, "students/edit_student.html", {"group": group, "form": form})
 
 
@@ -88,4 +88,4 @@ def edit_student(request, group_id: int, student_id: int):
 def delete_student(request, group_id: int, student_id: int):
     student = _get_student_if_allowed(request, group_id, student_id)
     student.delete()
-    return redirect("students:view_group", group_id=student.group.id)
+    return redirect(student.group.get_absolute_url())

@@ -2,8 +2,8 @@
 
 {% block breadcrumbs %}
 <li><a href="{% url 'homepage' %}">Domov</a></li>
-<li><a href="{% url 'students:view_group' document.student_group.id %}">{{ document.student_group.name }}</a></li>
-<li><a href="{% url 'students:documents:view_document' document.student_group.id document.id %}">{{ document.name }}</a></li>
+<li><a href="{{ document.student_group.get_absolute_url }}">{{ document.student_group.name }}</a></li>
+<li><a href="{{ document.get_absolute_url }}">{{ document.name }}</a></li>
 <li class="is-active"><a href="#" aria-current="page">Predogled</a></li>
 {% endblock breadcrumbs %}
 

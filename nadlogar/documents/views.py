@@ -27,11 +27,8 @@ def create_document(request, group_id):
         document: Document = form.save(commit=False)
         document.student_group = group
         document.save()
-        return redirect(
-            "students:documents:view_document",
-            group_id=document.student_group.id,
-            document_id=document.id,
-        )
+        return redirect(document.get_absolute_url())
+
     return render(
         request,
         "documents/create_document.html",
@@ -55,11 +52,7 @@ def edit_document(request, group_id: int, document_id: int):
     form = DocumentForm(request.POST or None, instance=document)
     if form.is_valid():
         document: Document = form.save()
-        return redirect(
-            "students:documents:view_document",
-            group_id=document.student_group.id,
-            document_id=document.id,
-        )
+        return redirect(document.get_absolute_url())
     return render(
         request, "documents/edit_document.html", {"document": document, "form": form}
     )

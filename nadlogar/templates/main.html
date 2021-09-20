@@ -61,7 +61,7 @@
                 </p>
                 {% for my_group in my_groups %}
                 <a class="panel-block {% if my_group == group %}is-active{% endif %}"
-                    href="{% url 'students:view_group' my_group.id %}">
+                    href="{{ my_group.get_absolute_url }}">
                     <span class=" panel-icon">
                         <i class="fas fa-users" aria-hidden="true"></i>
                     </span>

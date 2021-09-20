@@ -15,6 +15,11 @@ class StudentGroup(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        from django.urls import reverse
+
+        return reverse("students:view_group", kwargs={"group_id": self.id})
+
 
 class Student(models.Model):
     name = models.CharField("ime", max_length=255)

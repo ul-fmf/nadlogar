@@ -2,7 +2,7 @@
 
 {% block breadcrumbs %}
 <li><a href="{% url 'homepage' %}">Domov</a></li>
-<li><a href="{% url 'students:view_group' document.student_group.id %}">{{ document.student_group.name }}</a></li>
+<li><a href="{{ group.get_absolute_url }}">{{ group.name }}</a></li>
 <li class="is-active"><a href="#" aria-current="page">Nov učenec</a></li>
 {% endblock breadcrumbs %}
 

@@ -44,11 +44,7 @@ def create_problem(request, group_id: int, document_id: int, content_type_id: in
         problem: Problem = form.save(commit=False)
         problem.document = document
         problem.save()
-        return redirect(
-            "students:documents:view_document",
-            group_id=problem.document.student_group.id,
-            document_id=problem.document.id,
-        )
+        return redirect(problem.document.get_absolute_url())
     return render(
         request,
         "problems/create_problem.html",
@@ -64,11 +60,7 @@ def edit_problem(request, group_id: int, document_id: int, problem_id: int):
     form = problem_form(problem.content_type, request.POST or None, instance=problem)
     if form.is_valid():
         problem: Problem = form.save()
-        return redirect(
-            "students:documents:view_document",
-            group_id=problem.document.student_group.id,
-            document_id=problem.document.id,
-        )
+        return redirect(problem.document.get_absolute_url())
     return render(
         request, "problems/edit_problem.html", {"problem": problem, "form": form}
     )
@@ -78,8 +70,4 @@ def edit_problem(request, group_id: int, document_id: int, problem_id: int):
 def delete_problem(request, group_id: int, document_id: int, problem_id: int):
     problem = _get_problem_if_allowed(request, group_id, document_id, problem_id)
     problem.delete()
-    return redirect(
-        "students:documents:view_document",
-        group_id=problem.document.student_group.id,
-        document_id=problem.document.id,
-    )
+    return redirect(problem.document.get_absolute_url())

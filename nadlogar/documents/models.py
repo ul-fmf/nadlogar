@@ -68,6 +68,14 @@ class Document(models.Model):
     def __str__(self):
         return f"{self.name} ({self.date})"
 
+    def get_absolute_url(self):
+        from django.urls import reverse
+
+        return reverse(
+            "students:documents:view_document",
+            kwargs={"group_id": self.student_group.id, "document_id": self.id},
+        )
+
     def generate_student_problem_texts(self):
         students = self.student_group.students.all()
         student_problem_texts = {student: [] for student in students}

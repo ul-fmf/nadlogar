@@ -43,7 +43,7 @@
             {% for document in group.document_set.all %}
             <tr>
                 <th>{{ forloop.counter }}</th>
-                <td><a href="{% url 'students:documents:view_document' group.id document.id %}">{{ document.name }}</a>
+                <td><a href="{{ document.get_absolute_url }}">{{ document.name }}</a>
                 </td>
                 <td>{{ document.date }}</td>
                 <td>

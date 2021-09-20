@@ -21,7 +21,7 @@
             {% for document in documents %}
             <tr>
                 <th>{{ forloop.counter }}</th>
-                <td><a href="{% url 'students:documents:view_document' document.student_group.id document.id %}">{{ document.name }}</a></td>
+                <td><a href="{{ document.get_absolute_url }}">{{ document.name }}</a></td>
                 <td>{{ document.date }}</td>
                 <td>{{ document.student_group }}</td>
                 <td>
