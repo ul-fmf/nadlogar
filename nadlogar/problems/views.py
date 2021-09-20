@@ -69,5 +69,7 @@ def edit_problem(request, group_id: int, document_id: int, problem_id: int):
 @login_required
 def delete_problem(request, group_id: int, document_id: int, problem_id: int):
     problem = _get_problem_if_allowed(request, group_id, document_id, problem_id)
-    problem.delete()
-    return redirect(problem.document.get_absolute_url())
+    if request.method == "POST":
+        problem.delete()
+        return redirect(problem.document.get_absolute_url())
+    return render(request, "problems/delete_problem.html", {"problem": problem})

@@ -56,8 +56,10 @@ def edit_group(request, group_id: int):
 @login_required
 def delete_group(request, group_id: int):
     group = get_group_if_allowed(request, group_id)
-    group.delete()
-    return redirect("homepage")
+    if request.method == "POST":
+        group.delete()
+        return redirect("homepage")
+    return render(request, "students/delete_group.html", {"group": group})
 
 
 @login_required
@@ -87,5 +89,7 @@ def edit_student(request, group_id: int, student_id: int):
 @login_required
 def delete_student(request, group_id: int, student_id: int):
     student = _get_student_if_allowed(request, group_id, student_id)
-    student.delete()
-    return redirect(student.group.get_absolute_url())
+    if request.method == "POST":
+        student.delete()
+        return redirect(student.group.get_absolute_url())
+    return render(request, "students/delete_student.html", {"student": student})

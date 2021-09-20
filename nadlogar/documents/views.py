@@ -61,8 +61,10 @@ def edit_document(request, group_id: int, document_id: int):
 @login_required
 def delete_document(request, group_id: int, document_id: int):
     document = _get_document_if_allowed(request, group_id, document_id)
-    document.delete()
-    return redirect("homepage")
+    if request.method == "POST":
+        document.delete()
+        return redirect(document.group.get_absolute_url())
+    return render(request, "documents/delete_document.html", {"document": document})
 
 
 @login_required
