@@ -1,7 +1,7 @@
 {% extends 'form.html' %}
 
 {% block breadcrumbs %}
-<li><a href="{% url 'homepage' %}">Domov</a></li>
+<li><a href="{% url 'homepage' %}">Začetek</a></li>
 <li><a href="{{ student_group.get_absolute_url }}">{{ student_group.name }}</a></li>
 <li class="is-active"><a href="#" aria-current="page">Nov dokument</a></li>
 {% endblock breadcrumbs %}

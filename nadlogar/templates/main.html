@@ -39,13 +39,15 @@
     </div>
 </nav>
 <section class="section">
-    <nav class="breadcrumb is-large" aria-label="breadcrumbs">
-        <ul>
-            {% block breadcrumbs %}
-            {% endblock breadcrumbs %}
-        </ul>
-    </nav>
-    {% block contents %}
-    {% endblock contents %}
+    <div class="container">
+        <nav class="breadcrumb is-large" aria-label="breadcrumbs">
+            <ul>
+                {% block breadcrumbs %}
+                {% endblock breadcrumbs %}
+            </ul>
+        </nav>
+        {% block contents %}
+        {% endblock contents %}
+    </div>
 </section>
 {% endblock body %}
