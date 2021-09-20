@@ -1,4 +1,4 @@
-{% extends 'form.html' %}
+{% extends 'forms/edit.html' %}
 
 {% block breadcrumbs %}
 <li><a href="{% url 'homepage' %}">Začetek</a></li>
@@ -6,13 +6,3 @@
 <li><a href="{{ document.get_absolute_url }}">{{ document.name }}</a></li>
 <li class="is-active"><a href="#" aria-current="page">Urejanje</a></li>
 {% endblock breadcrumbs %}
-
-{% block method %}POST{% endblock method %}
-
-{% block title %}
-Urejanje dokumenta
-{% endblock title %}
-
-{% block submit %}
-Shrani
-{% endblock submit %}

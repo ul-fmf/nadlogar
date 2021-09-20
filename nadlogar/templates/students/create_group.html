@@ -1,12 +1,6 @@
-{% extends 'form.html' %}
+{% extends 'forms/create.html' %}
 
 {% block breadcrumbs %}
 <li><a href="{% url 'homepage' %}">Začetek</a></li>
 <li class="is-active"><a href="#" aria-current="page">Nova skupina</a></li>
 {% endblock breadcrumbs %}
-
-{% block method %}POST{% endblock method %}
-
-{% block title %}
-Dodajanje skupine
-{% endblock title %}

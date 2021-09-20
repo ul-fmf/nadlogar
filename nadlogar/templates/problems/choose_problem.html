@@ -1,4 +1,4 @@
-{% extends 'form.html' %}
+{% extends 'main.html' %}
 
 {% block breadcrumbs %}
 <li><a href="{% url 'homepage' %}">Začetek</a></li>
@@ -7,21 +7,14 @@
 <li class="is-active"><a href="#" aria-current="page">Nov problem</a></li>
 {% endblock breadcrumbs %}
 
-{% block title %}
-Izberi tip problema
-{% endblock title %}
-
-{% block action %}
-{% endblock action %}
-
-{% block form_fields %}
-{% for content_type_id, description in content_types %}
-<a href="{% url 'students:documents:problems:create_problem' document.student_group.id document.id content_type_id %}">
-    {{ description }}
-</a>
-{% endfor %}
-{% endblock form_fields %}
-
-{% block submit %}
-Izberi
-{% endblock submit %}
+{% block contents %}
+<ul>
+    {% for content_type_id, description in content_types %}
+    <li>
+        <a href="{% url 'students:documents:problems:create_problem' document.student_group.id document.id content_type_id %}">
+            {{ description }}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock contents %}

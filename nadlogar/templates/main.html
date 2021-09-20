@@ -1,53 +1,69 @@
-{% extends 'bulma.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html>
 
-{% block body %}
-<nav class="navbar is-dark" role="navigation" aria-label="main navigation">
-    <div class="navbar-brand">
-        <a class="navbar-item" href="{% url 'homepage' %}">
-            <strong>Nadlogar</strong>
-        </a>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Nadlogar{% endblock title %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="{% static "nadlogar.js" %}"></script>
+</head>
 
-        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbar">
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-        </a>
-    </div>
+<body>
+    <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="{% url 'homepage' %}">
+                <strong>Nadlogar</strong>
+            </a>
 
-    <div id="navbar" class="navbar-menu">
-        <div class="navbar-start">
-            <a class="navbar-item">
-                Pomoč
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbar">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
             </a>
         </div>
 
-        <div class="navbar-end">
-            <div class="navbar-item">
-                <div class="buttons">
-                    <a class="button" href="https://github.com/ul-fmf/nadlogar/">
-                        <span class="icon">
-                            <i class="fab fa-github"></i>
-                        </span>
-                        <span>GitHub</span>
-                    </a>
-                    <a class="button is-light" href="{% url 'logout' %}">
-                        Odjava
-                    </a>
+        <div id="navbar" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" href="https://github.com/ul-fmf/nadlogar/">
+                    <span class="icon">
+                        <i class="fab fa-github"></i>
+                    </span>
+                    <span>GitHub</span>
+                </a>
+            </div>
+
+            {% if request.user.is_authenticated %}
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <div class="buttons">
+                        <a class="button is-light" href="{% url 'logout' %}">
+                            Odjava
+                        </a>
+                    </div>
                 </div>
             </div>
+            {% endif %}
         </div>
-    </div>
-</nav>
-<section class="section">
-    <div class="container">
-        <nav class="breadcrumb is-large" aria-label="breadcrumbs">
-            <ul>
-                {% block breadcrumbs %}
-                {% endblock breadcrumbs %}
-            </ul>
-        </nav>
-        {% block contents %}
-        {% endblock contents %}
-    </div>
-</section>
-{% endblock body %}
+    </nav>
+    <section class="section">
+        <div class="container">
+            {% block container %}
+            <nav class="breadcrumb is-small has-succeeds-separator" aria-label="breadcrumbs">
+                <ul>
+                    {% block breadcrumbs %}
+                    {% endblock breadcrumbs %}
+                </ul>
+            </nav>
+            {% block contents %}
+            {% endblock contents %}
+            {% endblock container %}
+        </div>
+    </section>
+</body>
+
+</html>

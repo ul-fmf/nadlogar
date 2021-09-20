@@ -1,11 +1,10 @@
-{% extends "form.html" %}
+{% extends "main.html" %}
 
-{% block method %}POST{% endblock method %}
-
-{% block title %}
-Prijava
-{% endblock title %}
-
-{% block submit %}
-Prijavi se
-{% endblock submit %}
+{% block container %}
+<form method="POST">
+    {% include "_form.html" %}
+    <button class="button is-success is-fullwidth">
+        Prijavi se
+    </button>
+</form>
+{% endblock container %}
