@@ -1,5 +1,12 @@
 {% extends 'main.html' %}
 
+{% block breadcrumbs %}
+<li><a href="{% url 'homepage' %}">Domov</a></li>
+<li><a href="{% url 'students:view_group' document.student_group.id %}">{{ document.student_group.name }}</a></li>
+<li><a href="{% url 'students:documents:view_document' document.student_group.id document.id %}">{{ document.name }}</a></li>
+<li class="is-active"><a href="#" aria-current="page">Predogled</a></li>
+{% endblock breadcrumbs %}
+
 {% block contents %}
 <div class="content">
     <h2>{{ document.naslov }}</h2>

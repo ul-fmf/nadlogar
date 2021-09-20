@@ -1,5 +1,10 @@
 {% extends 'form.html' %}
 
+{% block breadcrumbs %}
+<li><a href="{% url 'homepage' %}">Domov</a></li>
+<li class="is-active"><a href="#" aria-current="page">Nova skupina</a></li>
+{% endblock breadcrumbs %}
+
 {% block method %}POST{% endblock method %}
 
 {% block title %}

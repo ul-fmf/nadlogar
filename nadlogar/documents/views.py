@@ -32,7 +32,11 @@ def create_document(request, group_id):
             group_id=document.student_group.id,
             document_id=document.id,
         )
-    return render(request, "documents/create_document.html", {"form": form})
+    return render(
+        request,
+        "documents/create_document.html",
+        {"form": form, "student_group": group},
+    )
 
 
 @login_required
@@ -56,7 +60,9 @@ def edit_document(request, group_id: int, document_id: int):
             group_id=document.student_group.id,
             document_id=document.id,
         )
-    return render(request, "documents/edit_document.html", {"form": form})
+    return render(
+        request, "documents/edit_document.html", {"document": document, "form": form}
+    )
 
 
 @login_required

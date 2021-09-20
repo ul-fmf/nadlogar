@@ -1,11 +1,12 @@
 {% extends 'main.html' %}
 
+{% block breadcrumbs %}
+<li><a href="{% url 'homepage' %}">Domov</a></li>
+<li class="is-active"><a href="#" aria-current="page">{{ group.name }}</a></li>
+{% endblock breadcrumbs %}
+
 {% block contents %}
 <div class="content">
-    <h1 class="title">
-        {{ group.name }}
-    </h1>
-
     <div class="field has-addons">
         <p class="control">
             <a class="button" href="{% url 'students:edit_group' group.id %}">

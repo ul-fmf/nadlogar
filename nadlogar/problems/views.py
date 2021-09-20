@@ -52,7 +52,7 @@ def create_problem(request, group_id: int, document_id: int, content_type_id: in
     return render(
         request,
         "problems/create_problem.html",
-        {"form": form},
+        {"document": document, "form": form},
     )
 
 
@@ -69,7 +69,9 @@ def edit_problem(request, group_id: int, document_id: int, problem_id: int):
             group_id=problem.document.student_group.id,
             document_id=problem.document.id,
         )
-    return render(request, "problems/edit_problem.html", {"form": form})
+    return render(
+        request, "problems/edit_problem.html", {"problem": problem, "form": form}
+    )
 
 
 @login_required

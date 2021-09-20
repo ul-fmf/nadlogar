@@ -1,76 +1,65 @@
-{% extends 'bulma.html' %}
+{% extends 'main.html' %}
 {% load bulma %}
 
-{% block body %}
-<div class="modal is-active">
-    <form method="{% block method %}GET{% endblock method %}" action="{% block action %}{% endblock action %}">
-        <div class="modal-background"></div>
-        <div class="modal-card">
-            <header class="modal-card-head">
-                <p class="modal-card-title">{% block title %}{% endblock title %}</p>
-            </header>
-            <section class="modal-card-body">
-                {% for error in form.non_field_errors %}
-                <div class="notification is-danger is-light">
-                    {{ error }}
-                </div>
-                {% endfor %}
+{% block contents %}
+<form method="{% block method %}GET{% endblock method %}" action="{% block action %}{% endblock action %}">
+    {% for error in form.non_field_errors %}
+    <div class="notification is-danger is-light">
+        {{ error }}
+    </div>
+    {% endfor %}
 
-                {% block form_fields %}
+    {% block form_fields %}
 
-                {% for field in form.visible_fields %}
-                {% if not field.field.custom_display %}
-                <div class="field">
-                    {% if field.widget_type != "checkbox" %}
-                    <label class="label" for="{{ field.id_for_label }}">{{ field.label }}</label>
-                    {% endif %}
+    {% for field in form.visible_fields %}
+    {% if not field.field.custom_display %}
+    <div class="field">
+        {% if field.widget_type != "checkbox" %}
+        <label class="label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {% endif %}
 
-                    {% if field.widget_type == "textarea" %}
-                    {{ field|add_class:"textarea"|is_danger_if_errors}}
-                    {% elif field.widget_type == "select" %}
-                    <div class="select {% if field.errors %}is-danger{% endif %}">
-                        {{ field }}
-                    </div>
-                    {% elif field.widget_type == "selectmultiple" %}
-                    <div class="select is-multiple {% if field.errors %}is-danger{% endif %}">
-                        {{ field }}
-                    </div>
-                    {% elif field.widget_type == "checkbox" %}
-                    <label class="label" for="{{ field.id_for_label }}">
-                        {{ field }}
-                        {{ field.label }}
-                    </label>
-                    {% else %}
-                    <div class="control">
-                        {{ field|add_class:"input"|is_danger_if_errors }}
-                    </div>
-                    {% endif %}
-
-                    {% for error in field.errors %}
-                    <p class="help is-danger">{{ error }}</p>
-                    {% endfor %}
-
-                    {% if field.help_text %}
-                    <p class="help">{{ field.help_text }}</p>
-                    {% endif %}
-                </div>
-                {% endif %}
-                {% endfor %}
-
-                {% endblock form_fields %}
-
-                {% for hidden in form.hidden_fields %}
-                {{ hidden }}
-                {% endfor %}
-
-                {% csrf_token %}
-            </section>
-            <footer class="modal-card-foot">
-                {% block actions %}
-                <button class="button is-fullwidth is-primary">{% block submit %}Pošlji{% endblock submit %}</button>
-                {% endblock actions %}
-            </footer>
+        {% if field.widget_type == "textarea" %}
+        {{ field|add_class:"textarea"|is_danger_if_errors}}
+        {% elif field.widget_type == "select" %}
+        <div class="select {% if field.errors %}is-danger{% endif %}">
+            {{ field }}
         </div>
-    </form>
-</div>
-{% endblock body %}
+        {% elif field.widget_type == "selectmultiple" %}
+        <div class="select is-multiple {% if field.errors %}is-danger{% endif %}">
+            {{ field }}
+        </div>
+        {% elif field.widget_type == "checkbox" %}
+        <label class="label" for="{{ field.id_for_label }}">
+            {{ field }}
+            {{ field.label }}
+        </label>
+        {% else %}
+        <div class="control">
+            {{ field|add_class:"input"|is_danger_if_errors }}
+        </div>
+        {% endif %}
+
+        {% for error in field.errors %}
+        <p class="help is-danger">{{ error }}</p>
+        {% endfor %}
+
+        {% if field.help_text %}
+        <p class="help">{{ field.help_text }}</p>
+        {% endif %}
+    </div>
+    {% endif %}
+    {% endfor %}
+
+    {% endblock form_fields %}
+
+    {% for hidden in form.hidden_fields %}
+    {{ hidden }}
+    {% endfor %}
+
+    {% csrf_token %}
+
+    {% block actions %}
+    <button class="button is-fullwidth is-primary">{% block submit %}Pošlji{% endblock submit %}</button>
+    {% endblock actions %}
+</form>
+{% endblock contents %}

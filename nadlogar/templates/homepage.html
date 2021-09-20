@@ -1,5 +1,9 @@
 {% extends 'main.html' %}
 
+{% block breadcrumbs %}
+<li class="is-active"><a href="#" aria-current="page">Domov</a></li>
+{% endblock breadcrumbs %}
+
 {% block contents %}
 <div class="content">
     <h2>Dokumenti</h2>
@@ -17,8 +21,7 @@
             {% for document in documents %}
             <tr>
                 <th>{{ forloop.counter }}</th>
-                <td><a href="{% url 'students:documents:view_document' document.student_group.id document.id %}">{{
-                        document.name }}</a></td>
+                <td><a href="{% url 'students:documents:view_document' document.student_group.id document.id %}">{{ document.name }}</a></td>
                 <td>{{ document.date }}</td>
                 <td>{{ document.student_group }}</td>
                 <td>

@@ -50,7 +50,7 @@ def edit_group(request, group_id: int):
     if form.is_valid():
         group: StudentGroup = form.save()
         return redirect("students:view_group", group_id=group.id)
-    return render(request, "students/edit_group.html", {"form": form})
+    return render(request, "students/edit_group.html", {"group": group, "form": form})
 
 
 @login_required
@@ -69,7 +69,9 @@ def create_student(request, group_id: int):
         student.group = group
         student.save()
         return redirect("students:view_group", group_id=student.group.id)
-    return render(request, "students/create_student.html", {"form": form})
+    return render(
+        request, "students/create_student.html", {"group": group, "form": form}
+    )
 
 
 @login_required
@@ -79,7 +81,7 @@ def edit_student(request, group_id: int, student_id: int):
     if form.is_valid():
         student: Student = form.save()
         return redirect("students:view_group", group_id=student.group.id)
-    return render(request, "students/edit_student.html", {"form": form})
+    return render(request, "students/edit_student.html", {"group": group, "form": form})
 
 
 @login_required

@@ -1,5 +1,12 @@
 {% extends 'problems/create_problem.html' %}
 
+{% block breadcrumbs %}
+<li><a href="{% url 'homepage' %}">Domov</a></li>
+<li><a href="{% url 'students:view_group' problem.document.student_group.id %}">{{ problem.document.student_group.name }}</a></li>
+<li><a href="{% url 'students:documents:view_document' problem.document.student_group.id problem.document.id %}">{{ problem.document.name }}</a></li>
+<li class="is-active"><a href="#" aria-current="page">Uredi problem</a></li>
+{% endblock breadcrumbs %}
+
 {% block title %}
 Uredi problem
 {% endblock title %}

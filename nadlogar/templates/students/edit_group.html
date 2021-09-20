@@ -1,5 +1,11 @@
 {% extends 'form.html' %}
 
+{% block breadcrumbs %}
+<li><a href="{% url 'homepage' %}">Domov</a></li>
+<li><a href="{% url 'students:view_group' document.student_group.id %}">{{ document.student_group.name }}</a></li>
+<li class="is-active"><a href="#" aria-current="page">Urejanje</a></li>
+{% endblock breadcrumbs %}
+
 {% block method %}POST{% endblock method %}
 
 {% block title %}

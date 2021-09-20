@@ -1,17 +1,13 @@
 {% extends 'main.html' %}
 
+{% block breadcrumbs %}
+<li><a href="{% url 'homepage' %}">Domov</a></li>
+<li><a href="{% url 'students:view_group' document.student_group.id %}">{{ document.student_group.name }}</a></li>
+<li class="is-active"><a href="#" aria-current="page">{{ document.name }}</a></li>
+{% endblock breadcrumbs %}
+
 {% block contents %}
 <div class="content">
-    <h1 class="title">{{ document.name }}</h1>
-    <h2 class="subtitle">
-        {{ document.date }},
-        <a href="{% url 'students:view_group' document.student_group.id %}">{{ document.student_group }}</a>
-    </h2>
-
-    {% if document.description %}
-    <p>{{ document.description }}</p>
-    {% endif %}
-
     <div class="field has-addons">
         <p class="control">
             <a class="button is-primary"
@@ -43,6 +39,14 @@
         </form>
         </p>
     </div>
+
+    {% if document.description %}
+    <p>{{ document.description }}</p>
+    {% endif %}
+
+    <small>
+        {{ document.date }}
+    </small>
 
     {% for problem, data, rendered_text in document.problem_examples %}
     <h3>
