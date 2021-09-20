@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import include, path
 
 from . import views
 
@@ -9,4 +9,5 @@ urlpatterns = [
     path("<int:document_id>/edit/", views.edit_document, name="edit_document"),
     path("<int:document_id>/delete/", views.delete_document, name="delete_document"),
     path("<int:document_id>/generate/", views.generate, name="generate"),
+    path("<int:document_id>/problems/", include("problems.urls")),
 ]

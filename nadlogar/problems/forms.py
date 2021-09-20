@@ -18,12 +18,10 @@ def problem_form(content_type, *args, **kwargs):
     class ProblemForm(forms.ModelForm):
         class Meta:
             model = Generator
-            exclude = []
+            exclude = ["content_type", "document"]
 
         def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)
-            self.fields["document"].widget = forms.HiddenInput()
-            self.fields["content_type"].widget = forms.HiddenInput()
             self.fields["text"].queryset = content_type.problemtext_set
             self.fields["text"].iterator = ProblemTextChoiceIterator
             self.fields["text"].empty_label = None

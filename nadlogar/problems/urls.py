@@ -4,8 +4,8 @@ from . import views
 
 app_name = "problems"
 urlpatterns = [
-    path("choose/<int:document_id>/", views.choose_problem, name="choose_problem"),
-    path("create/", views.create_problem, name="create_problem"),
+    path("create/<int:content_type_id>/", views.create_problem, name="create_problem"),
+    path("create/", views.choose_problem, name="choose_problem"),
     path(
         "<int:problem_id>/edit/",
         views.edit_problem,

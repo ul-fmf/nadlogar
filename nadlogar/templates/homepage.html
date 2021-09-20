@@ -17,27 +17,31 @@
             {% for document in documents %}
             <tr>
                 <th>{{ forloop.counter }}</th>
-                <td><a href="{% url 'documents:view_document' document.id %}">{{ document.name }}</a></td>
+                <td><a href="{% url 'students:documents:view_document' document.student_group.id document.id %}">{{
+                        document.name }}</a></td>
                 <td>{{ document.date }}</td>
                 <td>{{ document.student_group }}</td>
                 <td>
                     <div class="field has-addons">
                         <p class="control">
-                            <a class="button is-small" href="{% url 'documents:generate' document.id %}">
+                            <a class="button is-small"
+                                href="{% url 'students:documents:generate' document.student_group.id document.id %}">
                                 <span class="icon is-small">
                                     <i class="fas fa-download"></i>
                                 </span>
                             </a>
                         </p>
                         <p class="control">
-                            <a class="button is-small" href="{% url 'documents:edit_document' document.id %}">
+                            <a class="button is-small"
+                                href="{% url 'students:documents:edit_document' document.student_group.id document.id %}">
                                 <span class="icon is-small">
                                     <i class="fas fa-edit"></i>
                                 </span>
                             </a>
                         </p>
                         <p class="control">
-                        <form method="POST" action="{% url 'documents:delete_document' document.id %}">
+                        <form method="POST"
+                            action="{% url 'students:documents:delete_document' document.student_group.id document.id %}">
                             {% csrf_token %}
                             <button class="button is-small is-danger is-outlined">
                                 <span class="icon is-small">
@@ -50,20 +54,6 @@
                 </td>
             </tr>
             {% endfor %}
-            <tr>
-                <th></th>
-                <td>
-                    <form action="{% url 'documents:create_document' %}">
-                        {% csrf_token %}
-                        <button class="button is-outlined">
-                            <span class="icon is-small">
-                                <i class="fas fa-plus"></i>
-                            </span>
-                            <span>Nov dokument</span></button>
-                    </form>
-                </td>
-                <td></td>
-            </tr>
         </tbody>
     </table>
 </div>

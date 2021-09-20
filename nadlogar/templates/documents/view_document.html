@@ -14,7 +14,8 @@
 
     <div class="field has-addons">
         <p class="control">
-            <a class="button is-primary" href="{% url 'documents:generate' document.id %}">
+            <a class="button is-primary"
+                href="{% url 'students:documents:generate' document.student_group.id document.id %}">
                 <span class="icon is-small">
                     <i class="fas fa-download"></i>
                 </span>
@@ -22,7 +23,7 @@
             </a>
         </p>
         <p class="control">
-            <a class="button" href="{% url 'documents:edit_document' document.id %}">
+            <a class="button" href="{% url 'students:documents:edit_document' document.student_group.id document.id %}">
                 <span class="icon is-small">
                     <i class="fas fa-edit"></i>
                 </span>
@@ -30,7 +31,8 @@
             </a>
         </p>
         <p class="control">
-        <form method="POST" action="{% url 'documents:delete_document' document.id %}">
+        <form method="POST"
+            action="{% url 'students:documents:delete_document' document.student_group.id document.id %}">
             {% csrf_token %}
             <button class="button is-danger is-outlined">
                 <span class="icon is-small">
@@ -48,14 +50,16 @@
     </h3>
     <div class="field has-addons">
         <p class="control">
-            <a class="button is-small" href="{% url 'problems:edit_problem' problem.id %}">
+            <a class="button is-small"
+                href="{% url 'students:documents:problems:edit_problem' document.student_group.id document.id problem.id %}">
                 <span class="icon is-small">
                     <i class="fas fa-edit"></i>
                 </span>
             </a>
         </p>
         <p class="control">
-        <form method="POST" action="{% url 'problems:delete_problem' problem.id %}">
+        <form method="POST"
+            action="{% url 'students:documents:problems:delete_problem' document.student_group.id document.id problem.id %}">
             {% csrf_token %}
             <button class="button is-small is-danger is-outlined">
                 <span class="icon is-small">
@@ -68,7 +72,8 @@
     {% include "problems/_rendered_text.html" %}
     {% endfor %}
 </div>
-<a class="button is-outlined" href="{% url 'problems:choose_problem' document.id %}">
+<a class="button is-outlined"
+    href="{% url 'students:documents:problems:choose_problem' document.student_group.id document.id %}">
     <span class="icon is-small">
         <i class="fas fa-plus"></i>
     </span>
