@@ -1,0 +1,87 @@
+{% extends 'main.html' %}
+
+{% block breadcrumbs %}
+<li><a href="{% url 'homepage' %}">Začetek</a></li>
+<li><a href="{{ document.student_group.get_absolute_url }}">{{ document.student_group.name }}</a></li>
+<li><a href="{{ document.get_absolute_url }}">{{ document.name }}</a></li>
+<li class="is-active"><a href="#" aria-current="page">Predogled</a></li>
+{% endblock breadcrumbs %}
+
+{% block contents %}
+<nav class="level">
+    <div class="level-left">
+        <div class="level-item">
+            <div class="field has-addons">
+                <p class="control">
+                    <a class="button is-info"
+                        href="{% url 'students:documents:download_pdf' document.student_group.id document.id %}">
+                        <span class="icon is-small">
+                            <i class="fas fa-file-pdf"></i>
+                        </span>
+                        <span>Prenesi PDF datoteke</span>
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="level-right">
+        <div class="level-item">
+            <div class="field has-addons">
+                <p class="control">
+                    <a class="button is-small"
+                        href="{% url 'students:documents:download_tex' document.student_group.id document.id %}">
+                        <span class="icon is-small">
+                            <i class="fas fa-file-alt"></i>
+                        </span>
+                        <span>Prenesi TeX datoteke</span>
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="box">
+    <article class="media">
+        <div class="media-content">
+            <div class="content">
+                <h1>{{ document.name }}</h1>
+                <p>
+                    <small>
+                        <span class="icon is-small"><i class="far fa-calendar-alt" aria-hidden="true"></i></span>
+                        <span>{{ document.date }}</span>
+                    </small>
+
+                </p>
+                {% if document.description %}
+                <p>{{ document.description }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </article>
+    {% for student, problems in document.generate_student_problem_texts.items %}
+    <article class="media">
+        <div class="media-content">
+            <div class="content">
+                <p>
+                    <strong>{{ student.name }}</strong>
+                </p>
+                {% for rendered_text in problems %}
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p>
+                                <strong>{{ forloop.counter }}. naloga</strong>
+                                {% include "problems/_rendered_text.html" %}
+                            </p>
+                        </div>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+        </div>
+    </article>
+    {% endfor %}
+</div>
+{% endblock contents %}

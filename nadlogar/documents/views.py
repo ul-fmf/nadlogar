@@ -1,10 +1,14 @@
+import io
+import zipfile
+
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from students.views import get_group_if_allowed
 
 from .forms import DocumentForm
-from .models import Document
+from .models import Document, LaTeXError
 
 
 def _get_document_if_allowed(request, group_id, document_id):
@@ -67,11 +71,43 @@ def delete_document(request, group_id: int, document_id: int):
     return render(request, "documents/delete_document.html", {"document": document})
 
 
+def _zip_archive(archive_name, files):
+    string_buffer = io.BytesIO()
+    archive = zipfile.ZipFile(string_buffer, "w", zipfile.ZIP_DEFLATED)
+    for file_name, file_contents in files:
+        archive.writestr(file_name, file_contents)
+    archive.close()
+    response = HttpResponse(string_buffer.getvalue(), content_type="application/zip")
+    response["Content-Disposition"] = "attachment; filename={0}.zip".format(
+        archive_name
+    )
+    return response
+
+
 @login_required
-def generate(request, group_id: int, document_id: int):
+def preview(request, group_id: int, document_id: int):
     document = _get_document_if_allowed(request, group_id, document_id)
     return render(
         request,
-        "documents/generate.html",
-        {"document": document, "generated_files": document.generate_files()},
+        "documents/preview_download.html",
+        {"document": document},
     )
+
+
+@login_required
+def download_tex(request, group_id: int, document_id: int):
+    document = _get_document_if_allowed(request, group_id, document_id)
+    return _zip_archive(document.name, document.tex_files())
+
+
+@login_required
+def download_pdf(request, group_id: int, document_id: int):
+    document = _get_document_if_allowed(request, group_id, document_id)
+    try:
+        return _zip_archive(document.name, document.pdf_files())
+    except LaTeXError as error:
+        return render(
+            request,
+            "documents/latex_error.html",
+            {"document": document, "error": error},
+        )

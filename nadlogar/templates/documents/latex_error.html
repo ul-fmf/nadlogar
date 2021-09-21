@@ -1,0 +1,12 @@
+{% extends 'main.html' %}
+
+{% block breadcrumbs %}
+<li><a href="{% url 'homepage' %}">Začetek</a></li>
+<li><a href="{{ document.student_group.get_absolute_url }}">{{ document.student_group.name }}</a></li>
+<li class="is-active"><a href="#" aria-current="page">{{ document.name }}</a></li>
+{% endblock breadcrumbs %}
+
+{% block contents %}
+<pre>{{ error.args.0.decode }}</pre>
+<pre>{{ error.args.1.decode }}</pre>
+{% endblock contents %}

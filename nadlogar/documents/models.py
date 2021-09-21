@@ -1,6 +1,31 @@
+import subprocess
+import tempfile
+
 from django.db import models
 from django.template import Context
 from django.template import Template as DjangoTemplate
+
+
+class LaTeXError(Exception):
+    pass
+
+
+def _pdf_latex(source):
+    with tempfile.TemporaryDirectory() as temp_dir:
+        with tempfile.NamedTemporaryFile(dir=temp_dir, suffix=".tex") as temp_file:
+            temp_file.write(source.encode())
+            temp_file.flush()
+            r = subprocess.run(
+                ["pdflatex", "-interaction", "nonstopmode", temp_file.name],
+                capture_output=True,
+                cwd=temp_dir,
+            )
+            if r.returncode:
+                raise LaTeXError(r.stdout, r.stderr)
+            else:
+                temp_pdf_name = temp_file.name.replace(".tex", ".pdf")
+                with open(temp_pdf_name, "rb") as temp_pdf:
+                    return temp_pdf.read()
 
 
 class Template(models.Model):
@@ -25,15 +50,15 @@ class Template(models.Model):
 
     def _file_name(self, document, student=None):
         if student is None:
-            return f"{document.name}/{self.name}.pdf"
+            return f"{document.name}/{self.name}"
         else:
-            return f"{document.name}/{self.name}/{student.name}.pdf"
+            return f"{document.name}/{self.name}/{student.name}"
 
     def generate_files(self, document, student_problem_texts):
         template = DjangoTemplate(self.template)
         if self.type == self.INDIVIDUAL:
             for student, problem_texts in student_problem_texts.items():
-                file_name = self._file_name(document, student)
+                file_name = self._file_name(document, student) + ".tex"
                 context = Context(
                     {
                         "document": document,
@@ -93,7 +118,13 @@ class Document(models.Model):
             data, rendered_text = problem.generate_data_and_text()
             yield (problem, data, rendered_text)
 
-    def generate_files(self):
+    def tex_files(self):
         student_problem_texts = self.generate_student_problem_texts()
         for template in self.templates.all():
             yield from template.generate_files(self, student_problem_texts)
+
+    def pdf_files(self):
+        for tex_file_name, tex_contents in self.tex_files():
+            pdf_file_name = tex_file_name.replace(".tex", ".pdf")
+            pdf_contents = _pdf_latex(tex_contents)
+            yield pdf_file_name, pdf_contents
