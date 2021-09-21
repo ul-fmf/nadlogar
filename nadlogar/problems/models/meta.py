@@ -92,8 +92,8 @@ class Problem(models.Model):
         return data, rendered_text
 
     @staticmethod
-    def example(content_type):
+    def example_data_and_text(content_type):
         problem = content_type.model_class()()
         data = problem.generate_data(None)
         text = ProblemText.objects.filter(content_type=content_type).first()
-        return text.render(data)
+        return data, text.render(data)

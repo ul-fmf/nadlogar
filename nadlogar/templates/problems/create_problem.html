@@ -22,10 +22,7 @@
                         {% else %}
                         <input type="radio" name="{{ form.text.html_name }}" value="{{ value }}">
                         {% endif %}
-                        <div style="display: inline-block; vertical-align: top;">
-                        </div>
                     </label>
-        
                 </div>
                 <div class="media-content">
                     <div class="content">
@@ -34,6 +31,27 @@
                 </div>
             </article>
             {% endfor %}
+            <article class="media">
+                <div class="media-left">
+                    <label class="radio">
+                        <input type="radio" name="{{ form.text.html_name }}">
+                    </label>
+                </div>
+                <div class="media-content">
+                    <div class="content">
+                        {% include "_field.html" with field=form.question %}
+                        {% include "_field.html" with field=form.answer %}
+                    </div>
+                    <div class="content help">
+                        Pri pisanju besedila in rešitve so vam na voljo sledeči podatki:
+                        <ul>
+                            {% for key, value in example_data.items %}
+                            <li><code>{% templatetag openbrace %}{{ key }}{% templatetag closebrace %}</code>: <code>{{ value }}</code></li>
+                            {% endfor %}
+                        </ul>
+                    </p>
+                </div>
+            </article>
         </div>
     </div>
     <button class="button is-primary">

@@ -24,7 +24,11 @@ def _get_problem_if_allowed(request, group_id: int, document_id: int, problem_id
 @login_required
 def choose_problem(request, group_id: int, document_id: int):
     content_types = [
-        (content_type.id, Problem.example(content_type), generator._meta.verbose_name)
+        (
+            content_type.id,
+            Problem.example_data_and_text(content_type)[1],
+            generator._meta.verbose_name,
+        )
         for generator, content_type in problem_content_types().items()
     ]
     document = _get_document_if_allowed(request, group_id, document_id)
@@ -39,6 +43,7 @@ def choose_problem(request, group_id: int, document_id: int):
 def create_problem(request, group_id: int, document_id: int, content_type_id: int):
     content_type = get_object_or_404(ContentType, id=content_type_id)
     document = _get_document_if_allowed(request, group_id, document_id)
+    example_data = Problem.example_data_and_text(content_type)[0]
     form = problem_form(content_type, request.POST or None)
     if form.is_valid():
         problem: Problem = form.save(commit=False)
@@ -48,7 +53,7 @@ def create_problem(request, group_id: int, document_id: int, content_type_id: in
     return render(
         request,
         "problems/create_problem.html",
-        {"document": document, "form": form},
+        {"document": document, "form": form, "example_data": example_data},
     )
 
 
@@ -62,7 +67,9 @@ def edit_problem(request, group_id: int, document_id: int, problem_id: int):
         problem: Problem = form.save()
         return redirect(problem.document.get_absolute_url())
     return render(
-        request, "problems/edit_problem.html", {"problem": problem, "form": form}
+        request,
+        "problems/edit_problem.html",
+        {"problem": problem, "form": form, "example_data": problem.generate_data(None)},
     )
 
 

@@ -63,7 +63,7 @@ class Document(models.Model):
     templates = models.ManyToManyField("documents.Template", verbose_name="predloge")
 
     class Meta:
-        ordering = ["date", "name"]
+        ordering = ["-date", "name"]
 
     def __str__(self):
         return f"{self.name} ({self.date})"
