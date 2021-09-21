@@ -6,142 +6,63 @@
 {% endblock breadcrumbs %}
 
 {% block contents %}
-<div class="content">
-    <div class="field has-addons">
-        <p class="control">
-            <a class="button" href="{% url 'students:edit_group' group.id %}">
-                <span class="icon is-small">
-                    <i class="fas fa-edit"></i>
-                </span>
-                <span>Uredi</span>
-            </a>
-        </p>
-        <p class="control">
-        <form method="POST" action="{% url 'students:delete_group' group.id %}">
-            {% csrf_token %}
-            <button class="button is-danger is-outlined">
-                <span class="icon is-small">
-                    <i class="fas fa-trash"></i>
-                </span>
-                <span>Pobriši</span>
-            </button>
-        </form>
-        </p>
+<nav class="level">
+    <div class="level-left">
     </div>
 
-    <h2>Dokumenti</h2>
-    <table class="table is-fullwidth">
-        <thead>
-            <tr>
-                <th></th>
-                <th>Ime</th>
-                <th>Datum</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for document in group.document_set.all %}
-            <tr>
-                <th>{{ forloop.counter }}</th>
-                <td><a href="{{ document.get_absolute_url }}">{{ document.name }}</a>
-                </td>
-                <td>{{ document.date }}</td>
-                <td>
-                    <div class="field has-addons">
-                        <p class="control">
-                            <a class="button is-small"
-                                href="{% url 'students:documents:generate' group.id document.id %}">
-                                <span class="icon is-small">
-                                    <i class="fas fa-download"></i>
-                                </span>
-                            </a>
-                        </p>
-                        <p class="control">
-                            <a class="button is-small"
-                                href="{% url 'students:documents:edit_document' group.id document.id %}">
-                                <span class="icon is-small">
-                                    <i class="fas fa-edit"></i>
-                                </span>
-                            </a>
-                        </p>
-                        <p class="control">
-                        <form method="POST"
-                            action="{% url 'students:documents:delete_document' group.id document.id %}">
-                            {% csrf_token %}
-                            <button class="button is-small is-danger is-outlined">
-                                <span class="icon is-small">
-                                    <i class="fas fa-trash"></i>
-                                </span>
-                            </button>
-                        </form>
-                        </p>
-                    </div>
-                </td>
-            </tr>
-            {% endfor %}
-            <tr>
-                <th></th>
-                <td>
-                    <a href="{% url 'students:documents:create_document' group.id %}" class="button is-outlined">
-                        <span class="icon is-small">
-                            <i class="fas fa-plus"></i>
-                        </span>
-                        <span>Nov dokument</span></a>
-                </td>
-                <td></td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="level-right">
+        <p class="level-item">
+        <div class="field has-addons">
+            <p class="control">
+                <a class="button is-small" href="{% url 'students:edit_group' group.id %}">
+                    <span class="icon is-small">
+                        <i class="fas fa-edit"></i>
+                    </span>
+                    <span>Uredi</span>
+                </a>
+            </p>
+            <p class="control">
+                <a class="button is-small is-danger is-outlined" href="{% url 'students:delete_group' group.id %}">
+                    <span class="icon is-small">
+                        <i class="fas fa-trash"></i>
+                    </span>
+                    <span>Pobriši</span>
+                </a>
+            </p>
+        </div>
+    </div>
+</nav>
 
-    <h2>Učenci</h2>
-    <table class="table is-fullwidth">
-        <thead>
-            <tr>
-                <th></th>
-                <th>Ime</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for student in group.students.all %}
-            <tr>
-                <th>{{ forloop.counter }}</th>
-                <td>{{ student.name }}</td>
-                <td>
-                    <div class="field has-addons">
-                        <p class="control">
-                            <a class="button is-small" href="{% url 'students:edit_student' group.id student.id %}">
-                                <span class="icon is-small">
-                                    <i class="fas fa-edit"></i>
-                                </span>
-                            </a>
-                        </p>
-                        <p class="control">
-                        <form method="POST" action="{% url 'students:delete_student' group.id student.id %}">
-                            {% csrf_token %}
-                            <button class="button is-small is-danger is-outlined">
-                                <span class="icon is-small">
-                                    <i class="fas fa-trash"></i>
-                                </span>
-                            </button>
-                        </form>
-                        </p>
-                    </div>
-                </td>
-            </tr>
-            {% endfor %}
-            <tr>
-                <th></th>
-                <td>
-                    <a href="{% url 'students:create_student' group.id %}" class="button is-outlined">
-                        <span class="icon is-small">
-                            <i class="fas fa-plus"></i>
-                        </span>
-                        <span>Nov učenec</span></a>
-                </td>
-                <td></td>
-            </tr>
-        </tbody>
-    </table>
+<div class="box">
+    <article class="media">
+        <div class="media-content">
+            <div class="content">
+                <h1><small class="subtitle">Skupina</small> {{ group.name }}</h1>
+            </div>
+        </div>
+    </article>
+    {% block group_data %}
+    <div class="tabs">
+        <ul>
+            <li class="is-active"><a>Dokumenti</a></li>
+            <li><a href="{% url 'students:view_students' group.id %}">Učenci</a></li>
+        </ul>
+    </div>
+    <article class="media">
+        <div class="media-content">
+            <div class="content">
+                <a href="{% url 'students:documents:create_document' group.id %}" class="button is-outlined">
+                    <span class="icon">
+                        <i class="fas fa-plus"></i>
+                    </span>
+                    <span>Nov dokument</span></a>
+                </a>
+            </div>
+        </div>
+    </article>
+    {% for document in group.document_set.all %}
+    {% include "documents/_document_media.html" with hide_group=True %}
+    {% endfor %}
+    {% endblock group_data %}
 </div>
 {% endblock contents %}

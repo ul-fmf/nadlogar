@@ -8,13 +8,26 @@
 {% endblock breadcrumbs %}
 
 {% block contents %}
-<ul>
+<div class="box">
     {% for content_type_id, description in content_types %}
-    <li>
-        <a href="{% url 'students:documents:problems:create_problem' document.student_group.id document.id content_type_id %}">
-            {{ description }}
-        </a>
-    </li>
+    <article class="media">
+        <div class="media-content">
+            <div class="content">
+                <p>
+                    <strong>{{ description.capitalize }}</strong>
+                </p>
+                <small>
+                    <a
+                        href="{% url 'students:documents:problems:create_problem' document.student_group.id document.id content_type_id %}">
+                        <span class="icon is-small">
+                            <i class="fas fa-arrow-circle-right"></i>
+                        </span>
+                        <span>Izberi</span>
+                    </a>
+                </small>
+            </div>
+        </div>
+    </article>
     {% endfor %}
-</ul>
+</div>
 {% endblock contents %}

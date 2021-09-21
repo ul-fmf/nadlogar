@@ -44,6 +44,12 @@ def view_group(request, group_id: int):
 
 
 @login_required
+def view_students(request, group_id: int):
+    group = get_group_if_allowed(request, group_id)
+    return render(request, "students/view_students.html", {"group": group})
+
+
+@login_required
 def edit_group(request, group_id: int):
     group = get_group_if_allowed(request, group_id)
     form = StudentGroupForm(request.POST or None, instance=group)

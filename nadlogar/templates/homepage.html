@@ -6,99 +6,32 @@
 
 {% block contents %}
 <div class="content">
-    <h2>Dokumenti</h2>
-    <table class="table is-fullwidth">
-        <thead>
-            <tr>
-                <th></th>
-                <th>Ime</th>
-                <th>Datum</th>
-                <th>Skupina</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for document in documents %}
-            <tr>
-                <th>{{ forloop.counter }}</th>
-                <td><a href="{{ document.get_absolute_url }}">{{ document.name }}</a></td>
-                <td>{{ document.date }}</td>
-                <td>{{ document.student_group }}</td>
-                <td>
-                    <div class="field has-addons">
-                        <p class="control">
-                            <a class="button is-small"
-                                href="{% url 'students:documents:generate' document.student_group.id document.id %}">
-                                <span class="icon is-small">
-                                    <i class="fas fa-download"></i>
-                                </span>
-                            </a>
-                        </p>
-                        <p class="control">
-                            <a class="button is-small"
-                                href="{% url 'students:documents:edit_document' document.student_group.id document.id %}">
-                                <span class="icon is-small">
-                                    <i class="fas fa-edit"></i>
-                                </span>
-                            </a>
-                        </p>
-                        <p class="control">
-                        <form method="POST"
-                            action="{% url 'students:documents:delete_document' document.student_group.id document.id %}">
-                            {% csrf_token %}
-                            <button class="button is-small is-danger is-outlined">
-                                <span class="icon is-small">
-                                    <i class="fas fa-trash"></i>
-                                </span>
-                            </button>
-                        </form>
-                        </p>
-                    </div>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <h2>Moje skupine</h2>
-    <table class="table is-fullwidth">
-        <thead>
-            <tr>
-                <th></th>
-                <th>Ime</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for group in groups %}
-            <tr>
-                <th>{{ forloop.counter }}</th>
-                <td><a href="{{ group.get_absolute_url }}">{{ group.name }}</a></td>
-                <td>
-                    <div class="field has-addons">
-                        <p class="control">
-                            <a class="button is-small"
-                                href="{% url 'students:edit_group' group.id %}">
-                                <span class="icon is-small">
-                                    <i class="fas fa-edit"></i>
-                                </span>
-                            </a>
-                        </p>
-                        <p class="control">
-                        <form method="POST"
-                            action="{% url 'students:delete_group' group.id %}">
-                            {% csrf_token %}
-                            <button class="button is-small is-danger is-outlined">
-                                <span class="icon is-small">
-                                    <i class="fas fa-trash"></i>
-                                </span>
-                            </button>
-                        </form>
-                        </p>
-                    </div>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <h3>Moje skupine</h3>
+    {% for group in groups %}
+    <article class="media">
+        <div class="media-content">
+            <div class="content">
+                <p>
+                    <a href="{{ group.get_absolute_url }}">
+                        Skupina <strong>{{ group.name }}</strong>
+                    </a>
+                    <br>
+                    <small>
+                        <span class="icon is-small"><i class="far fa-file" aria-hidden="true"></i></span>
+                        <span>{{ group.document_set.count }} dokumentov</span>
+                        ·
+                        <span class="icon is-small"><i class="fas fa-user" aria-hidden="true"></i></span>
+                        <span>{{ group.students.count }} učenca</span>
+                    </small>
+                </p>
+            </div>
+        </div>
+    </article>
+    {% endfor %}
+
+    <h3>Moji dokumenti</h3>
+    {% for document in documents %}
+    {% include "documents/_document_media.html" %}
+    {% endfor %}
 </div>
 {% endblock contents %}

@@ -8,22 +8,33 @@
 {% endblock breadcrumbs %}
 
 {% block contents %}
-<form method="POST">
+<form method="POST" class="box">
     {% include "_form.html" %}
     <div class="field">
         <label class="label" for="{{ field.id_for_label }}">Besedilo</label>
         <div class="control">
             {% for value, rendered_text in form.fields.text.choices %}
-            <label class="radio">
-                {% if form.initial.text == value %}
-                <input type="radio" name="{{ form.text.html_name }}" value="{{ value }}" checked>
-                {% else %}
-                <input type="radio" name="{{ form.text.html_name }}" value="{{ value }}">
-                {% endif %}
-                <div style="display: inline-block; vertical-align: top;">
-                    {% include "problems/_rendered_text.html" %}
+            <article class="media">
+                <div class="media-left">
+                    <label class="radio">
+                        {% if form.initial.text == value %}
+                        <input type="radio" name="{{ form.text.html_name }}" value="{{ value }}" checked>
+                        {% else %}
+                        <input type="radio" name="{{ form.text.html_name }}" value="{{ value }}">
+                        {% endif %}
+                        <div style="display: inline-block; vertical-align: top;">
+                        </div>
+                    </label>
+        
                 </div>
-            </label>
+                <div class="media-content">
+                    <div class="content">
+                        <blockquote>
+                            {% include "problems/_rendered_text.html" %}
+                        </blockquote>
+                    </div>
+                </div>
+            </article>
             {% endfor %}
         </div>
     </div>
