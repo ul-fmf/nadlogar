@@ -24,7 +24,7 @@ def _get_problem_if_allowed(request, group_id: int, document_id: int, problem_id
 @login_required
 def choose_problem(request, group_id: int, document_id: int):
     content_types = [
-        (content_type.id, generator._meta.verbose_name)
+        (content_type.id, Problem.example(content_type), generator._meta.verbose_name)
         for generator, content_type in problem_content_types().items()
     ]
     document = _get_document_if_allowed(request, group_id, document_id)

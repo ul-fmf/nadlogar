@@ -9,13 +9,14 @@
 
 {% block contents %}
 <div class="box">
-    {% for content_type_id, description in content_types %}
+    {% for content_type_id, rendered_text, description in content_types %}
     <article class="media">
         <div class="media-content">
             <div class="content">
                 <p>
                     <strong>{{ description.capitalize }}</strong>
                 </p>
+                {% include "problems/_rendered_text.html" %}
                 <small>
                     <a
                         href="{% url 'students:documents:problems:create_problem' document.student_group.id document.id content_type_id %}">
