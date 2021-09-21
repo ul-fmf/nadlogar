@@ -1,4 +1,5 @@
 import random
+from string import Template as PythonTemplate
 
 import sympy
 from django.contrib.contenttypes.models import ContentType
@@ -16,6 +17,9 @@ def limit_content_type_choices():
     return {"id__in": {content_type.id for content_type in content_types}}
 
 
+class Template(PythonTemplate):
+    delimiter = "@"
+
 class ProblemText(models.Model):
     content_type = models.ForeignKey(
         ContentType,
@@ -29,8 +33,8 @@ class ProblemText(models.Model):
         return f"{self.content_type.name}: {self.question} / {self.answer}"
 
     def render(self, data):
-        question = self.question.format(**data)
-        answer = self.answer.format(**data)
+        question = Template(self.question).substitute(**data)
+        answer = Template(self.answer).substitute(**data)
         return {"question": question, "answer": answer}
 
 

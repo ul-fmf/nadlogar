@@ -43,12 +43,13 @@
                         {% include "_field.html" with field=form.answer %}
                     </div>
                     <div class="content help">
-                        Pri pisanju besedila in rešitve so vam na voljo sledeči podatki:
+                        Pri pisanju vprašanja in odgovora so vam na voljo sledeči podatki:
                         <ul>
                             {% for key, value in example_data.items %}
-                            <li><code>{% templatetag openbrace %}{{ key }}{% templatetag closebrace %}</code>: <code>{{ value }}</code></li>
+                            <li><strong>@{{ key }}</strong>: <code>{{ value }}</code></li>
                             {% endfor %}
                         </ul>
+                        Če želite v besedilu uporabiti @, morate napisati <strong>@@</strong>.
                     </p>
                 </div>
             </article>

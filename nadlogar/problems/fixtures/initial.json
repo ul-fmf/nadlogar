@@ -7,8 +7,8 @@
                 "problems",
                 "krajsanjeulomkov"
             ],
-            "question": "Okraj\u0161aj ulomek $\\frac{{{neokrajsan_stevec}}}{{{neokrajsan_imenovalec}}}$.",
-            "answer": "$\\frac{{{okrajsan_stevec}}}{{{okrajsan_imenovalec}}}$"
+            "question": "Okraj\u0161aj ulomek $\\frac{@neokrajsan_stevec}{@neokrajsan_imenovalec}$.",
+            "answer": "$\\frac{@okrajsan_stevec}{@okrajsan_imenovalec}$"
         }
     },
     {
@@ -19,8 +19,8 @@
                 "problems",
                 "iskanjenicelpolinoma"
             ],
-            "question": "Poi\u0161\u010di vse ni\u010dle polonoma ${polinom}$.",
-            "answer": "$\\{{{nicle}\\}}$"
+            "question": "Poi\u0161\u010di vse ni\u010dle polonoma $@polinom$.",
+            "answer": "$\\{@nicle\\}$"
         }
     },
     {
@@ -31,8 +31,8 @@
                 "problems",
                 "prostobesedilo"
             ],
-            "question": "{vprasanje}",
-            "answer": "{odgovor}"
+            "question": "@vprasanje",
+            "answer": "@odgovor"
         }
     },
     {
@@ -43,8 +43,8 @@
                 "problems",
                 "razstavivieta"
             ],
-            "question": "Razstavi izraz ${izraz}$",
-            "answer": "${razstavljen}$"
+            "question": "Razstavi izraz $@izraz$",
+            "answer": "$@razstavljen$"
         }
     },
     {
@@ -55,8 +55,8 @@
                 "problems",
                 "razstavirazliko"
             ],
-            "question": "Razstavi izraz ${izraz}$",
-            "answer": "${razstavljen}$"
+            "question": "Razstavi izraz $@izraz$",
+            "answer": "$@razstavljen$"
         }
     },
     {
@@ -67,8 +67,8 @@
                 "problems",
                 "elementimnozice"
             ],
-            "question": "Zapiši elemente množice $ \\mathcal{{A}} = \\{{ {n};  (n \\in \\mathbb{{N}}) \\land (n {pogoj} {stevilo} ) \\}}$.",
-            "answer": "$ \\mathcal{{A}} ={mnozica}$"
+            "question": "Zapiši elemente množice $ \\mathcal{A} = \\{ @n;  (n \\in \\mathbb{N}) \\land (n @pogoj @stevilo ) \\}$.",
+            "answer": "$ \\mathcal{A} =@mnozica$"
         }
     },
     {
@@ -79,8 +79,8 @@
                 "problems",
                 "potencnamnozica"
             ],
-            "question": "Zapiši potenčno množico množice $ \\mathcal{{A}} ={mnozica}$",
-            "answer": "$\\mathcal{{P}}( \\mathcal{{A}} ) ={potencna}$"
+            "question": "Zapiši potenčno množico množice $ \\mathcal{A} =@mnozica$",
+            "answer": "$\\mathcal{P}( \\mathcal{A} ) =@potencna$"
         }
     },
     {
@@ -91,8 +91,8 @@
                 "problems",
                 "operacijemnozic"
             ],
-            "question": "Dani sta množici $ \\mathcal{{A}} ={A}$ in $ \\mathcal{{B}} ={B}$.\r\n    Zapiši množice $ \\mathcal{{A}} \\cup  \\mathcal{{B}} $, $ \\mathcal{{A}} \\cap  \\mathcal{{B}} $, $ \\mathcal{{A}} - \\mathcal{{B}} $ in $ \\mathcal{{A}} \\times  \\mathcal{{B}} $.",
-            "answer": "$ \\mathcal{{A}} \\cup  \\mathcal{{B}} ={unija}$, $ \\mathcal{{A}} \\cap  \\mathcal{{B}} ={presek}$, $ \\mathcal{{A}} - \\mathcal{{B}} ={brez}$, $ \\mathcal{{A}} \\times  \\mathcal{{B}} ={kartezicno}$"
+            "question": "Dani sta množici $ \\mathcal{A} =@A$ in $ \\mathcal{B} =@B$.\r\n    Zapiši množice $ \\mathcal{A} \\cup  \\mathcal{B} $, $ \\mathcal{A} \\cap  \\mathcal{B} $, $ \\mathcal{A} - \\mathcal{B} $ in $ \\mathcal{A} \\times  \\mathcal{B} $.",
+            "answer": "$ \\mathcal{A} \\cup  \\mathcal{B} =@unija$, $ \\mathcal{A} \\cap  \\mathcal{B} =@presek$, $ \\mathcal{A} - \\mathcal{B} =@brez$, $ \\mathcal{A} \\times  \\mathcal{B} =@kartezicno$"
         }
     },
     {
@@ -103,8 +103,8 @@
                 "problems",
                 "izpeljanemnozice"
             ],
-            "question": "Dana je univerzalna množica $ \\mathcal{{U}} =\\mathbb{{N}}_{{ {velikost_univerzalne} }}$ in njene pomnožice $ \\mathcal{{A}} =\\{{ {navodilo_A}; k \\in \\mathbb{{N}} \\}}$, $ \\mathcal{{B}} = \\{{ {navodilo_B}; k \\in \\mathbb{{N}} \\}}$, $ \\mathcal{{C}} ={C}$. Zapiši elemente množic $ \\mathcal{{A}} $, $ \\mathcal{{B}} $, $ \\mathcal{{A}}  \\cup  \\mathcal{{B}} $, $ \\mathcal{{C}} ^{{\\mathsf{{c}} }}$ in $ \\mathcal{{B}}  -  \\mathcal{{A}} $.",
-            "answer": "$ \\mathcal{{A}} ={A}$, $ \\mathcal{{B}} ={B}$, $ \\mathcal{{A}}  \\cup  \\mathcal{{B}}  ={A_unija_B}$, $ \\mathcal{{C}} ^{{\\mathsf{{c}} }}={C_komplement}$,  $ \\mathcal{{B}}  -  \\mathcal{{A}}  ={B_brez_A}$"
+            "question": "Dana je univerzalna množica $ \\mathcal{U} =\\mathbb{N}_{ @velikost_univerzalne }$ in njene pomnožice $ \\mathcal{A} =\\{ @navodilo_A; k \\in \\mathbb{N} \\}$, $ \\mathcal{B} = \\{ @navodilo_B; k \\in \\mathbb{N} \\}$, $ \\mathcal{C} =@C$. Zapiši elemente množic $ \\mathcal{A} $, $ \\mathcal{B} $, $ \\mathcal{A}  \\cup  \\mathcal{B} $, $ \\mathcal{C} ^{\\mathsf{c} }$ in $ \\mathcal{B}  -  \\mathcal{A} $.",
+            "answer": "$ \\mathcal{A} =@A$, $ \\mathcal{B} =@B$, $ \\mathcal{A}  \\cup  \\mathcal{B}  =@A_unija_B$, $ \\mathcal{C} ^{\\mathsf{c} }=@C_komplement$,  $ \\mathcal{B}  -  \\mathcal{A}  =@B_brez_A$"
         }
     },
     {
@@ -115,8 +115,8 @@
                 "problems",
                 "potencadvoclenika"
             ],
-            "question": "Potenciraj izraz ${izraz}$",
-            "answer": "${resitev}$"
+            "question": "Potenciraj izraz $@izraz$",
+            "answer": "$@resitev$"
         }
     },
     {
@@ -127,8 +127,8 @@
                 "problems",
                 "potencatroclenika"
             ],
-            "question": "Potenciraj izraz ${izraz}$",
-            "answer": "${resitev}$"
+            "question": "Potenciraj izraz $@izraz$",
+            "answer": "$@resitev$"
         }
     },
     {
@@ -139,8 +139,8 @@
                 "problems",
                 "potencavecclenika"
             ],
-            "question": "Potenciraj izraz ${izraz}$",
-            "answer": "${resitev}$"
+            "question": "Potenciraj izraz $@izraz$",
+            "answer": "$@resitev$"
         }
     },
     {
@@ -151,8 +151,8 @@
                 "problems",
                 "vsotakompleksnih"
             ],
-            "question": "Izračunaj $z={izraz}$.",
-            "answer": "$z={resitev}$"
+            "question": "Izračunaj $z=@izraz$.",
+            "answer": "$z=@resitev$"
         }
     },
     {
@@ -163,8 +163,8 @@
                 "problems",
                 "kompleksniulomek"
             ],
-            "question": "Izračunaj $z={izraz}$.",
-            "answer": "$z={resitev}$"
+            "question": "Izračunaj $z=@izraz$.",
+            "answer": "$z=@resitev$"
         }
     },
     {
@@ -175,8 +175,8 @@
                 "problems",
                 "mnozenjekompleksnih"
             ],
-            "question": "Izračunaj $z={izraz}$.",
-            "answer": "$z={resitev}$"
+            "question": "Izračunaj $z=@izraz$.",
+            "answer": "$z=@resitev$"
         }
     },
     {
@@ -187,8 +187,8 @@
                 "problems",
                 "racunanjekompleksno"
             ],
-            "question": "Dano je kompleksno število $z={stevilo}$. Izračunaj število $w={izraz}$.",
-            "answer": "$w={resitev}$"
+            "question": "Dano je kompleksno število $z=@stevilo$. Izračunaj število $w=@izraz$.",
+            "answer": "$w=@resitev$"
         }
     },
     {
@@ -199,8 +199,8 @@
                 "problems",
                 "kompleksnaenacba"
             ],
-            "question": "Katero kompleksno število $z$ zadošča enačbi ${enacba}$? Zapiši $\\operatorname{{Re}}(z)$ in $\\operatorname{{Im}}(z)$ ter izračunaj $\\left| z \\right|$.",
-            "answer": "$z={resitev}$, $\\operatorname{{Re}}(z)={realna}$, $\\operatorname{{Im}}(z)={imaginarna}$, $\\left|z\\right|={absolutna}$"
+            "question": "Katero kompleksno število $z$ zadošča enačbi $@enacba$? Zapiši $\\operatorname{Re}(z)$ in $\\operatorname{Im}(z)$ ter izračunaj $\\left| z \\right|$.",
+            "answer": "$z=@resitev$, $\\operatorname{Re}(z)=@realna$, $\\operatorname{Im}(z)=@imaginarna$, $\\left|z\\right|=@absolutna$"
         }
     },
     {
@@ -211,8 +211,8 @@
                 "problems",
                 "narisikompleksna"
             ],
-            "question": "V kompleksno ravnino nariši števila $z_1={stevila[0]}$, $z_2={stevila[1]}$, $z_3={stevila[2]}$ in $z_4={stevila[3]}$.",
-            "answer": "$z_1={koordinate[0]}$, $z_2={koordinate[1]}$, $z_3={koordinate[2]}$ in $z_4={koordinate[3]}$"
+            "question": "V kompleksno ravnino nariši števila $z_1=@stevila[0]$, $z_2=@stevila[1]$, $z_3=@stevila[2]$ in $z_4=@stevila[3]$.",
+            "answer": "$z_1=@koordinate[0]$, $z_2=@koordinate[1]$, $z_3=@koordinate[2]$ in $z_4=@koordinate[3]$"
         }
     },
     {
@@ -223,8 +223,8 @@
                 "problems",
                 "deliteljveckratnik"
             ],
-            "question": "Določi največji skupni delitelj in najmanjši skupni večkratnik števil ${stevilo1}$ in ${stevilo2}$.",
-            "answer": "$D( {stevilo1},{stevilo2} )={najvecji_delitelj}$, $v( {stevilo1},{stevilo2} )={najmanjsi_veckratnik}$"
+            "question": "Določi največji skupni delitelj in najmanjši skupni večkratnik števil $@stevilo1$ in $@stevilo2$.",
+            "answer": "$D( @stevilo1,@stevilo2 )=@najvecji_delitelj$, $v( @stevilo1,@stevilo2 )=@najmanjsi_veckratnik$"
         }
     },
     {
@@ -235,8 +235,9 @@
                 "problems",
                 "evklidovalgoritem"
             ],
-            "question": "Z Evklidovim algoritmom poišči največji skupni delitelj števil ${stevilo1}$ in ${stevilo2}$.",
-            "answer": "$D({stevilo1},{stevilo2})={najvecji_delitelj}$"
+            "question": "Z Evklidovim algoritmom poišči največji skupni delitelj števil $@stevilo1$ in $@stevilo2$.",
+            "answer": "$D(@stevilo1,@stevilo2)=@najvecji_delitelj$"
+        
         }
     }
 ]
