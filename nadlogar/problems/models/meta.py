@@ -20,14 +20,15 @@ def limit_content_type_choices():
 class Template(PythonTemplate):
     delimiter = "@"
 
+
 class ProblemText(models.Model):
     content_type = models.ForeignKey(
         ContentType,
         on_delete=models.PROTECT,
         limit_choices_to=limit_content_type_choices,
     )
-    question = models.TextField(blank=True)
-    answer = models.TextField(blank=True)
+    question = models.TextField()
+    answer = models.TextField()
 
     def __str__(self):
         return f"{self.content_type.name}: {self.question} / {self.answer}"
