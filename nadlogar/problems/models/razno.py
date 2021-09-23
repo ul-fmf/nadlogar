@@ -2,13 +2,13 @@ from .meta import *
 
 
 class ProstoBesedilo(Problem):
-    """Problem s poljubnim fiksnim vprašanjem in odgovorom, namenjen ročno sestavljenim nalogam."""
+    """Problem s poljubnim fiksnim besedilom navodila in rešitve, namenjen ročno sestavljenim nalogam."""
 
-    vprasanje = models.TextField(
-        "vprašanje", help_text="Poljubno besedilo vprašanja.", default=""
+    navodilo = models.TextField(
+        "navodilo", help_text="Poljubno besedilo navodila.", default=""
     )
-    odgovor = models.TextField(
-        "odgovor", help_text="Poljubno besedilo odgovora.", default=""
+    resitev = models.TextField(
+        "rešitev", help_text="Poljubno besedilo rešitve.", default=""
     )
 
     class Meta:
@@ -16,8 +16,8 @@ class ProstoBesedilo(Problem):
 
     def generate(self):
         return {
-            "vprasanje": self.vprasanje,
-            "odgovor": self.odgovor,
+            "navodilo": self.navodilo,
+            "resitev": self.resitev,
         }
 
 

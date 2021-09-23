@@ -27,16 +27,16 @@ class ProblemText(models.Model):
         on_delete=models.PROTECT,
         limit_choices_to=limit_content_type_choices,
     )
-    question = models.TextField()
-    answer = models.TextField()
+    instruction = models.TextField()
+    solution = models.TextField()
 
     def __str__(self):
-        return f"{self.content_type.name}: {self.question} / {self.answer}"
+        return f"{self.content_type.name}: {self.instruction} / {self.solution}"
 
     def render(self, data):
-        question = Template(self.question).substitute(**data)
-        answer = Template(self.answer).substitute(**data)
-        return {"question": question, "answer": answer}
+        instruction = Template(self.instruction).substitute(**data)
+        solution = Template(self.solution).substitute(**data)
+        return {"instruction": instruction, "solution": solution}
 
 
 class GeneratedDataIncorrect(Exception):
