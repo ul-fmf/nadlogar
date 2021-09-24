@@ -1,10 +1,10 @@
 {% extends 'forms/delete.html' %}
 
 {% block breadcrumbs %}
-<li><a href="{% url 'homepage' %}">Začetek</a></li>
+<li><a href="{% url 'homepage' %}"><span class="icon is-small"><i class="fas fa-home" aria-hidden="true"></i></span></a></li>
 <li><a href="{{ problem.document.student_group.get_absolute_url }}">{{ problem.document.student_group.name }}</a></li>
 <li><a href="{{ problem.document.get_absolute_url }}">{{ problem.document.name }}</a></li>
-<li class="is-active"><a href="#" aria-current="page">Pobriši</a></li>
+<li class="is-active"><a href="#" aria-current="page">Brisanje</a></li>
 {% endblock breadcrumbs %}
 
 {% block warning %}

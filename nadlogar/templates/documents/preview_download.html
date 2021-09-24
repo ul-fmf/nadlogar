@@ -1,7 +1,7 @@
 {% extends 'main.html' %}
 
 {% block breadcrumbs %}
-<li><a href="{% url 'homepage' %}">Začetek</a></li>
+<li><a href="{% url 'homepage' %}"><span class="icon is-small"><i class="fas fa-home" aria-hidden="true"></i></span></a></li>
 <li><a href="{{ document.student_group.get_absolute_url }}">{{ document.student_group.name }}</a></li>
 <li><a href="{{ document.get_absolute_url }}">{{ document.name }}</a></li>
 <li class="is-active"><a href="#" aria-current="page">Predogled</a></li>
