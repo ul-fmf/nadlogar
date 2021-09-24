@@ -44,6 +44,11 @@ class Template(models.Model):
         max_length=1,
         choices=TYPE,
     )
+    document_sort = models.ForeignKey(
+        "documents.DocumentSort",
+        verbose_name="vrsta dokumenta",
+        on_delete=models.CASCADE,
+    )
 
     def __str__(self):
         return f"{self.name} ({self.get_type_display()})"
@@ -68,7 +73,7 @@ class Template(models.Model):
                 file_contents = template.render(context)
                 yield (file_name, file_contents)
         elif self.type == self.GROUPED_BY_STUDENTS:
-            file_name = self._file_name(document)
+            file_name = self._file_name(document) + ".tex"
             students = [
                 {"name": student.name, "texts": problem_texts}
                 for student, problem_texts in student_problem_texts.items()
@@ -76,6 +81,21 @@ class Template(models.Model):
             context = Context({"document": document, "students": students})
             file_contents = template.render(context)
             yield (file_name, file_contents)
+
+
+class DocumentSort(models.Model):
+    name = models.CharField("ime", max_length=255)
+    html_fragment = models.TextField()
+
+    class Meta:
+        ordering = ["name"]
+
+    def __str__(self):
+        return self.name
+
+    def tex_files(self, student_problem_texts):
+        for template in self.template_set.all():
+            yield from template.generate_files(self, student_problem_texts)
 
 
 class Document(models.Model):
@@ -88,7 +108,9 @@ class Document(models.Model):
     student_group = models.ForeignKey(
         "students.StudentGroup", verbose_name="skupina", on_delete=models.CASCADE
     )
-    templates = models.ManyToManyField("documents.Template", verbose_name="predloge")
+    sort = models.ForeignKey(
+        "documents.DocumentSort", verbose_name="vrsta", on_delete=models.PROTECT
+    )
 
     class Meta:
         ordering = ["-date", "name"]
@@ -123,8 +145,7 @@ class Document(models.Model):
 
     def tex_files(self):
         student_problem_texts = self.generate_student_problem_texts()
-        for template in self.templates.all():
-            yield from template.generate_files(self, student_problem_texts)
+        yield from self.sort.tex_files(student_problem_texts)
 
     def pdf_files(self):
         for tex_file_name, tex_contents in self.tex_files():
