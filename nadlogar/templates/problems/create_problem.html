@@ -55,7 +55,9 @@
                         </div>
                 </article>
             </div>
+            {% if form.display_parameter_form %}
             <h3>Parametri naloge</h3>
+            {% endif %}
             {% include "_form.html" %}
         </div>
     </div>

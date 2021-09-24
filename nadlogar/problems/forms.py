@@ -68,4 +68,10 @@ def problem_form(content_type, *args, **kwargs):
                 problem.save()
             return problem
 
+        def display_parameter_form(self):
+            return any(
+                not getattr(field.field, "custom_display", False)
+                for field in self.visible_fields()
+            )
+
     return ProblemForm(*args, **kwargs)
