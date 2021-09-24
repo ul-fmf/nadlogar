@@ -1,0 +1,39 @@
+[
+    {
+        "model": "documents.template",
+        "pk": 1,
+        "fields": {
+            "name": "naloga",
+            "template": "\\documentclass[arhiv]{izpit}\r\n\\begin{document}\r\n\r\n\\izpit{%\r\n  {{ document.name }}:\r\n  {{ student.name }}\r\n}{%\r\n  {{ document.date }}\r\n}{%\r\n  {{ document.introduction }}\r\n}\r\n\r\n{% for texts in student.texts %}\r\n\\naloga\r\n{% if texts|length > 1 %}\r\n{% for text in texts %}\r\n\\podnaloga {{ text.instruction }}\r\n{% endfor %}\r\n{% else %}\r\n{{ texts.0.instruction }}\r\n{% endif %}\r\n{% endfor %}\r\n\r\n\\end{document}",
+            "type": "I",
+            "document_sort": 1
+        }
+    },
+    {
+        "model": "documents.template",
+        "pk": 2,
+        "fields": {
+            "name": "rešitve",
+            "template": "\\documentclass[arhiv]{izpit}\r\n\\begin{document}\r\n\r\n{% for student in students %}\r\n\r\n\\izpit{%\r\n  {{ document.name }}:\r\n  {{ student.name }} -- rešitve\r\n}{%\r\n  {{ document.date }}\r\n}{}\r\n\r\n{% for texts in student.texts %}\r\n\\naloga\r\n{% if texts|length > 1 %}\r\n{% for text in texts %}\r\n\\podnaloga {{ text.solution }}\r\n{% endfor %}\r\n{% else %}\r\n{{ texts.0.solution }}\r\n{% endif %}\r\n{% endfor %}\r\n{% endfor %}\r\n\r\n\\end{document}",
+            "type": "S",
+            "document_sort": 1
+        }
+    },
+    {
+        "model": "documents.template",
+        "pk": 3,
+        "fields": {
+            "name": "rešitve po nalogah",
+            "template": "\\documentclass[arhiv]{izpit}\r\n\\begin{document}\r\n\r\n\\izpit{%\r\n  {{ document.name }}:\r\n  Rešitve\r\n}{%\r\n  {{ document.date }}\r\n}{}\r\n\r\n{% for problem in problems %}\r\n\r\n\\naloga\r\n{% for student in problem.students %}\r\n\\noindent\\textbf{%\r\n  {{ student.name }}:\r\n}%\r\n{% if student.text|length > 1 %}%\r\n\\begin{enumerate}\r\n{% for text in student.text %}\r\n\\item {{ text.solution }}\r\n{% endfor %}\r\n\\end{enumerate}\r\n{% else %}%\r\n{{ student.text.0.solution }}\r\n{% endif %}\r\n{% endfor %}\r\n{% endfor %}\r\n\r\n\\end{document}",
+            "type": "P",
+            "document_sort": 1
+        }
+    },
+    {
+        "model": "documents.documentsort",
+        "pk": 1,
+        "fields": {
+            "name": "Domača naloga prek spleta"
+        }
+    }
+]

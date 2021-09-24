@@ -1,3 +1,4 @@
+import os
 import subprocess
 import tempfile
 
@@ -6,6 +7,8 @@ from django.template import Context
 from django.template import Template as DjangoTemplate
 from django.utils.text import slugify
 
+from . import izpit
+
 
 class LaTeXError(Exception):
     pass
@@ -13,6 +16,8 @@ class LaTeXError(Exception):
 
 def _pdf_latex(source):
     with tempfile.TemporaryDirectory() as temp_dir:
+        with open(os.path.join(temp_dir, "izpit.cls"), "w") as izpit_cls_file:
+            izpit_cls_file.write(izpit.cls)
         with tempfile.NamedTemporaryFile(dir=temp_dir, suffix=".tex") as temp_file:
             temp_file.write(source.encode())
             temp_file.flush()
@@ -32,11 +37,16 @@ def _pdf_latex(source):
 class Template(models.Model):
     INDIVIDUAL = "I"
     GROUPED_BY_STUDENTS = "S"
+    GROUPED_BY_PROBLEMS = "P"
     TYPE = [
-        (INDIVIDUAL, "posamezna datoteka za vsakega študenta"),
+        (INDIVIDUAL, "posamezna datoteka za vsakega učenca"),
         (
             GROUPED_BY_STUDENTS,
-            "združena datoteka za vse študente, urejena po študentih",
+            "združena datoteka za vse učence, urejena po učencih",
+        ),
+        (
+            GROUPED_BY_PROBLEMS,
+            "združena datoteka za vse učence, urejena po nalogah",
         ),
     ]
     name = models.CharField("ime", max_length=255)
@@ -82,6 +92,17 @@ class Template(models.Model):
                 for student, problem_texts in student_problem_texts.items()
             ]
             context = Context({"document": document, "students": students})
+            file_contents = template.render(context)
+            yield (file_name, file_contents)
+        elif self.type == self.GROUPED_BY_PROBLEMS:
+            file_name = self._file_name(document) + ".tex"
+            problems = [{"students": []} for _ in document.problems.all()]
+            for student, problem_texts in student_problem_texts.items():
+                for i, problem_text in enumerate(problem_texts):
+                    problems[i]["students"].append(
+                        {"name": student.name, "text": problem_text}
+                    )
+            context = Context({"document": document, "problems": problems})
             file_contents = template.render(context)
             yield (file_name, file_contents)
 
