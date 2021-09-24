@@ -9,50 +9,54 @@
 
 {% block contents %}
 <form method="POST" class="box">
-    {% include "_form.html" %}
-    <div class="field">
-        <label class="label" for="{{ field.id_for_label }}">Besedilo</label>
-        <div class="control">
-            {% for value, rendered_text in form.fields.text.choices %}
-            <article class="media">
-                <div class="media-left">
-                    <label class="radio">
-                        {% if form.initial.text == value %}
-                        <input type="radio" name="{{ form.text.html_name }}" value="{{ value }}" checked>
-                        {% else %}
-                        <input type="radio" name="{{ form.text.html_name }}" value="{{ value }}">
-                        {% endif %}
-                    </label>
-                </div>
-                <div class="media-content">
-                    <div class="content">
-                        {% include "problems/_rendered_text.html" %}
+    <div class="content">
+        <h3>Besedilo naloge</h3>
+        <div class="field">
+            <div class="control">
+                {% for value, rendered_text in form.fields.text.choices %}
+                <article class="media">
+                    <div class="media-left">
+                        <label class="radio">
+                            {% if form.initial.text == value %}
+                            <input type="radio" name="{{ form.text.html_name }}" value="{{ value }}" checked>
+                            {% else %}
+                            <input type="radio" name="{{ form.text.html_name }}" value="{{ value }}">
+                            {% endif %}
+                        </label>
                     </div>
-                </div>
-            </article>
-            {% endfor %}
-            <article class="media">
-                <div class="media-left">
-                    <label class="radio">
-                        <input type="radio" name="{{ form.text.html_name }}">
-                    </label>
-                </div>
-                <div class="media-content">
-                    <div class="content">
-                        {% include "_field.html" with field=form.instruction %}
-                        {% include "_field.html" with field=form.solution %}
+                    <div class="media-content">
+                        <div class="content">
+                            {% include "problems/_rendered_text.html" %}
+                        </div>
                     </div>
-                    <div class="content help">
-                        Pri pisanju navodila in rešitve so vam na voljo sledeči podatki:
-                        <ul>
-                            {% for key, value in example_data.items %}
-                            <li><strong>@{{ key }}</strong>: <code>{{ value }}</code></li>
-                            {% endfor %}
-                        </ul>
-                        Če želite v besedilu uporabiti @, morate napisati <strong>@@</strong>.
-                    </p>
-                </div>
-            </article>
+                </article>
+                {% endfor %}
+                <article class="media">
+                    <div class="media-left">
+                        <label class="radio">
+                            <input type="radio" name="{{ form.text.html_name }}">
+                        </label>
+                    </div>
+                    <div class="media-content">
+                        <div class="content">
+                            <h4>Novo besedilo</h4>
+                            {% include "_field.html" with field=form.instruction %}
+                            {% include "_field.html" with field=form.solution %}
+                        </div>
+                        <div class="content help">
+                            Pri pisanju navodila in rešitve so vam na voljo sledeči podatki:
+                            <ul>
+                                {% for key, value in example_data.items %}
+                                <li><strong>@{{ key }}</strong>: <code>{{ value }}</code></li>
+                                {% endfor %}
+                            </ul>
+                            Če želite v besedilu uporabiti @, morate napisati <strong>@@</strong>.
+                            </p>
+                        </div>
+                </article>
+            </div>
+            <h3>Parametri naloge</h3>
+            {% include "_form.html" %}
         </div>
     </div>
     <button class="button is-primary">

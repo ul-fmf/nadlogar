@@ -80,8 +80,11 @@ class Template(models.Model):
 
 class Document(models.Model):
     name = models.CharField("ime", max_length=255)
-    date = models.DateField("datum")
-    description = models.TextField("opis", blank=True)
+    date = models.DateField(
+        "datum dokumenta",
+        help_text="Datum, ki bo v glavi dokumenta in po katerem bodo urejeni dokumenti.",
+    )
+    introduction = models.TextField("uvodno besedilo", blank=True)
     student_group = models.ForeignKey(
         "students.StudentGroup", verbose_name="skupina", on_delete=models.CASCADE
     )
