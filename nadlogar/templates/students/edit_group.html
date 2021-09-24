@@ -2,6 +2,6 @@
 
 {% block breadcrumbs %}
 <li><a href="{% url 'homepage' %}">Začetek</a></li>
-<li><a href="{{ document.student_group.get_absolute_url }}">{{ document.student_group.name }}</a></li>
+<li><a href="{{ group.get_absolute_url }}">{{ group.name }}</a></li>
 <li class="is-active"><a href="#" aria-current="page">Urejanje</a></li>
 {% endblock breadcrumbs %}

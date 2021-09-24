@@ -17,3 +17,12 @@ def is_danger_if_errors(field):
         return add_class(field, "is-danger")
     else:
         return field
+
+
+@register.simple_tag
+def pluralize(number, singular, dual, plural_34, plural):
+    print(number)
+    choice = {1: singular, 2: dual, 3: plural_34, 4: plural_34}.get(
+        number % 100, plural
+    )
+    return f"{number} {choice}"

@@ -1,4 +1,5 @@
 {% extends 'main.html' %}
+{% load tags %}
 
 {% block breadcrumbs %}
 <li class="is-active"><a href="#" aria-current="page">Začetek</a></li>
@@ -19,10 +20,10 @@
                     <br>
                     <small>
                         <span class="icon is-small"><i class="far fa-file" aria-hidden="true"></i></span>
-                        <span>{{ group.document_set.count }} dokumentov</span>
+                        <span>{% pluralize group.document_set.count "dokument" "dokumenta" "dokumenti" "dokumentov" %}</span>
                         ·
                         <span class="icon is-small"><i class="fas fa-user" aria-hidden="true"></i></span>
-                        <span>{{ group.students|length }} učenca</span>
+                        <span>{% pluralize group.students|length "učenec" "učenca" "učenci" "učencev"  %}</span>
                     </small>
                 </p>
             </div>
