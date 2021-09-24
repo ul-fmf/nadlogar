@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils.text import slugify
 from students.models import StudentGroup
 from students.views import get_group_if_allowed
 
@@ -90,7 +91,7 @@ def _zip_archive(archive_name, files):
     archive.close()
     response = HttpResponse(string_buffer.getvalue(), content_type="application/zip")
     response["Content-Disposition"] = 'attachment; filename="{0}.zip"'.format(
-        archive_name
+        slugify(archive_name)
     )
     return response
 

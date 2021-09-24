@@ -4,6 +4,7 @@ import tempfile
 from django.db import models
 from django.template import Context
 from django.template import Template as DjangoTemplate
+from django.utils.text import slugify
 
 
 class LaTeXError(Exception):
@@ -55,9 +56,11 @@ class Template(models.Model):
 
     def _file_name(self, document, student=None):
         if student is None:
-            return f"{document.name}/{self.name}"
+            return f"{slugify(document.name)}/{slugify(self.name)}"
         else:
-            return f"{document.name}/{self.name}/{student.name}"
+            return (
+                f"{slugify(document.name)}/{slugify(self.name)}/{slugify(student.name)}"
+            )
 
     def generate_files(self, document, student_problem_texts):
         template = DjangoTemplate(self.template)
@@ -92,9 +95,9 @@ class DocumentSort(models.Model):
     def __str__(self):
         return self.name
 
-    def tex_files(self, student_problem_texts):
+    def tex_files(self, document, student_problem_texts):
         for template in self.template_set.all():
-            yield from template.generate_files(self, student_problem_texts)
+            yield from template.generate_files(document, student_problem_texts)
 
 
 class Document(models.Model):
@@ -143,7 +146,7 @@ class Document(models.Model):
 
     def tex_files(self):
         student_problem_texts = self.generate_student_problem_texts()
-        yield from self.sort.tex_files(student_problem_texts)
+        yield from self.sort.tex_files(self, student_problem_texts)
 
     def pdf_files(self):
         for tex_file_name, tex_contents in self.tex_files():
