@@ -21,7 +21,7 @@ class PotencaDvoclenika(Problem):
     )
 
     class Meta:
-        verbose_name = "potenciranje dvočlenika"
+        verbose_name = "Veččleniki / potenciranje dvočlenika"
 
     def generate(self):
         potenca = random.randint(self.najmanjsa_potenca, self.najvecja_potenca)
@@ -69,7 +69,7 @@ class PotencaTroclenika(Problem):
     )
 
     class Meta:
-        verbose_name = "potenciranje tročlenika"
+        verbose_name = "Veččleniki / potenciranje tročlenika"
 
     def generate(self):
         potenca = random.randint(self.najmanjsa_potenca, self.najvecja_potenca)
@@ -120,7 +120,7 @@ class PotencaVecclenika(Problem):
     )
 
     class Meta:
-        verbose_name = "potenciranje veččlenika"
+        verbose_name = "Veččleniki / potenciranje veččlenika"
 
     def generate(self):
         potenca = random.randint(self.najmanjsa_potenca, self.najvecja_potenca)

@@ -23,19 +23,25 @@ def _get_problem_if_allowed(request, group_id: int, document_id: int, problem_id
 
 @login_required
 def choose_problem(request, group_id: int, document_id: int):
-    content_types = [
-        (
-            content_type.id,
-            Problem.example_data_and_text(content_type)[1],
-            generator._meta.verbose_name,
+    problem_groups = {}
+    for generator, content_type in problem_content_types().items():
+        group, description = generator._meta.verbose_name.split(" / ")
+        problem_groups.setdefault(group, []).append(
+            (
+                content_type.id,
+                Problem.example_data_and_text(content_type)[1],
+                description,
+            )
         )
-        for generator, content_type in problem_content_types().items()
-    ]
+    if "???" in problem_groups:
+        del problem_groups["???"]
+    special_problems = problem_groups.pop("Razno")
+    grouped_problems = [("Razno", special_problems)] + sorted(problem_groups.items())
     document = _get_document_if_allowed(request, group_id, document_id)
     return render(
         request,
         "problems/choose_problem.html",
-        {"document": document, "content_types": content_types},
+        {"document": document, "grouped_problems": grouped_problems},
     )
 
 

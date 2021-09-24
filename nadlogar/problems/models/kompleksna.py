@@ -27,7 +27,7 @@ class VsotaKompleksnih(Problem):
     """Problem za seštevanje in odštevanje kompleksnih števil."""
 
     class Meta:
-        verbose_name = "vsota in razlika kompleksnih števil"
+        verbose_name = "Kompleksna števila / seštevanje in odštevanje ulomkov"
 
     def generate(self):
         kolicina = 3
@@ -69,7 +69,7 @@ class KompleksniUlomek(Problem):
     """Problem za seštevanje in racionalizacijo kompleksnih ulomkov."""
 
     class Meta:
-        verbose_name = "seštevanje in racionalizacija kompleksnih ulomkov"
+        verbose_name = "Kompleksna števila / seštevanje in racionalizacija ulomkov"
 
     def generate(self):
         kolicina = 4
@@ -96,7 +96,7 @@ class MnozenjeKompleksnih(Problem):
     """Problem za množenje kompleksnih števil."""
 
     class Meta:
-        verbose_name = "množenje kompleksnih števil"
+        verbose_name = "Kompleksna števila / množenje"
 
     def generate(self):
         kolicina = 2
@@ -115,7 +115,7 @@ class RacunanjeKompleksno(Problem):
     """Problem za računanje absolutne vrednosti, potenciranja in konjugiranje kompleksnega števila ter višje potence kompleksne enote i."""
 
     class Meta:
-        verbose_name = "računanje z kompleksno enoto"
+        verbose_name = "Kompleksna števila / računanje s kompleksno enoto"
 
     def generate(self):
         z = sympy.symbols("z")
@@ -148,7 +148,7 @@ class KompleksnaEnacba(Problem):
     )
 
     class Meta:
-        verbose_name = "enačbe s kompleksnimi števili"
+        verbose_name = "Kompleksna števila / reševanje enačb s kompleksnimi števili"
 
     def generate(self):
         z = sympy.symbols("z")
@@ -176,7 +176,7 @@ class NarisiKompleksna(Problem):
     """Problem za risanje kompleksnih števil v kompleksno ravnino."""
 
     class Meta:
-        verbose_name = "risanje kompleksnih števil"
+        verbose_name = "??? / risanje v ravnino"
 
     def generate(self):
         kolicina = 4

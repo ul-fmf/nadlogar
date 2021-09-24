@@ -23,7 +23,7 @@ class DeliteljVeckratnik(Problem):
     )
 
     class Meta:
-        verbose_name = "največji skupni delitelj in najmanjši skupni večkratnik"
+        verbose_name = "Naravna števila / iskanje največjega skupnega delitelja in najmanjšega skupnega večkratnika"
 
     def generate(self):
         stevilo1 = random.randint(self.minimalna_vrednost, self.maksimalna_vrednost)
@@ -49,7 +49,7 @@ class EvklidovAlgoritem(Problem):
     """Problem za izračun največjega skupnega delitelja dveh števil z evklidovim algoritmom."""
 
     class Meta:
-        verbose_name = "evklidov algoritem"
+        verbose_name = "Naravna števila / Evklidov algoritem"
 
     def generate(self):
         stevilo_malo = random.randint(50, 199)

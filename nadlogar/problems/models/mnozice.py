@@ -15,7 +15,7 @@ class ElementiMnozice(Problem):
     )
 
     class Meta:
-        verbose_name = "elementi množice"
+        verbose_name = "Množice / elementi iz predpisa"
 
     def generate(self):
         pogoj = random.choice(self.POGOJ)
@@ -48,7 +48,7 @@ class PotencnaMnozica(Problem):
     """Problem za izpis potenčne množice od dane množice."""
 
     class Meta:
-        verbose_name = "potenčna množica"
+        verbose_name = "Množice / potenčna množica"
 
     def generate(self):
         velikost = random.randint(2, 3)
@@ -70,7 +70,7 @@ class OperacijeMnozic(Problem):
     """Naloga za zapis unije, preseka, razlike, in kartezičnega produkta množic."""
 
     class Meta:
-        verbose_name = "operacije z množicami"
+        verbose_name = "Množice / operacije z množicami"
 
     @staticmethod
     def generiraj_mnozico(velikost, od, do):
@@ -100,7 +100,7 @@ class IzpeljaneMnozice(Problem):
     """Problem za zapis komplementa, unije in razlike množic ter izpis elementov izpeljane množice pri podani univerzalni množici."""
 
     class Meta:
-        verbose_name = "izpeljane množice"
+        verbose_name = "Množice / operacije na izpeljanih množicah"
 
     def generate(self):
         k = sympy.symbols("k")

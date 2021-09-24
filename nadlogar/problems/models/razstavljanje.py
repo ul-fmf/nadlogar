@@ -16,7 +16,7 @@ class RazstaviVieta(Problem):
     )
 
     class Meta:
-        verbose_name = "razstavi Vieta"
+        verbose_name = "Razstavljanje / Vietovo pravilo"
 
     def generate(self):
         x1 = random.randint(-self.maksimalna_vrednost, self.maksimalna_vrednost)
@@ -54,7 +54,7 @@ class RazstaviRazliko(Problem):
     )
 
     class Meta:
-        verbose_name = "razstavi razliko"
+        verbose_name = "Razstavljanje / razlika potenc"
 
     def generate(self):
         if self.najmanjsa_potenca > self.najvecja_potenca:

@@ -8,8 +8,10 @@
 {% endblock breadcrumbs %}
 
 {% block contents %}
-<div class="box">
-    {% for content_type_id, rendered_text, description in content_types %}
+<div class="box content">
+    {% for group, problems in grouped_problems %}
+    <h3>{{ group }}</h3>
+    {% for content_type_id, rendered_text, description in problems %}
     <article class="media">
         <div class="media-content">
             <div class="content">
@@ -29,6 +31,7 @@
             </div>
         </div>
     </article>
+    {% endfor %}
     {% endfor %}
 </div>
 {% endblock contents %}

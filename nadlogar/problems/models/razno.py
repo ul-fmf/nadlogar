@@ -5,14 +5,16 @@ class ProstoBesedilo(Problem):
     """Problem s poljubnim fiksnim besedilom navodila in rešitve, namenjen ročno sestavljenim nalogam."""
 
     navodilo = models.TextField(
-        "navodilo", help_text="Poljubno besedilo navodila.", default=""
+        "navodilo",
+        help_text="Poljubno besedilo navodila.",
+        default="Poljubno besedilo…",
     )
     resitev = models.TextField(
-        "rešitev", help_text="Poljubno besedilo rešitve.", default=""
+        "rešitev", help_text="Poljubno besedilo rešitve.", default="Poljubno besedilo…"
     )
 
     class Meta:
-        verbose_name = "prosto besedilo"
+        verbose_name = "Razno / prosto besedilo"
 
     def generate(self):
         return {
@@ -41,7 +43,7 @@ class KrajsanjeUlomkov(Problem):
     )
 
     class Meta:
-        verbose_name = "krajšanje ulomkov"
+        verbose_name = "??? / krajšanje ulomkov"
 
     def generate(self):
         stevec = random.randint(1, self.najvecji_stevec)
@@ -70,7 +72,7 @@ class IskanjeNicelPolinoma(Problem):
     )
 
     class Meta:
-        verbose_name = "iskanje ničel polinoma"
+        verbose_name = "??? / iskanje ničel polinoma"
 
     def generate(self):
         nicla = random.randint(1, self.velikost_nicle)
