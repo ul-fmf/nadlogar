@@ -64,17 +64,15 @@
     <article class="media">
         <div class="media-content">
             <div class="content">
-                <p>
-                    <strong>{{ student.name }}</strong>
-                </p>
+                <h3>{{ student.name }}</h3>
                 {% for rendered_text in problems %}
                 <article class="media">
+                    <div class="media-left">
+                        <strong>{{ forloop.counter }}.</strong>
+                    </div>
                     <div class="media-content">
                         <div class="content">
-                            <p>
-                                <strong>{{ forloop.counter }}. naloga</strong>
-                                {% include "problems/_rendered_text.html" %}
-                            </p>
+                            {% include "problems/_rendered_text.html" %}
                         </div>
                     </div>
                 </article>

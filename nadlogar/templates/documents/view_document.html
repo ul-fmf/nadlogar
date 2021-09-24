@@ -72,12 +72,12 @@
     </article>
     {% for problem, data, rendered_text in document.problem_examples %}
     <article class="media">
+        <div class="media-left">
+            <strong>{{ forloop.counter }}.</strong>
+        </div>
         <div class="media-content">
             <div class="content">
-                <p>
-                    <strong>{{ forloop.counter }}. naloga</strong>
-                    {% include "problems/_rendered_text.html" %}
-                </p>
+                {% include "problems/_rendered_text.html" %}
                 <small>
                     <a
                         href="{% url 'students:documents:problems:edit_problem' document.student_group.id document.id problem.id %}">
