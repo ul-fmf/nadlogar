@@ -102,3 +102,13 @@ class Problem(models.Model):
         data = problem.generate_data(None)
         text = ProblemText.objects.filter(content_type=content_type).first()
         return data, text.render(data)
+
+    def duplicate(self):
+        self = self.downcast()
+        # https://docs.djangoproject.com/en/3.2/topics/db/queries/#copying-model-instances
+        # > Due to how inheritance works, you have to set both pk and id to None, and _state.adding to True
+        self.pk = None
+        self.id = None
+        self._state.adding = True
+        self.save()
+        return self

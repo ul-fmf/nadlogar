@@ -86,6 +86,19 @@
                         </span>
                         <span>Uredi</span>
                     </a>
+                    ·&nbsp;
+                    <form style="display: inline" method="POST"
+                        action="{% url 'students:documents:problems:duplicate_problem' document.student_group.id document.id problem.id %}">
+                        {% csrf_token %}
+                        <button class="button is-ghost" style="padding: 0; height:auto">
+                            <small>
+                                <span class="icon is-small">
+                                    <i class="fas fa-copy"></i>
+                                </span>
+                                <span>Podvoji</span>
+                            </small>
+                        </button>
+                    </form>
                     ·
                     <a class="has-text-danger-dark"
                         href="{% url 'students:documents:problems:delete_problem' document.student_group.id document.id problem.id %}">

@@ -80,3 +80,11 @@ def delete_problem(request, group_id: int, document_id: int, problem_id: int):
         problem.delete()
         return redirect(problem.document.get_absolute_url())
     return render(request, "problems/delete_problem.html", {"problem": problem})
+
+
+@login_required
+def duplicate_problem(request, group_id: int, document_id: int, problem_id: int):
+    problem = _get_problem_if_allowed(request, group_id, document_id, problem_id)
+    if request.method == "POST":
+        new_problem = problem.duplicate()
+        return redirect(new_problem.document.get_absolute_url())
