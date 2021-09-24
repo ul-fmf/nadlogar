@@ -6,11 +6,10 @@ class DocumentTest(TestCase):
     def setUp(self):
         self.stevilo_testov = 10
         self.stevilo_studentov = 5
-        self.student_group = baker.make("StudentGroup")
-        self.students = [
-            baker.make("Student", group=self.student_group)
-            for i in range(self.stevilo_studentov)
-        ]
+        self.student_group = baker.make(
+            "StudentGroup",
+            _students="\n".join("Student{i}" for i in range(self.stevilo_studentov)),
+        )
 
     def test_stevilo_nadlog(self):
         for stevilo_nalog in range(self.stevilo_testov):
