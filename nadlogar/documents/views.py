@@ -78,7 +78,7 @@ def _zip_archive(archive_name, files):
         archive.writestr(file_name, file_contents)
     archive.close()
     response = HttpResponse(string_buffer.getvalue(), content_type="application/zip")
-    response["Content-Disposition"] = "attachment; filename={0}.zip".format(
+    response["Content-Disposition"] = 'attachment; filename="{0}.zip"'.format(
         archive_name
     )
     return response
