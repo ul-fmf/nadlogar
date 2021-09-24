@@ -151,3 +151,13 @@ class Document(models.Model):
             pdf_file_name = tex_file_name.replace(".tex", ".pdf")
             pdf_contents = _pdf_latex(tex_contents)
             yield pdf_file_name, pdf_contents
+
+    def copy(self, group):
+        old_problems = list(self.problems.all())
+        self.group = group
+        self.pk = None
+        self.name += " (kopija)"
+        self.save()
+        for problem in old_problems:
+            problem.copy(self)
+        return self

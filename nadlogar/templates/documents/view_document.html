@@ -15,7 +15,7 @@
                     <a class="button is-info"
                         href="{% url 'students:documents:preview' document.student_group.id document.id %}">
                         <span class="icon is-small">
-                            <i class="fas fa-copy"></i>
+                            <i class="fas fa-book-reader"></i>
                         </span>
                         <span>Predogled nadlog</span>
                     </a>
@@ -36,6 +36,33 @@
                         <span>Uredi</span>
                     </a>
                 </p>
+                <div class="dropdown is-hoverable">
+                    <div class="dropdown-trigger">
+                        <button class="button is-small" aria-haspopup="true" aria-controls="dropdown-menu">
+                            <span class="icon">
+                                <i class="fas fa-copy"></i>
+                            </span>
+                            <span>Kopiraj</span>
+                            <span class="icon is-small">
+                                <i class="fas fa-angle-down" aria-hidden="true"></i>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                        <div class="dropdown-content">
+                            {% for new_group in groups.all %}
+                            <form method="POST"
+                                action="{% url 'students:documents:copy_document' document.student_group.id document.id new_group.id %}"
+                                style="display: inline">
+                                {% csrf_token %}
+                                <button class="button is-ghost" style="height:auto; text-decoration: none;">
+                                    {{ new_group.name }}
+                                </button>
+                            </form>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
                 <p class="control">
                     <a class="button is-small is-danger is-outlined"
                         href="{% url 'students:documents:delete_document' document.student_group.id document.id %}">

@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from students.models import StudentGroup
 from students.views import get_group_if_allowed
 
 from .forms import DocumentForm
@@ -43,10 +44,11 @@ def create_document(request, group_id):
 @login_required
 def view_document(request, group_id: int, document_id: int):
     document = _get_document_if_allowed(request, group_id, document_id)
+    groups = StudentGroup.objects.filter(user=request.user)
     return render(
         request,
         "documents/view_document.html",
-        {"document": document},
+        {"document": document, "groups": groups},
     )
 
 
@@ -69,6 +71,15 @@ def delete_document(request, group_id: int, document_id: int):
         document.delete()
         return redirect(document.group.get_absolute_url())
     return render(request, "documents/delete_document.html", {"document": document})
+
+
+@login_required
+def copy_document(request, group_id: int, document_id: int, new_group_id: int):
+    document = _get_document_if_allowed(request, group_id, document_id)
+    new_group = get_group_if_allowed(request, new_group_id)
+    if request.method == "POST":
+        new_document = document.copy(new_group)
+        return redirect(new_document.get_absolute_url())
 
 
 def _zip_archive(archive_name, files):

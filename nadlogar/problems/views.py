@@ -86,5 +86,5 @@ def delete_problem(request, group_id: int, document_id: int, problem_id: int):
 def duplicate_problem(request, group_id: int, document_id: int, problem_id: int):
     problem = _get_problem_if_allowed(request, group_id, document_id, problem_id)
     if request.method == "POST":
-        new_problem = problem.duplicate()
+        new_problem = problem.copy(problem.document)
         return redirect(new_problem.document.get_absolute_url())

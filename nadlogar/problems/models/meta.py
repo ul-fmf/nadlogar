@@ -103,8 +103,9 @@ class Problem(models.Model):
         text = ProblemText.objects.filter(content_type=content_type).first()
         return data, text.render(data)
 
-    def duplicate(self):
+    def copy(self, document):
         self = self.downcast()
+        self.document = document
         # https://docs.djangoproject.com/en/3.2/topics/db/queries/#copying-model-instances
         # > Due to how inheritance works, you have to set both pk and id to None, and _state.adding to True
         self.pk = None

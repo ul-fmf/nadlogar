@@ -8,6 +8,11 @@ urlpatterns = [
     path("<int:document_id>/", views.view_document, name="view_document"),
     path("<int:document_id>/edit/", views.edit_document, name="edit_document"),
     path("<int:document_id>/delete/", views.delete_document, name="delete_document"),
+    path(
+        "<int:document_id>/copy/<int:new_group_id>/",
+        views.copy_document,
+        name="copy_document",
+    ),
     path("<int:document_id>/problems/", include("problems.urls")),
     path("<int:document_id>/download/", views.preview, name="preview"),
     path("<int:document_id>/download/tex/", views.download_tex, name="download_tex"),
