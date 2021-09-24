@@ -28,6 +28,18 @@
         </div>
     </article>
     {% endfor %}
+    <article class="media">
+        <div class="media-content">
+            <div class="content">
+                <a href="{% url 'students:create_group' %}" class="button is-outlined">
+                    <span class="icon">
+                        <i class="fas fa-plus"></i>
+                    </span>
+                    <span>Nova skupina</span></a>
+                </a>
+            </div>
+        </div>
+    </article>
 
     <h3>Moji dokumenti</h3>
     {% for document in documents %}
