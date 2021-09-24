@@ -70,7 +70,7 @@ def delete_document(request, group_id: int, document_id: int):
     document = _get_document_if_allowed(request, group_id, document_id)
     if request.method == "POST":
         document.delete()
-        return redirect(document.group.get_absolute_url())
+        return redirect(document.student_group.get_absolute_url())
     return render(request, "documents/delete_document.html", {"document": document})
 
 

@@ -1,4 +1,5 @@
 {% extends 'forms/delete.html' %}
+{% load tags %}
 
 {% block breadcrumbs %}
 <li><a href="{% url 'homepage' %}"><span class="icon is-small"><i class="fas fa-home" aria-hidden="true"></i></span></a></li>
@@ -7,5 +8,5 @@
 {% endblock breadcrumbs %}
 
 {% block warning %}
-Pobrisali boste skupino z {{ group.students|length }} učenci in {{ group.document_set.count }} dokumenti.
+Pobrisali boste skupino, ki ima {% pluralize group.students|length "učenca" "učenca" "učence" "učencev" %} in {% pluralize group.document_set.count "dokument" "dokumenta" "dokumente" "dokumentov" %}.
 {% endblock warning %}

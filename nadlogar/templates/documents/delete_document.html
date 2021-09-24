@@ -1,4 +1,5 @@
 {% extends 'forms/delete.html' %}
+{% load tags %}
 
 {% block breadcrumbs %}
 <li><a href="{% url 'homepage' %}"><span class="icon is-small"><i class="fas fa-home" aria-hidden="true"></i></span></a></li>
@@ -8,5 +9,5 @@
 {% endblock breadcrumbs %}
 
 {% block warning %}
-Pobrisali boste dokument {{ document.name }} z {{ document.problems.count }} nalogami.
+Pobrisali boste dokument {{ document.name }}, ki ima {% pluralize document.problems.count "nalogo" "nalogi" "naloge" "nalog" %}.
 {% endblock warning %}

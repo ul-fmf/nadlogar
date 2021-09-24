@@ -4,7 +4,7 @@
         "pk": 1,
         "fields": {
             "name": "naloge",
-            "template": "\\documentclass[arhiv]{izpit}\r\n\\begin{document}\r\n\r\n\\izpit{%\r\n  {{ document.name }}:\r\n  {{ student.name }}\r\n}{%\r\n  {{ document.date }}\r\n}{%\r\n  {{ document.introduction }}\r\n}\r\n\r\n{% for texts in student.texts %}\r\n\\naloga\r\n{% if texts|length > 1 %}\r\n{% for text in texts %}\r\n\\podnaloga {{ text.instruction }}\r\n{% endfor %}\r\n{% else %}\r\n{{ texts.0.instruction }}\r\n{% endif %}\r\n{% endfor %}\r\n\r\n\\end{document}",
+            "template": "\\documentclass[arhiv]{izpit}\r\n\\usepackage{bera}\r\n\\begin{document}\r\n\r\n\\izpit{%\r\n  {{ document.name }}:\r\n  {{ student.name }}\r\n}{%\r\n  {{ document.date }}\r\n}{%\r\n  {{ document.introduction }}\r\n}\r\n\r\n{% for texts in student.texts %}\r\n\\naloga\r\n{% if texts|length > 1 %}\r\n{% for text in texts %}\r\n\\podnaloga {{ text.instruction }}\r\n{% endfor %}\r\n{% else %}\r\n{{ texts.0.instruction }}\r\n{% endif %}\r\n{% endfor %}\r\n\r\n\\end{document}",
             "type": "I",
             "document_sort": 1
         }
@@ -14,7 +14,7 @@
         "pk": 2,
         "fields": {
             "name": "rešitve",
-            "template": "\\documentclass[arhiv]{izpit}\r\n\\begin{document}\r\n\r\n\\izpit{%\r\n  {{ document.name }}:\r\n  Rešitve\r\n}{%\r\n  {{ document.date }}\r\n}{}\r\n\r\n{% for problem in problems %}\r\n\r\n\\naloga\r\n{% for student in problem.students %}\r\n\\noindent\\textbf{%\r\n  {{ student.name }}:\r\n}%\r\n{% if student.text|length > 1 %}%\r\n\\begin{enumerate}\r\n{% for text in student.text %}\r\n\\item {{ text.solution }}\r\n{% endfor %}\r\n\\end{enumerate}\r\n{% else %}%\r\n{{ student.text.0.solution }}\r\n{% endif %}\r\n{% endfor %}\r\n{% endfor %}\r\n\r\n\\end{document}",
+            "template": "\\documentclass[arhiv]{izpit}\r\n\\usepackage{bera}\r\n\\begin{document}\r\n\r\n\\izpit{%\r\n  {{ document.name }}:\r\n  Rešitve\r\n}{%\r\n  {{ document.date }}\r\n}{}\r\n\r\n{% for problem in problems %}\r\n\r\n\\naloga\r\n{% for student in problem.students %}\r\n\\noindent\\textbf{%\r\n  {{ student.name }}:\r\n}%\r\n{% if student.text|length > 1 %}%\r\n\\begin{enumerate}\r\n{% for text in student.text %}\r\n\\item {{ text.solution }}\r\n{% endfor %}\r\n\\end{enumerate}\r\n{% else %}%\r\n{{ student.text.0.solution }}\r\n{% endif %}\r\n{% endfor %}\r\n{% endfor %}\r\n\r\n\\end{document}",
             "type": "P",
             "document_sort": 1
         }
@@ -24,7 +24,7 @@
         "pk": 3,
         "fields": {
             "name": "naloge",
-            "template": "\\documentclass[arhiv]{izpit}\r\n\\begin{document}\r\n{% for student in students %}\r\n\\izpit{%\r\n  {{ document.name }}:\r\n  {{ student.name }}\r\n}{%\r\n  {{ document.date }}\r\n}{%\r\n  {{ document.introduction }}\r\n}\r\n\r\n{% for texts in student.texts %}\r\n\\naloga\r\n{% if texts|length > 1 %}\r\n{% for text in texts %}\r\n\\podnaloga {{ text.instruction }}\r\n{% endfor %}\r\n{% else %}\r\n{{ texts.0.instruction }}\r\n{% endif %}\r\n{% endfor %}\r\n{% endfor %}\r\n\\end{document}",
+            "template": "\\documentclass[arhiv]{izpit}\r\n\\usepackage{bera}\r\n\\begin{document}\r\n{% for student in students %}\r\n\\izpit{%\r\n  {{ document.name }}:\r\n  {{ student.name }}\r\n}{%\r\n  {{ document.date }}\r\n}{%\r\n  {{ document.introduction }}\r\n}\r\n\r\n{% for texts in student.texts %}\r\n\\naloga\r\n{% if texts|length > 1 %}\r\n{% for text in texts %}\r\n\\podnaloga {{ text.instruction }}\r\n{% endfor %}\r\n{% else %}\r\n{{ texts.0.instruction }}\r\n{% endif %}\r\n{% endfor %}\r\n{% endfor %}\r\n\\end{document}",
             "type": "S",
             "document_sort": 2
         }
@@ -34,7 +34,7 @@
         "pk": 4,
         "fields": {
             "name": "rešitve",
-            "template": "\\documentclass[arhiv]{izpit}\r\n\\begin{document}\r\n\r\n\\izpit{%\r\n  {{ document.name }}:\r\n  Rešitve\r\n}{%\r\n  {{ document.date }}\r\n}{}\r\n\r\n{% for problem in problems %}\r\n\r\n\\naloga\r\n{% for student in problem.students %}\r\n\\noindent\\textbf{%\r\n  {{ student.name }}:\r\n}%\r\n{% if student.text|length > 1 %}%\r\n\\begin{enumerate}\r\n{% for text in student.text %}\r\n\\item {{ text.solution }}\r\n{% endfor %}\r\n\\end{enumerate}\r\n{% else %}%\r\n{{ student.text.0.solution }}\r\n{% endif %}\r\n{% endfor %}\r\n{% endfor %}\r\n\r\n\\end{document}",
+            "template": "\\documentclass[arhiv]{izpit}\r\n\\usepackage{bera}\r\n\\begin{document}\r\n\r\n\\izpit{%\r\n  {{ document.name }}:\r\n  Rešitve\r\n}{%\r\n  {{ document.date }}\r\n}{}\r\n\r\n{% for problem in problems %}\r\n\r\n\\naloga\r\n{% for student in problem.students %}\r\n\\noindent\\textbf{%\r\n  {{ student.name }}:\r\n}%\r\n{% if student.text|length > 1 %}%\r\n\\begin{enumerate}\r\n{% for text in student.text %}\r\n\\item {{ text.solution }}\r\n{% endfor %}\r\n\\end{enumerate}\r\n{% else %}%\r\n{{ student.text.0.solution }}\r\n{% endif %}\r\n{% endfor %}\r\n{% endfor %}\r\n\r\n\\end{document}",
             "type": "P",
             "document_sort": 2
         }
@@ -44,7 +44,7 @@
         "pk": 5,
         "fields": {
             "name": "naloge",
-            "template": "\\documentclass[izpolnjen]{izpit}\r\n\\begin{document}\r\n\r\n{% for student in students %}\r\n\\izpit{%\r\n  {{ document.name }}:\r\n  {{ student.name }}\r\n}{%\r\n  {{ document.date }}\r\n}{%\r\n  {{ document.introduction }}\r\n}\r\n\r\n{% for texts in student.texts %}\r\n\\naloga\r\n{% if texts|length > 1 %}\r\n{% for text in texts %}\r\n\\podnaloga {{ text.instruction }}\r\n\\prostor\r\n{% endfor %}\r\n{% else %}\r\n{{ texts.0.instruction }}\r\n{% endif %}\r\n{% endfor %}\r\n{% endfor %}\r\n\\end{document}",
+            "template": "\\documentclass[izpolnjen]{izpit}\r\n\\usepackage{bera}\r\n\\begin{document}\r\n\r\n{% for student in students %}\r\n\\izpit{%\r\n  {{ document.name }}:\r\n  {{ student.name }}\r\n}{%\r\n  {{ document.date }}\r\n}{%\r\n  {{ document.introduction }}\r\n}\r\n\r\n{% for texts in student.texts %}\r\n\\naloga\r\n{% if texts|length > 1 %}\r\n{% for text in texts %}\r\n\\podnaloga {{ text.instruction }}\r\n\\prostor\r\n{% endfor %}\r\n{% else %}\r\n{{ texts.0.instruction }}\r\n{% endif %}\r\n{% endfor %}\r\n{% endfor %}\r\n\\end{document}",
             "type": "S",
             "document_sort": 3
         }
@@ -54,7 +54,7 @@
         "pk": 6,
         "fields": {
             "name": "rešitve",
-            "template": "\\documentclass[arhiv]{izpit}\r\n\\begin{document}\r\n\r\n\\izpit{%\r\n  {{ document.name }}:\r\n  Rešitve\r\n}{%\r\n  {{ document.date }}\r\n}{}\r\n\r\n{% for problem in problems %}\r\n\r\n\\naloga\r\n{% for student in problem.students %}\r\n\\noindent\\textbf{%\r\n  {{ student.name }}:\r\n}%\r\n{% if student.text|length > 1 %}%\r\n\\begin{enumerate}\r\n{% for text in student.text %}\r\n\\item {{ text.solution }}\r\n{% endfor %}\r\n\\end{enumerate}\r\n{% else %}%\r\n{{ student.text.0.solution }}\r\n{% endif %}\r\n{% endfor %}\r\n{% endfor %}\r\n\r\n\\end{document}",
+            "template": "\\documentclass[arhiv]{izpit}\r\n\\usepackage{bera}\r\n\\begin{document}\r\n\r\n\\izpit{%\r\n  {{ document.name }}:\r\n  Rešitve\r\n}{%\r\n  {{ document.date }}\r\n}{}\r\n\r\n{% for problem in problems %}\r\n\r\n\\naloga\r\n{% for student in problem.students %}\r\n\\noindent\\textbf{%\r\n  {{ student.name }}:\r\n}%\r\n{% if student.text|length > 1 %}%\r\n\\begin{enumerate}\r\n{% for text in student.text %}\r\n\\item {{ text.solution }}\r\n{% endfor %}\r\n\\end{enumerate}\r\n{% else %}%\r\n{{ student.text.0.solution }}\r\n{% endif %}\r\n{% endfor %}\r\n{% endfor %}\r\n\r\n\\end{document}",
             "type": "P",
             "document_sort": 3
         }
@@ -64,7 +64,7 @@
         "pk": 7,
         "fields": {
             "name": "naloge",
-            "template": "\\documentclass[arhiv]{izpit}\r\n\\usepackage{rotating}\r\n\\begin{document}\r\n\r\n\\izpit{%\r\n  {{ document.name }}:\r\n  {{ student.name }}\r\n}{%\r\n  {{ document.date }}\r\n}{%\r\n  {{ document.introduction }}\r\n}\r\n\r\n{% for texts in student.texts %}\r\n\\naloga\r\n{% if texts|length > 1 %}\r\n{% for text in texts %}\r\n\\podnaloga {{ text.instruction }}\r\n{% endfor %}\r\n{% else %}\r\n{{ texts.0.instruction }}\r\n{% endif %}\r\n{% endfor %}\r\n\r\n\\vfill\r\n\\begin{turn}{180}{\\begin{minipage}{\\linewidth}\r\n\\tiny\r\n\\begin{enumerate}\r\n{% for texts in student.texts %}\r\n\\item%\r\n{% if texts|length > 1 %}\r\n{% for text in texts %}\r\n{{ text.solution }}{% if not forloop.last %},{% endif %}\r\n{% endfor %}\r\n{% else %}\r\n{{ texts.0.solution }}\r\n{% endif %}\r\n{% endfor %}\r\n\\end{enumerate}\\end{minipage}}\\end{turn}\r\n\r\n\\end{document}",
+            "template": "\\documentclass[arhiv]{izpit}\r\n\\usepackage{bera}\r\n\\usepackage{rotating}\r\n\\begin{document}\r\n\r\n\\izpit{%\r\n  {{ document.name }}:\r\n  {{ student.name }}\r\n}{%\r\n  {{ document.date }}\r\n}{%\r\n  {{ document.introduction }}\r\n}\r\n\r\n{% for texts in student.texts %}\r\n\\naloga\r\n{% if texts|length > 1 %}\r\n{% for text in texts %}\r\n\\podnaloga {{ text.instruction }}\r\n{% endfor %}\r\n{% else %}\r\n{{ texts.0.instruction }}\r\n{% endif %}\r\n{% endfor %}\r\n\r\n\\vfill\r\n\\begin{turn}{180}{\\begin{minipage}{\\linewidth}\r\n\\tiny\r\n\\begin{enumerate}\r\n{% for texts in student.texts %}\r\n\\item%\r\n{% if texts|length > 1 %}\r\n{% for text in texts %}\r\n{{ text.solution }}{% if not forloop.last %},{% endif %}\r\n{% endfor %}\r\n{% else %}\r\n{{ texts.0.solution }}\r\n{% endif %}\r\n{% endfor %}\r\n\\end{enumerate}\\end{minipage}}\\end{turn}\r\n\r\n\\end{document}",
             "type": "I",
             "document_sort": 4
         }
@@ -74,7 +74,7 @@
         "pk": 8,
         "fields": {
             "name": "naloga",
-            "template": "\\documentclass[arhiv]{izpit}\r\n\\usepackage{rotating}\r\n\\begin{document}\r\n\r\n{% for student in students %}\r\n\\izpit{%\r\n  {{ document.name }}:\r\n  {{ student.name }}\r\n}{%\r\n  {{ document.date }}\r\n}{%\r\n  {{ document.introduction }}\r\n}\r\n\r\n{% for texts in student.texts %}\r\n\\naloga\r\n{% if texts|length > 1 %}\r\n{% for text in texts %}\r\n\\podnaloga {{ text.instruction }}\r\n{% endfor %}\r\n{% else %}\r\n{{ texts.0.instruction }}\r\n{% endif %}\r\n{% endfor %}\r\n\r\n\\vfill\r\n\\begin{turn}{180}{\\begin{minipage}{\\linewidth}\r\n\\tiny\r\n\\begin{enumerate}\r\n{% for texts in student.texts %}\r\n\\item%\r\n{% if texts|length > 1 %}\r\n{% for text in texts %}\r\n{{ text.solution }}{% if not forloop.last %},{% endif %}\r\n{% endfor %}\r\n{% else %}\r\n{{ texts.0.solution }}\r\n{% endif %}\r\n{% endfor %}\r\n\\end{enumerate}\\end{minipage}}\\end{turn}\r\n{% endfor %}\r\n\\end{document}",
+            "template": "\\documentclass[arhiv]{izpit}\r\n\\usepackage{bera}\r\n\\usepackage{rotating}\r\n\\begin{document}\r\n\r\n{% for student in students %}\r\n\\izpit{%\r\n  {{ document.name }}:\r\n  {{ student.name }}\r\n}{%\r\n  {{ document.date }}\r\n}{%\r\n  {{ document.introduction }}\r\n}\r\n\r\n{% for texts in student.texts %}\r\n\\naloga\r\n{% if texts|length > 1 %}\r\n{% for text in texts %}\r\n\\podnaloga {{ text.instruction }}\r\n{% endfor %}\r\n{% else %}\r\n{{ texts.0.instruction }}\r\n{% endif %}\r\n{% endfor %}\r\n\r\n\\vfill\r\n\\begin{turn}{180}{\\begin{minipage}{\\linewidth}\r\n\\tiny\r\n\\begin{enumerate}\r\n{% for texts in student.texts %}\r\n\\item%\r\n{% if texts|length > 1 %}\r\n{% for text in texts %}\r\n{{ text.solution }}{% if not forloop.last %},{% endif %}\r\n{% endfor %}\r\n{% else %}\r\n{{ texts.0.solution }}\r\n{% endif %}\r\n{% endfor %}\r\n\\end{enumerate}\\end{minipage}}\\end{turn}\r\n{% endfor %}\r\n\\end{document}",
             "type": "S",
             "document_sort": 5
         }
