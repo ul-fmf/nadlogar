@@ -1,8 +1,0 @@
-{% extends 'forms/edit.html' %}
-
-{% block breadcrumbs %}
-<li><a href="{% url 'homepage' %}">Začetek</a></li>
-<li><a href="{{ student.group.get_absolute_url }}">{{ student.group.name }}</a></li>
-<li><a href="{{ student.get_absolute_url }}">{{ student.name }}</a></li>
-<li class="is-active"><a href="#" aria-current="page">Urejanje</a></li>
-{% endblock breadcrumbs %}

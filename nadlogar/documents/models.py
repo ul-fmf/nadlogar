@@ -126,7 +126,7 @@ class Document(models.Model):
         )
 
     def generate_student_problem_texts(self):
-        students = self.student_group.students.all()
+        students = self.student_group.students
         student_problem_texts = {student: [] for student in students}
         for index, problem in enumerate(self.problems.all(), 1):
             problem = problem.downcast()

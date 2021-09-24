@@ -7,5 +7,5 @@
 {% endblock breadcrumbs %}
 
 {% block warning %}
-Pobrisali boste skupino z {{ group.students.count }} učenci in {{ group.document_set.count }} dokumenti.
+Pobrisali boste skupino z {{ group.students|length }} učenci in {{ group.document_set.count }} dokumenti.
 {% endblock warning %}
