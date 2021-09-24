@@ -1,7 +1,8 @@
 {% extends 'main.html' %}
 
 {% block breadcrumbs %}
-<li><a href="{% url 'homepage' %}"><span class="icon is-small"><i class="fas fa-home" aria-hidden="true"></i></span></a></li>
+<li><a href="{% url 'homepage' %}"><span class="icon is-small"><i class="fas fa-home" aria-hidden="true"></i></span></a>
+</li>
 <li><a href="{{ document.student_group.get_absolute_url }}">{{ document.student_group.name }}</a></li>
 <li><a href="{{ document.get_absolute_url }}">{{ document.name }}</a></li>
 <li class="is-active"><a href="#" aria-current="page">Predogled</a></li>
@@ -42,7 +43,7 @@
     </div>
 </nav>
 
-<div class="box">
+<div class="box content">
     <article class="media">
         <div class="media-content">
             <div class="content">
@@ -62,26 +63,18 @@
             </div>
         </div>
     </article>
-    {% for student, problems in document.generate_student_problem_texts.items %}
+    {% for problem in problems %}
+    <h3>{{ forloop.counter }}. naloga</h3>
+    {% for student in problem.students %}
     <article class="media">
         <div class="media-content">
-            <div class="content">
-                <h3>{{ student.name }}</h3>
-                {% for rendered_text in problems %}
-                <article class="media">
-                    <div class="media-left">
-                        <strong>{{ forloop.counter }}.</strong>
-                    </div>
-                    <div class="media-content">
-                        <div class="content">
-                            {% include "problems/_rendered_text.html" %}
-                        </div>
-                    </div>
-                </article>
-                {% endfor %}
-            </div>
+            <p>
+                <strong>{{ student.name }}</strong>
+            </p>
+            {% include "problems/_rendered_text.html" with rendered_text=student.text %}
         </div>
     </article>
+    {% endfor %}
     {% endfor %}
 </div>
 {% endblock contents %}

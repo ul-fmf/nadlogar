@@ -99,10 +99,15 @@ def _zip_archive(archive_name, files):
 @login_required
 def preview(request, group_id: int, document_id: int):
     document = _get_document_if_allowed(request, group_id, document_id)
+    student_problem_texts = document.generate_student_problem_texts()
+    problems = [{"students": []} for _ in document.problems.all()]
+    for student, problem_texts in student_problem_texts.items():
+        for i, problem_text in enumerate(problem_texts):
+            problems[i]["students"].append({"name": student.name, "text": problem_text})
     return render(
         request,
         "documents/preview_download.html",
-        {"document": document},
+        {"document": document, "problems": problems},
     )
 
 
