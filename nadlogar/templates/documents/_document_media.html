@@ -2,14 +2,15 @@
     <div class="media-content">
         <div class="content">
             <p>
-                <strong>
-                    <a href="{{ document.get_absolute_url }}">
-                        {{ document.name }}
-                    </a>
-                </strong>
+                <a href="{{ document.get_absolute_url }}">
+                    <strong>{{ document.name }}</strong>
+                </a>
                 <br>
                 <small>
                     {% if not hide_group %}
+                    <span class="icon is-small"><i class="fas fa-file-invoice" aria-hidden="true"></i></span>
+                    <span>{{ document.sort.name }}</span>
+                    ·
                     <span class="icon is-small"><i class="fas fa-users" aria-hidden="true"></i></span>
                     <a href="{{ document.student_group.get_absolute_url }}">
                         {{ document.student_group.name }}

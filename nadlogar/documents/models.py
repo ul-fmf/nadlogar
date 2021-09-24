@@ -85,7 +85,6 @@ class Template(models.Model):
 
 class DocumentSort(models.Model):
     name = models.CharField("ime", max_length=255)
-    html_fragment = models.TextField()
 
     class Meta:
         ordering = ["name"]
@@ -99,6 +98,9 @@ class DocumentSort(models.Model):
 
 
 class Document(models.Model):
+    sort = models.ForeignKey(
+        "documents.DocumentSort", verbose_name="vrsta", on_delete=models.PROTECT
+    )
     name = models.CharField("ime", max_length=255)
     date = models.DateField(
         "datum dokumenta",
@@ -107,9 +109,6 @@ class Document(models.Model):
     introduction = models.TextField("uvodno besedilo", blank=True)
     student_group = models.ForeignKey(
         "students.StudentGroup", verbose_name="skupina", on_delete=models.CASCADE
-    )
-    sort = models.ForeignKey(
-        "documents.DocumentSort", verbose_name="vrsta", on_delete=models.PROTECT
     )
 
     class Meta:
