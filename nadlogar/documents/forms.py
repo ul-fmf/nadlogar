@@ -11,3 +11,9 @@ class DocumentForm(ModelForm):
         widgets = {
             "date": DateInput(attrs={"type": "date"}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.initial["date"] = (
+            self.instance.date.isoformat() if self.instance.date else ""
+        )
