@@ -1,9 +1,25 @@
 <blockquote>
-    {{ rendered_text.instruction }}
+    {% if rendered_text|length == 1 %}
+    {{ rendered_text.0.instruction }}
     <small>
         <p>
             <strong>Rešitev:</strong>
-            {{ rendered_text.solution }}
+            {{ rendered_text.0.solution }}
         </p>
     </small>
+    {% else %}
+    <ol>
+        {% for text in rendered_text %}
+        <li>
+            {{ text.instruction }}
+            <small>
+                <p>
+                    <strong>Rešitev:</strong>
+                    {{ text.solution }}
+                </p>
+            </small>
+        </li>
+        {% endfor %}
+    </ol>
+    {% endif %}
 </blockquote>

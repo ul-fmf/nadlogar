@@ -16,7 +16,7 @@ class ProblemTest(TestCase):
         # will create a new document (and student group) for each problem.
         problem = baker.make("KrajsanjeUlomkov", document=self.document)
         for seed in range(self.stevilo_preizkusov):
-            primer = problem.generate_data(seed)
+            primer = problem.generate_data(seed, 1)[0]
             a = primer.pop("okrajsan_stevec")
             b = primer.pop("okrajsan_imenovalec")
             c = primer.pop("neokrajsan_stevec")
@@ -30,7 +30,7 @@ class ProblemTest(TestCase):
         # will create a new document (and student group) for each problem.
         problem = baker.make("IskanjeNicelPolinoma", document=self.document)
         for seed in range(self.stevilo_preizkusov):
-            primer = problem.generate_data(seed)
+            primer = problem.generate_data(seed, 1)[0]
             nicle = primer.pop("nicle")
             polinom = primer.pop("polinom")
             self.assertEqual(primer, {})

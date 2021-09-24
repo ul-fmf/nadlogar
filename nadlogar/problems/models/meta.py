@@ -34,9 +34,12 @@ class ProblemText(models.Model):
         return f"{self.content_type.name}: {self.instruction} / {self.solution}"
 
     def render(self, data):
-        instruction = Template(self.instruction).substitute(**data)
-        solution = Template(self.solution).substitute(**data)
-        return {"instruction": instruction, "solution": solution}
+        rendered_texts = []
+        for datum in data:
+            instruction = Template(self.instruction).substitute(**datum)
+            solution = Template(self.solution).substitute(**datum)
+            rendered_texts.append({"instruction": instruction, "solution": solution})
+        return rendered_texts
 
 
 class GeneratedDataIncorrect(Exception):
@@ -51,6 +54,11 @@ class Problem(models.Model):
         limit_choices_to=limit_content_type_choices,
     )
     text = models.ForeignKey("problems.ProblemText", on_delete=models.PROTECT)
+    number_of_subproblems = models.PositiveSmallIntegerField(
+        "število podnalog",
+        help_text="Če je izbrana več kot ena naloga, bodo navodila našteta v seznamu.",
+        default=1,
+    )
 
     class Meta:
         default_related_name = "problems"
@@ -82,26 +90,31 @@ class Problem(models.Model):
         if not condition:
             raise GeneratedDataIncorrect
 
-    def generate_data(self, seed):
-        random.seed(seed)
-        while True:
-            try:
-                return self.generate()
-            except GeneratedDataIncorrect:
-                pass
+    def generate_data(self, seed, count):
+        data = []
+        for i in range(count):
+            random.seed((i, seed))
+            while True:
+                try:
+                    data.append(self.generate())
+                    break
+                except GeneratedDataIncorrect:
+                    pass
+        return data
 
     def generate_data_and_text(self, student=None):
         seed = (self.id, None if student is None else student.id)
-        data = self.generate_data(seed)
+        data = self.generate_data(seed, self.number_of_subproblems)
         rendered_text = self.text.render(data)
         return data, rendered_text
 
     @staticmethod
     def example_data_and_text(content_type):
         problem = content_type.model_class()()
-        data = problem.generate_data(None)
+        data = problem.generate_data(None, 1)
         text = ProblemText.objects.filter(content_type=content_type).first()
-        return data, text.render(data)
+        rendered_text = text.render(data)
+        return data[0], rendered_text
 
     def copy(self, document):
         self = self.downcast()

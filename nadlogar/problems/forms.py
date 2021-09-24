@@ -10,7 +10,7 @@ from .models import ProblemText, limit_content_type_choices
 def problem_form(content_type, *args, **kwargs):
     Generator = content_type.model_class()
     example_problem = Generator()
-    example_data = example_problem.generate_data(None)
+    example_data = example_problem.generate_data(None, 1)
 
     class ProblemTextChoiceIterator(ModelChoiceIterator):
         def choice(self, obj):

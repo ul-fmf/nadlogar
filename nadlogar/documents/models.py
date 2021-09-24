@@ -128,11 +128,10 @@ class Document(models.Model):
     def generate_student_problem_texts(self):
         students = self.student_group.students
         student_problem_texts = {student: [] for student in students}
-        for index, problem in enumerate(self.problems.all(), 1):
+        for problem in self.problems.all():
             problem = problem.downcast()
             for student in students:
                 _data, rendered_text = problem.generate_data_and_text(student)
-                rendered_text["index"] = index
                 student_problem_texts[student].append(rendered_text)
         return student_problem_texts
 

@@ -75,7 +75,11 @@ def edit_problem(request, group_id: int, document_id: int, problem_id: int):
     return render(
         request,
         "problems/edit_problem.html",
-        {"problem": problem, "form": form, "example_data": problem.generate_data(None)},
+        {
+            "problem": problem,
+            "form": form,
+            "example_data": problem.generate_data(None, 1)[0],
+        },
     )
 
 
