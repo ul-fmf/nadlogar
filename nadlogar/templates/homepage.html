@@ -45,5 +45,38 @@
     {% for document in documents %}
     {% include "documents/_document_media.html" %}
     {% endfor %}
+    <article class="media">
+        <div class="media-content">
+            <div class="dropdown is-hoverable">
+                <div class="dropdown-trigger">
+                    <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+                        <span class="icon">
+                            <i class="fas fa-plus"></i>
+                        </span>
+                        <span>Nov dokument</span>
+                        <span class="icon is-small">
+                            <i class="fas fa-angle-down" aria-hidden="true"></i>
+                        </span>
+                    </button>
+                </div>
+                <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                    <div class="dropdown-content">
+                        {% for group in groups %}
+                        <a href="{% url 'students:documents:create_document' group.id %}" class="dropdown-item">
+                            {{ group.name }}
+                        </a>
+                        {% endfor %}
+                        <hr class="dropdown-divider">
+                        <a href="{% url 'students:create_group' %}" class="dropdown-item">
+                            <span class="icon">
+                                <i class="fas fa-plus"></i>
+                            </span>
+                                Nova skupina
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
 </div>
 {% endblock contents %}
