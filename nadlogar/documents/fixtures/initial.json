@@ -24,7 +24,7 @@
         "pk": 3,
         "fields": {
             "name": "naloge",
-            "template": "\\documentclass[arhiv]{izpit}\r\n\\usepackage{bera}\r\n\\begin{document}\r\n{% for student in students %}\r\n\\izpit{%\r\n  {{ document.name }}:\r\n  {{ student.name }}\r\n}{%\r\n  {{ document.date }}\r\n}{%\r\n  {{ document.introduction }}\r\n}\r\n\r\n{% for texts in student.texts %}\r\n\\naloga\r\n{% if texts|length > 1 %}\r\n{% for text in texts %}\r\n\\podnaloga {{ text.instruction }}\r\n{% endfor %}\r\n{% else %}\r\n{{ texts.0.instruction }}\r\n{% endif %}\r\n{% endfor %}\r\n{% endfor %}\r\n\\end{document}",
+            "template": "\\documentclass[arhiv]{izpit}\r\n\\usepackage{bera}\r\n\\begin{document}\r\n{% for student in students %}\r\n\\izpit[naloge={{ student.texts|length }}]{%\r\n  {{ document.name }}:\r\n  {{ student.name }}\r\n}{%\r\n  {{ document.date }}\r\n}{%\r\n  {{ document.introduction }}\r\n}\r\n\r\n{% for texts in student.texts %}\r\n\\naloga\r\n{% if texts|length > 1 %}\r\n{% for text in texts %}\r\n\\podnaloga {{ text.instruction }}\r\n{% endfor %}\r\n{% else %}\r\n{{ texts.0.instruction }}\r\n{% endif %}\r\n{% endfor %}\r\n{% endfor %}\r\n\\end{document}",
             "type": "S",
             "document_sort": 2
         }
@@ -73,7 +73,7 @@
         "model": "documents.template",
         "pk": 8,
         "fields": {
-            "name": "naloga",
+            "name": "naloge",
             "template": "\\documentclass[arhiv]{izpit}\r\n\\usepackage{bera}\r\n\\usepackage{rotating}\r\n\\begin{document}\r\n\r\n{% for student in students %}\r\n\\izpit{%\r\n  {{ document.name }}:\r\n  {{ student.name }}\r\n}{%\r\n  {{ document.date }}\r\n}{%\r\n  {{ document.introduction }}\r\n}\r\n\r\n{% for texts in student.texts %}\r\n\\naloga\r\n{% if texts|length > 1 %}\r\n{% for text in texts %}\r\n\\podnaloga {{ text.instruction }}\r\n{% endfor %}\r\n{% else %}\r\n{{ texts.0.instruction }}\r\n{% endif %}\r\n{% endfor %}\r\n\r\n\\vfill\r\n\\begin{turn}{180}{\\begin{minipage}{\\linewidth}\r\n\\tiny\r\n\\begin{enumerate}\r\n{% for texts in student.texts %}\r\n\\item%\r\n{% if texts|length > 1 %}\r\n{% for text in texts %}\r\n{{ text.solution }}{% if not forloop.last %},{% endif %}\r\n{% endfor %}\r\n{% else %}\r\n{{ texts.0.solution }}\r\n{% endif %}\r\n{% endfor %}\r\n\\end{enumerate}\\end{minipage}}\\end{turn}\r\n{% endfor %}\r\n\\end{document}",
             "type": "S",
             "document_sort": 5

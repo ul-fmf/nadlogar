@@ -122,13 +122,13 @@ class DocumentSort(models.Model):
 
 
 class Document(models.Model):
-    sort = models.ForeignKey(
-        "documents.DocumentSort", verbose_name="vrsta", on_delete=models.PROTECT
-    )
     name = models.CharField("ime", max_length=255)
     date = models.DateField(
         "datum dokumenta",
         help_text="Datum, ki bo v glavi dokumenta in po katerem bodo urejeni dokumenti.",
+    )
+    sort = models.ForeignKey(
+        "documents.DocumentSort", verbose_name="oblika", on_delete=models.PROTECT
     )
     introduction = models.TextField("uvodno besedilo", blank=True)
     student_group = models.ForeignKey(
