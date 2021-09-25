@@ -177,7 +177,7 @@ class Document(models.Model):
 
     def copy(self, group):
         old_problems = list(self.problems.all())
-        self.group = group
+        self.student_group = group
         self.pk = None
         self.name += " (kopija)"
         self.save()
