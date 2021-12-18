@@ -1,10 +1,11 @@
-// For format details, see https://aka.ms/vscode-remote/devcontainer.json or this file's README at:
-// https://github.com/microsoft/vscode-dev-containers/tree/v0.101.0/containers/python-3
 {
 	"name": "Nadlogar",
-	"context": "..",
-	"dockerFile": "Dockerfile",
-	// Set *default* container specific settings.json values on container create.
+	"dockerComposeFile": [
+		"../docker-compose.yml",
+		"docker-compose.yml"
+	],
+	"service": "web",
+	"workspaceFolder": "/workspace",
 	"settings": {
 		"[python]": {
 			"editor.codeActionsOnSave": {
@@ -14,10 +15,10 @@
 		},
 		"python.pythonPath": "/usr/local/bin/python",
 		"python.analysis.extraPaths": [
-			"nadlogar"
+			"/src"
 		],
 		"python.autoComplete.extraPaths": [
-			"nadlogar"
+			"/src"
 		],
 		"python.formatting.provider": "black",
 		"editor.formatOnSave": true,
@@ -31,17 +32,10 @@
 		"python.sortImports.args": [
 			"--profile",
 			"black"
-		],
+		]
 	},
-	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
-		"ms-python.python",
-		"ms-python.vscode-pylance"
-	]
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
-	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "pip install -r requirements.txt",
-	// Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
-	// "remoteUser": "vscode"
+		"ms-python.python"
+	],
+	"remoteUser": "nadlogar"
 }

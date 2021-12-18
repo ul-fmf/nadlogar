@@ -1,0 +1,26 @@
+version: "3"
+   
+services:
+  db:
+    image: postgres:${POSTGRES_VERSION}
+    restart: always
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+  web:
+    build: nadlogar
+    restart: always
+    ports:
+      - "${HTTP_PORT}:8000"
+    depends_on:
+      - db
+    environment:
+      - DJANGO_SETTINGS_MODULE
+      - ALLOWED_HOSTS
+      - SECRET_KEY
+      - POSTGRES_DB
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
