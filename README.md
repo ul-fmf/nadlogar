@@ -22,7 +22,7 @@ Dobiti bi morali sledečo strukturo datotek:
     nadlogar/
         nadlogar/
             config/
-            naloge/
+            documents/
             ...
         manage.py
         ...
@@ -33,7 +33,7 @@ Po prvi namestitvi, pa tudi na vsake toliko časa, greste v mapo `nadlogar/nadlo
 
     git pull
     source venv/bin/activate
-    pip install -r requirements.txt
+    pip install -r requirements/local.txt
     python manage.py migrate
     python manage.py loaddata problems/fixtures/initial.json
 
@@ -41,9 +41,9 @@ Po prvi namestitvi, pa tudi na vsake toliko časa, greste v mapo `nadlogar/nadlo
 
     git pull
     venv\Scripts\activate
-    pip install -r requirements.txt
+    pip install -r requirements\local.txt
     python manage.py migrate
-    python manage.py loaddata problems/fixtures/initial.json
+    python manage.py loaddata problems\fixtures\initial.json
 
 Strežnik nato poženete z
 
