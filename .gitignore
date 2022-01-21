@@ -137,3 +137,6 @@ dmypy.json
 
 # macOS nonsense
 .DS_Store
+
+# Docker compose Postgres volume
+data/db
