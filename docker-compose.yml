@@ -5,7 +5,7 @@ services:
     image: postgres:${POSTGRES_VERSION}
     restart: always
     volumes:
-      - ./data/db:/var/lib/postgresql/data
+      - ${POSTGRES_DATA_PATH}:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB
       - POSTGRES_USER

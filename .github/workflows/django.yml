@@ -6,6 +6,7 @@ jobs:
   build:
     env:
       POSTGRES_VERSION: 12
+      POSTGRES_DATA_PATH: ./data/db
       POSTGRES_DB: postgres
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
