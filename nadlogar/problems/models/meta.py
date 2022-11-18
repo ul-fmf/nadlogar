@@ -46,6 +46,8 @@ class GeneratedDataIncorrect(Exception):
 
 
 class Problem(models.Model):
+    default_instruction = None
+    default_solution = None
     document = models.ForeignKey("documents.Document", on_delete=models.CASCADE)
     content_type = models.ForeignKey(
         ContentType,
@@ -108,11 +110,18 @@ class Problem(models.Model):
         return data, rendered_text
 
     @classmethod
+    def default_text(cls):
+        return ProblemText(
+            content_type=ContentType.objects.get_for_model(cls),
+            instruction=cls.default_instruction,
+            solution=cls.default_solution,
+        )
+
+    @classmethod
     def example_data_and_text(cls):
         problem = cls()
-        content_type = ContentType.objects.get_for_model(cls)
         data = problem.generate_data(None, 1)
-        text = ProblemText.objects.filter(content_type=content_type).first()
+        text = cls.default_text()
         rendered_text = text.render(data)
         return data[0], rendered_text
 
