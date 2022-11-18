@@ -9,6 +9,9 @@ from .meta import Problem
 class PotencaDvoclenika(Problem):
     """Problem za potenciranje dvočlenika."""
 
+    default_instruction = "Potenciraj izraz $@izraz$"
+    default_solution = "$@resitev$"
+
     najmanjsa_potenca = models.PositiveSmallIntegerField(
         "najmanjša potenca",
         help_text="Najmanjša možna potenca dvočlenika.",
@@ -60,6 +63,9 @@ class PotencaDvoclenika(Problem):
 class PotencaTroclenika(Problem):
     """Problem za potenciranje tročlenika."""
 
+    default_instruction = "Potenciraj izraz $@izraz$"
+    default_solution = "$@resitev$"
+
     najmanjsa_potenca = models.PositiveSmallIntegerField(
         "najmanjša potenca",
         help_text="Najmanjša možna potenca tročlenika.",
@@ -103,6 +109,9 @@ class PotencaTroclenika(Problem):
 
 class PotencaVecclenika(Problem):
     """Problem za potenciranje veččlenika."""
+
+    default_instruction = "Potenciraj izraz $@izraz$"
+    default_solution = "$@resitev$"
 
     najmanjsa_potenca = models.PositiveSmallIntegerField(
         "najmanjša potenca",

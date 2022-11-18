@@ -31,6 +31,9 @@ def generiraj_kompleksna_stevila(kolicina):
 class VsotaKompleksnih(Problem):
     """Problem za seštevanje in odštevanje kompleksnih števil."""
 
+    default_instruction = "Izračunaj $z=@izraz$."
+    default_solution = "$z=@resitev$"
+
     class Meta:
         verbose_name = "Kompleksna števila / seštevanje in odštevanje ulomkov"
 
@@ -73,6 +76,9 @@ class VsotaKompleksnih(Problem):
 class KompleksniUlomek(Problem):
     """Problem za seštevanje in racionalizacijo kompleksnih ulomkov."""
 
+    default_instruction = "Izračunaj $z=@izraz$."
+    default_solution = "$z=@resitev$"
+
     class Meta:
         verbose_name = "Kompleksna števila / seštevanje in racionalizacija ulomkov"
 
@@ -100,6 +106,9 @@ class KompleksniUlomek(Problem):
 class MnozenjeKompleksnih(Problem):
     """Problem za množenje kompleksnih števil."""
 
+    default_instruction = "Izračunaj $z=@izraz$."
+    default_solution = "$z=@resitev$"
+
     class Meta:
         verbose_name = "Kompleksna števila / množenje"
 
@@ -118,6 +127,11 @@ class MnozenjeKompleksnih(Problem):
 
 class RacunanjeKompleksno(Problem):
     """Problem za računanje absolutne vrednosti, potenciranja in konjugiranje kompleksnega števila ter višje potence kompleksne enote i."""
+
+    default_instruction = (
+        "Dano je kompleksno število $z=@stevilo$. Izračunaj število $w=@izraz$."
+    )
+    default_solution = "$w=@resitev$"
 
     class Meta:
         verbose_name = "Kompleksna števila / računanje s kompleksno enoto"
@@ -144,6 +158,9 @@ class RacunanjeKompleksno(Problem):
 
 class KompleksnaEnacba(Problem):
     """Problem za množenja, konjugiranja, absolutne vrednosti in komponent kompleksnih števil."""
+
+    default_instruction = "Katero kompleksno število $z$ zadošča enačbi $@enacba$? Zapiši $\\operatorname{Re}(z)$ in $\\operatorname{Im}(z)$ ter izračunaj $\\left| z \\right|$."
+    default_solution = "$z=@resitev$, $\\operatorname{Re}(z)=@realna$, $\\operatorname{Im}(z)=@imaginarna$, $\\left|z\\right|=@absolutna$"
 
     konjugirana_vrednost = models.BooleanField(
         "konjugirana vrednost",
@@ -179,6 +196,9 @@ class KompleksnaEnacba(Problem):
 
 class NarisiKompleksna(Problem):
     """Problem za risanje kompleksnih števil v kompleksno ravnino."""
+
+    default_instruction = "V kompleksno ravnino nariši števila $z_1=@stevila[0]$, $z_2=@stevila[1]$, $z_3=@stevila[2]$ in $z_4=@stevila[3]$."
+    default_solution = "$z_1=@koordinate[0]$, $z_2=@koordinate[1]$, $z_3=@koordinate[2]$ in $z_4=@koordinate[3]$"
 
     class Meta:
         verbose_name = "??? / risanje v ravnino"
