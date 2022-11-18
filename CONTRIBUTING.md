@@ -73,6 +73,8 @@ Ko prek vmesnika dodate besedilo naloge, spremenite podatkovno bazo. Vendar osta
 
 `python -Xutf8 manage.py dumpdata --output 'problems\fixtures\initial.json' --indent 4`
 
+Veliko problemov je v okviru svoje magistrske naloge že naredila _Urša Pertot_. Velika večina jih še ni implementiranih v Nadlogarja, dostopni pa so na [njenem repozitoriju](https://github.com/ursa16180/generiranje-nalog).
+
 ## Nekaj ne dela pravilno?!?
 
 V tem primeru (oziroma v vseh primerih) je zelo priporočen obisk [Discord skupine programerskega krožka](https://discord.gg/259nUehq), kjer tudi potekajo glavni pogovori glede projekta.

@@ -24,7 +24,7 @@ Dobiti bi morali sledečo strukturo datotek:
             config/
             documents/
             ...
-        manage.py
+            manage.py
         ...
         venv/
             ...
@@ -53,7 +53,7 @@ Teste poženete z
 
     python manage.py test
 
-Po namestitvi je koristno pognati
+    Po namestitvi je koristno pognati
 
     python manage.py loaddata documents/fixtures/initial.json
 
