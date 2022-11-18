@@ -52,11 +52,6 @@ def problem_form(content_type, *args, **kwargs):
                         )
             else:
                 del self.errors["text"]
-                for field_name in ["instruction", "solution"]:
-                    if not cleaned_data[field_name]:
-                        errors[
-                            field_name
-                        ] = "Ob izbiri novega besedila mora biti to polje neprazno."
             if errors:
                 raise ValidationError(errors)
 

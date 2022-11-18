@@ -54,7 +54,9 @@ class Problem(models.Model):
         on_delete=models.PROTECT,
         limit_choices_to=limit_content_type_choices,
     )
-    text = models.ForeignKey("problems.ProblemText", on_delete=models.PROTECT)
+    text = models.ForeignKey(
+        "problems.ProblemText", on_delete=models.SET_NULL, blank=True, null=True
+    )
     number_of_subproblems = models.PositiveSmallIntegerField(
         "število podnalog",
         help_text="Če je izbrana več kot ena naloga, bodo navodila našteta v seznamu.",
@@ -71,7 +73,11 @@ class Problem(models.Model):
         if issubclass(Problem, type(self)):
             raise ValidationError("Problems must have a non-trivial generator")
         self.content_type = ContentType.objects.get_for_model(type(self))
-        if hasattr(self, "text") and self.content_type != self.text.content_type:
+        if (
+            hasattr(self, "text")
+            and self.text is not None
+            and self.content_type != self.text.content_type
+        ):
             raise ValidationError("Generators of the problem and its text must match")
 
     def save(self, *args, **kwargs):
@@ -106,7 +112,10 @@ class Problem(models.Model):
     def generate_data_and_text(self, student=None):
         seed = (self.id, None if student is None else student.id)
         data = self.generate_data(seed, self.number_of_subproblems)
-        rendered_text = self.text.render(data)
+        if self.text is None:
+            rendered_text = self.default_text().render(data)
+        else:
+            rendered_text = self.text.render(data)
         return data, rendered_text
 
     @classmethod
