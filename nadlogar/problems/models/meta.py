@@ -93,7 +93,7 @@ class Problem(models.Model):
     def generate_data(self, seed, count):
         data = []
         for i in range(count):
-            random.seed((i, seed))
+            random.seed(f"{i}-{seed}")
             while True:
                 try:
                     data.append(self.generate())
