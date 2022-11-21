@@ -1,10 +1,8 @@
 from django import forms
-from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
 from django.forms.models import ModelChoiceIterator
-from documents.models import Document
 
-from .models import ProblemText, limit_content_type_choices
+from .models import ProblemText
 
 
 def problem_form(content_type, *args, **kwargs):
@@ -42,9 +40,10 @@ def problem_form(content_type, *args, **kwargs):
             if "text" in cleaned_data:
                 for field_name in ["instruction", "solution"]:
                     if cleaned_data[field_name]:
-                        errors[
-                            field_name
-                        ] = "Da ne bi prišlo do izgube podatkov, mora biti ob izbiri obstoječega besedila to polje prazno."
+                        errors[field_name] = (
+                            "Da ne bi prišlo do izgube podatkov, mora biti ob izbiri"
+                            " obstoječega besedila to polje prazno."
+                        )
             else:
                 del self.errors["text"]
                 for field_name in ["instruction", "solution"]:

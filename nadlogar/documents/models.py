@@ -125,7 +125,7 @@ class Document(models.Model):
     name = models.CharField("ime", max_length=255)
     date = models.DateField(
         "datum dokumenta",
-        help_text="Datum, ki bo v glavi dokumenta in po katerem bodo urejeni dokumenti.",
+        help_text="Datum v glavi dokumenta in po katerem so urejeni dokumenti.",
     )
     sort = models.ForeignKey(
         "documents.DocumentSort", verbose_name="oblika", on_delete=models.PROTECT

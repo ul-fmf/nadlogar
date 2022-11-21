@@ -1,4 +1,9 @@
-from .meta import *
+import random
+
+import sympy
+from django.db import models
+
+from .meta import Problem
 
 
 class PotencaDvoclenika(Problem):
@@ -16,7 +21,10 @@ class PotencaDvoclenika(Problem):
     )
     linearna_kombinacija = models.BooleanField(
         "linearna kombinacija",
-        help_text="Ali naj naloga vsebuje linearno kombinacijo dveh neznank ali enostaven dvočlenik?",
+        help_text=(
+            "Ali naj naloga vsebuje linearno kombinacijo dveh neznank ali enostaven"
+            " dvočlenik?"
+        ),
         default=True,
     )
 
@@ -42,7 +50,7 @@ class PotencaDvoclenika(Problem):
             m = random.randint(1, 5)
             y = sympy.symbols(random.choice(simboli))
 
-        izraz = sympy.Pow(a * x ** n + b * y ** m, potenca, evaluate=False)
+        izraz = sympy.Pow(a * x**n + b * y**m, potenca, evaluate=False)
         return {
             "izraz": sympy.latex(izraz),
             "resitev": sympy.latex(sympy.expand(izraz)),
@@ -64,7 +72,10 @@ class PotencaTroclenika(Problem):
     )
     linearna_kombinacija = models.BooleanField(
         "linearna kombinacija",
-        help_text="Ali naj naloga vsebuje linearno kombinacijo treh neznank ali enostaven tročlenik?",
+        help_text=(
+            "Ali naj naloga vsebuje linearno kombinacijo treh neznank ali enostaven"
+            " tročlenik?"
+        ),
         default=True,
     )
 
@@ -115,7 +126,10 @@ class PotencaVecclenika(Problem):
     )
     linearna_kombinacija = models.BooleanField(
         "linearna kombinacija",
-        help_text="Ali naj naloga vsebuje linearno kombinacijo neznank ali enostaven veččlenik?",
+        help_text=(
+            "Ali naj naloga vsebuje linearno kombinacijo neznank ali enostaven"
+            " veččlenik?"
+        ),
         default=True,
     )
 
@@ -141,7 +155,7 @@ class PotencaVecclenika(Problem):
 
         vrednosti = zip(koeficienti, simboli, potence)
         izraz = sympy.Pow(
-            sum(k * s ** p for k, s, p in vrednosti), potenca, evaluate=False
+            sum(k * s**p for k, s, p in vrednosti), potenca, evaluate=False
         )
 
         return {

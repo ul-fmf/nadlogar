@@ -1,4 +1,8 @@
-from .meta import *
+import random
+
+from django.db import models
+
+from .meta import Problem
 
 
 class ProstoBesedilo(Problem):

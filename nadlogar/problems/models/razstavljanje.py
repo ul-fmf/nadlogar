@@ -1,4 +1,9 @@
-from .meta import *
+import random
+
+import sympy
+from django.db import models
+
+from .meta import Problem
 
 
 class RazstaviVieta(Problem):
@@ -6,7 +11,9 @@ class RazstaviVieta(Problem):
 
     maksimalna_vrednost = models.PositiveSmallIntegerField(
         "maksimalna vrednost",
-        help_text="Največja možna vrednost razstavljenega člena glede na absolutno vrednost",
+        help_text=(
+            "Največja možna vrednost razstavljenega člena glede na absolutno vrednost"
+        ),
         default=15,
     )
     vodilni_koeficient = models.BooleanField(
@@ -49,7 +56,10 @@ class RazstaviRazliko(Problem):
     )
     linearna_kombinacija = models.BooleanField(
         "linearna kombinacija",
-        help_text="Ali naj naloga vsebuje linearno kombinacijo dveh neznank ali enostaven dvočlenik?",
+        help_text=(
+            "Ali naj naloga vsebuje linearno kombinacijo dveh neznank ali enostaven"
+            " dvočlenik?"
+        ),
         default=True,
     )
 
@@ -84,7 +94,7 @@ class RazstaviRazliko(Problem):
             n = random.randint(1, 3)
             m = random.randint(1, 3)
             y = sympy.symbols(random.choice(simboli))
-        izraz = (a * x ** n) ** potenca - (b * y ** m) ** potenca
+        izraz = (a * x**n) ** potenca - (b * y**m) ** potenca
         razstavljen = sympy.factor(izraz)
 
         return {"izraz": sympy.latex(izraz), "razstavljen": sympy.latex(razstavljen)}

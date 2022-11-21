@@ -1,4 +1,9 @@
-from .meta import *
+import random
+
+import sympy
+from django.db import models
+
+from .meta import GeneratedDataIncorrect, Problem
 
 
 def generiraj_kompleksna_stevila(kolicina):
