@@ -53,7 +53,7 @@ Teste poženete z
 
     python manage.py test
 
-    Po namestitvi je koristno pognati
+Po namestitvi je koristno pognati
 
     python manage.py loaddata documents/fixtures/initial.json
 
@@ -61,8 +61,16 @@ Tako naložite nekaj koristinih LaTeX predlog.
 
 ## Kako poženete Nadlogarja?
 
-Če poženete ukaz `python manage.py runserver`, vam na [lokalnem strežniku](http://127.0.0.1:8000) požene spletno stran. Vendar se morate za njeno uporabo najprej prijaviti.
-Zato ustvarite adminskega uporabnika, kar storite z ukazom `python manage.py createsuperuser`. Ko to storite, vam je dostopen tudi [adminski vmesnik](http://127.0.0.1:8000/admin/), kjer med drugim lahko dodajate nova besedila nalog _(vsaj zaenkrat, saj se bo shranjevanje besedil kmalu spremenilo)_.
+Če poženete ukaz
+
+    python manage.py runserver
+
+vam na [lokalnem strežniku](http://127.0.0.1:8000) požene spletno stran. Vendar se morate za njeno uporabo najprej prijaviti.
+Zato ustvarite adminskega uporabnika, kar storite z ukazom
+
+    python manage.py createsuperuser
+
+Ko to storite, vam je dostopen tudi [adminski vmesnik](http://127.0.0.1:8000/admin/), kjer med drugim lahko dodajate nova besedila nalog _(vsaj zaenkrat, saj se bo shranjevanje besedil kmalu spremenilo)_.
 
 Za navodila glede dodajanja funkcionalnosti in popravljanja napak glejte
 [CONTRIBUTING.md](CONTRIBUTING.md).

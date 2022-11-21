@@ -1,6 +1,6 @@
 # OSNOVNA NAVODILA ZA RAZVIJALCE NADLOGARJA
 
-Tukaj se nahajajo osnovna navodila za uporabo Nadlogarja. Vsem, ki pri projektu nameravajo sodelovati ali kakorkoli pomagati, toplo priporočamo, da si jih preberejo.
+Tukaj se nahajajo osnovna navodila za uporabo Nadlogarja. Če želite pri projektu sodelovati ali kakorkoli pomagati, vam toplo priporočamo, da si jih preberete.
 
 ## Namestitev Nadlogarja
 
@@ -15,10 +15,10 @@ Vsebino PR in commitov pišite v slovenščini.
 Poskrbite, da PR ni prevelik in da je zaključena celota. Po vsakem PR mora aplikacija še vedno
 delovati. Pri vsakem PR:
 
-- napišite smiselen naslov, ki pove, kaj PR naredi;
-- napišite opis, kjer opišete, kaj je problem in kako ga rešite (lahko se sklicujete ali zaprete
+- izberite opisen naslov
+- opišite problem in kako ste ga rešili (lahko se sklicujete na ali zaprete
   primeren issue)
-- commiti v PRju so zaključene celote (če je potrebno kaj popraviti, uredite obstoječi commit in
+- commiti v PRju naj bodo zaključene celote (če je potrebno kaj popraviti, uredite obstoječi commit in
   ne naredite novega)
 - sprememba naj bo ena sama in koda naj bo čimbolj berljiva
 - PR mora na githubu dobiti kljukico, da so vsi avtomatski testi ok. To vključuje
@@ -42,7 +42,7 @@ Po prvem uspešno sprejetem PRju boste tudi dodani na seznam razvijalcev.
 Za dodajanje novega problema je potrebno:
 
 - V datoteko `nadlogar/problems/<ime_datoteke>.py` dodati nov podrazred razreda `Problem`.
-- V dokumentacijski niz razreda napišite en stavek, ki opisuje vrsto problema. Ta stavek naj bo golo besedilo (brez LaTeXa, HTMLja, …), ki se bo prikazalo uporabnikom ob izbiri problema.
+- V dokumentacijski niz razreda napisati en stavek, ki opisuje vrsto problema. Ta stavek naj bo golo besedilo (brez LaTeXa, HTMLja, …), ki se bo prikazalo uporabnikom ob izbiri problema.
 - Vsem parametrom je treba kot prvi argument podati niz s pravilnim prikazom imena (s šumniki in morebitnimi velikimi začetnicami).
 - Vsem parametrom je treba podati argument `help_text` z besedilom, ki opisuje namen parametra.
 - V podrazredu `Meta` je treba definirati spremenljivko `verbose_name` s pravilnim prikazom imena problema.
@@ -73,8 +73,8 @@ Ko prek vmesnika dodate besedilo naloge, spremenite podatkovno bazo. Vendar osta
 
 `python -Xutf8 manage.py dumpdata --output 'problems\fixtures\initial.json' --indent 4`
 
-Veliko problemov je v okviru svoje magistrske naloge že naredila _Urša Pertot_. Velika večina jih še ni implementiranih v Nadlogarja, dostopni pa so na [njenem repozitoriju](https://github.com/ursa16180/generiranje-nalog).
+Veliko problemov je v okviru svoje magistrske naloge že naredila _Urša Pertot_. Večina jih še ni implementiranih v Nadlogarja, so pa dostopni na [njenem repozitoriju](https://github.com/ursa16180/generiranje-nalog).
 
 ## Nekaj ne dela pravilno?!?
 
-V tem primeru (oziroma v vseh primerih) je zelo priporočen obisk [Discord skupine programerskega krožka](https://discord.gg/259nUehq), kjer tudi potekajo glavni pogovori glede projekta.
+V tem primeru vprašanje lahko zastavite na [Discord kanalu programerskega krožka FMF](https://discord.gg/259nUehq), kjer v podzavihku _Nadlogar_ potekajo glavni pogovori glede projekta.
