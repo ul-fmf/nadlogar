@@ -1,0 +1,6 @@
+[flake8]
+exclude = migrations,config
+max-line-length = 88
+per-file-ignores =
+    nadlogar/problems/models/__init__.py:F401,F403
+    nadlogar/problems/models/*.py:E501
