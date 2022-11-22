@@ -77,13 +77,16 @@ def edit_problem(request, group_id: int, document_id: int, problem_id: int):
     if form.is_valid():
         problem: Problem = form.save()
         return redirect(problem.document.get_absolute_url())
+    example_data = problem.generate_data_and_text()[0]
+    example_text = problem.default_text().render(example_data)
     return render(
         request,
         "problems/edit_problem.html",
         {
             "problem": problem,
             "form": form,
-            "example_data": problem.generate_data(None, 1)[0],
+            "example_data": example_data,
+            "example_text": example_text,
         },
     )
 

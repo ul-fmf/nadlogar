@@ -41,17 +41,30 @@ def problem_form(content_type, *args, **kwargs):
                 self.fields[field_name].custom_display = True
 
         def clean(self):
-            cleaned_data = super().clean()
+            super().clean()
             errors = {}
-            if "text" in cleaned_data:
+            if self.data["text"] == "new":
+                del self.errors["text"]
                 for field_name in ["instruction", "solution"]:
-                    if cleaned_data[field_name]:
+                    if not self.cleaned_data[field_name]:
+                        errors[
+                            field_name
+                        ] = "Ob izbiri novega besedila mora biti to polje neprazno."
+            else:
+                if "text" not in self.cleaned_data:
+                    self.cleaned_data["text"] = None
+                    del self.errors["text"]
+                if self.cleaned_data["instruction"] == Generator.default_instruction:
+                    self.cleaned_data["instruction"] = ""
+                if self.cleaned_data["solution"] == Generator.default_solution:
+                    self.cleaned_data["solution"] = ""
+                for field_name in ["instruction", "solution"]:
+                    if self.cleaned_data[field_name]:
                         errors[field_name] = (
                             "Da ne bi prišlo do izgube podatkov, mora biti ob izbiri"
-                            " obstoječega besedila to polje prazno."
+                            " obstoječega besedila to polje prazno ali enako privzeti"
+                            " vrednosti."
                         )
-            else:
-                del self.errors["text"]
             if errors:
                 raise ValidationError(errors)
 
