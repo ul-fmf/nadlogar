@@ -162,8 +162,8 @@ class Document(models.Model):
     def problem_examples(self):
         for problem in self.problems.all():
             problem = problem.downcast()
-            data, rendered_text = problem.generate_data_and_text()
-            yield (problem, data, rendered_text)
+            _, rendered_text = problem.generate_data_and_text()
+            yield (problem, rendered_text)
 
     def tex_files(self):
         student_problem_texts = self.generate_student_problem_texts()
