@@ -29,7 +29,7 @@ def choose_problem(request, group_id: int, document_id: int):
         problem_groups.setdefault(group, []).append(
             (
                 content_type.id,
-                Problem.example_data_and_text(content_type)[1],
+                content_type.model_class().example_data_and_text()[1],
                 description,
             )
         )
@@ -49,7 +49,7 @@ def choose_problem(request, group_id: int, document_id: int):
 def create_problem(request, group_id: int, document_id: int, content_type_id: int):
     content_type = get_object_or_404(ContentType, id=content_type_id)
     document = _get_document_if_allowed(request, group_id, document_id)
-    example_data = Problem.example_data_and_text(content_type)[0]
+    example_data, example_text = content_type.model_class().example_data_and_text()
     form = problem_form(content_type, request.POST or None)
     if form.is_valid():
         problem: Problem = form.save(commit=False)
@@ -59,7 +59,12 @@ def create_problem(request, group_id: int, document_id: int, content_type_id: in
     return render(
         request,
         "problems/create_problem.html",
-        {"document": document, "form": form, "example_data": example_data},
+        {
+            "document": document,
+            "form": form,
+            "example_data": example_data,
+            "example_text": example_text,
+        },
     )
 
 

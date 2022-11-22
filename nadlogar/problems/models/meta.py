@@ -46,13 +46,17 @@ class GeneratedDataIncorrect(Exception):
 
 
 class Problem(models.Model):
+    default_instruction = None
+    default_solution = None
     document = models.ForeignKey("documents.Document", on_delete=models.CASCADE)
     content_type = models.ForeignKey(
         ContentType,
         on_delete=models.PROTECT,
         limit_choices_to=limit_content_type_choices,
     )
-    text = models.ForeignKey("problems.ProblemText", on_delete=models.PROTECT)
+    text = models.ForeignKey(
+        "problems.ProblemText", on_delete=models.SET_NULL, blank=True, null=True
+    )
     number_of_subproblems = models.PositiveSmallIntegerField(
         "število podnalog",
         help_text="Če je izbrana več kot ena naloga, bodo navodila našteta v seznamu.",
@@ -69,7 +73,11 @@ class Problem(models.Model):
         if issubclass(Problem, type(self)):
             raise ValidationError("Problems must have a non-trivial generator")
         self.content_type = ContentType.objects.get_for_model(type(self))
-        if hasattr(self, "text") and self.content_type != self.text.content_type:
+        if (
+            hasattr(self, "text")
+            and self.text is not None
+            and self.content_type != self.text.content_type
+        ):
             raise ValidationError("Generators of the problem and its text must match")
 
     def save(self, *args, **kwargs):
@@ -104,14 +112,25 @@ class Problem(models.Model):
     def generate_data_and_text(self, student=None):
         seed = (self.id, None if student is None else student.id)
         data = self.generate_data(seed, self.number_of_subproblems)
-        rendered_text = self.text.render(data)
+        if self.text is None:
+            rendered_text = self.default_text().render(data)
+        else:
+            rendered_text = self.text.render(data)
         return data, rendered_text
 
-    @staticmethod
-    def example_data_and_text(content_type):
-        problem = content_type.model_class()()
+    @classmethod
+    def default_text(cls):
+        return ProblemText(
+            content_type=ContentType.objects.get_for_model(cls),
+            instruction=cls.default_instruction,
+            solution=cls.default_solution,
+        )
+
+    @classmethod
+    def example_data_and_text(cls):
+        problem = cls()
         data = problem.generate_data(None, 1)
-        text = ProblemText.objects.filter(content_type=content_type).first()
+        text = cls.default_text()
         rendered_text = text.render(data)
         return data[0], rendered_text
 

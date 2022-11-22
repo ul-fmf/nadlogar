@@ -13,6 +13,27 @@
         <h3>Besedilo naloge</h3>
         <div class="field">
             <div class="control">
+                <article class="media">
+                    <div class="media-left">
+                        <label class="radio">
+                            {% if form.initial.text == None %}
+                            <input type="radio" name="{{ form.text.html_name }}" checked>
+                            {% else %}
+                            <input type="radio" name="{{ form.text.html_name }}">
+                            {% endif %}
+                        </label>
+                    </div>
+                    <div class="media-content">
+                        <div class="content">
+                            <h4>Privzeto besedilo</h4>
+                            {{ form.generator }}
+                            {% include "problems/_rendered_text.html" with rendered_text=example_text %}
+                        </div>
+                        <div class="content help">
+                            <strong>Pozor:</strong> privzeto besedilo naloge se s posodobitvami spletne storitve lahko spreminja.
+                            Če tega ne želite, si spodaj ustvarite novo besedilo na osnovi privzetega.
+                        </div>
+                </article>
                 {% for value, rendered_text in form.fields.text.choices %}
                 <article class="media">
                     <div class="media-left">

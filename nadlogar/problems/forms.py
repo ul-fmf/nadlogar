@@ -16,10 +16,16 @@ def problem_form(content_type, *args, **kwargs):
 
     class ProblemForm(forms.ModelForm):
         instruction = forms.CharField(
-            label="Navodilo", widget=forms.Textarea(attrs={"rows": 5}), required=False
+            label="Navodilo",
+            widget=forms.Textarea(attrs={"rows": 5}),
+            required=False,
+            initial=Generator.default_instruction,
         )
         solution = forms.CharField(
-            label="Rešitev", widget=forms.Textarea(attrs={"rows": 3}), required=False
+            label="Rešitev",
+            widget=forms.Textarea(attrs={"rows": 3}),
+            required=False,
+            initial=Generator.default_solution,
         )
 
         class Meta:
@@ -46,11 +52,6 @@ def problem_form(content_type, *args, **kwargs):
                         )
             else:
                 del self.errors["text"]
-                for field_name in ["instruction", "solution"]:
-                    if not cleaned_data[field_name]:
-                        errors[
-                            field_name
-                        ] = "Ob izbiri novega besedila mora biti to polje neprazno."
             if errors:
                 raise ValidationError(errors)
 

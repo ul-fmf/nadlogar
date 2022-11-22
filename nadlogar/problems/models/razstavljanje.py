@@ -9,6 +9,9 @@ from .meta import Problem
 class RazstaviVieta(Problem):
     """Problem za razstavljanje s pomočjo Vietovega pravila."""
 
+    default_instruction = "Razstavi izraz $@izraz$"
+    default_solution = "$@razstavljen$"
+
     maksimalna_vrednost = models.PositiveSmallIntegerField(
         "maksimalna vrednost",
         help_text=(
@@ -43,6 +46,9 @@ class RazstaviVieta(Problem):
 
 class RazstaviRazliko(Problem):
     """Problem za razstavljanje razlike kvadratov, kubov in višjih potenc."""
+
+    default_instruction = "Razstavi izraz $@izraz$"
+    default_solution = "$@razstavljen$"
 
     najmanjsa_potenca = models.PositiveSmallIntegerField(
         "najmanjša potenca",

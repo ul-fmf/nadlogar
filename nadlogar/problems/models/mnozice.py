@@ -9,6 +9,9 @@ from .meta import GeneratedDataIncorrect, Problem
 class ElementiMnozice(Problem):
     """Problem za izpis elementov množice iz podanega predpisa."""
 
+    default_instruction = "Zapiši elemente množice $ \\mathcal{A} = \\{ @n;  (n \\in \\mathbb{N}) \\land (n @pogoj @stevilo ) \\}$."
+    default_solution = "$ \\mathcal{A} =@mnozica$"
+
     POGOJ = ["|", "<", "<="]
     POGOJ_LATEX = {"|": r"\mid", "<": r"\lt", "<=": r"\le"}
 
@@ -52,6 +55,9 @@ class ElementiMnozice(Problem):
 class PotencnaMnozica(Problem):
     """Problem za izpis potenčne množice od dane množice."""
 
+    default_instruction = "Zapiši potenčno množico množice $ \\mathcal{A} =@mnozica$"
+    default_solution = "$\\mathcal{P}( \\mathcal{A} ) =@potencna$"
+
     class Meta:
         verbose_name = "Množice / potenčna množica"
 
@@ -73,6 +79,9 @@ class PotencnaMnozica(Problem):
 
 class OperacijeMnozic(Problem):
     """Naloga za zapis unije, preseka, razlike, in kartezičnega produkta množic."""
+
+    default_instruction = "Dani sta množici $ \\mathcal{A} =@A$ in $ \\mathcal{B} =@B$.\r\n    Zapiši množice $ \\mathcal{A} \\cup  \\mathcal{B} $, $ \\mathcal{A} \\cap  \\mathcal{B} $, $ \\mathcal{A} - \\mathcal{B} $ in $ \\mathcal{A} \\times  \\mathcal{B} $."
+    default_solution = "$ \\mathcal{A} \\cup  \\mathcal{B} =@unija$, $ \\mathcal{A} \\cap  \\mathcal{B} =@presek$, $ \\mathcal{A} - \\mathcal{B} =@brez$, $ \\mathcal{A} \\times  \\mathcal{B} =@kartezicno$"
 
     class Meta:
         verbose_name = "Množice / operacije z množicami"
@@ -103,6 +112,9 @@ class OperacijeMnozic(Problem):
 
 class IzpeljaneMnozice(Problem):
     """Problem za zapis komplementa, unije in razlike množic ter izpis elementov izpeljane množice pri podani univerzalni množici."""
+
+    default_instruction = "Dana je univerzalna množica $ \\mathcal{U} =\\mathbb{N}_{ @velikost_univerzalne }$ in njene pomnožice $ \\mathcal{A} =\\{ @navodilo_A; k \\in \\mathbb{N} \\}$, $ \\mathcal{B} = \\{ @navodilo_B; k \\in \\mathbb{N} \\}$, $ \\mathcal{C} =@C$. Zapiši elemente množic $ \\mathcal{A} $, $ \\mathcal{B} $, $ \\mathcal{A}  \\cup  \\mathcal{B} $, $ \\mathcal{C} ^{\\mathsf{c} }$ in $ \\mathcal{B}  -  \\mathcal{A} $."
+    default_solution = "$ \\mathcal{A} =@A$, $ \\mathcal{B} =@B$, $ \\mathcal{A}  \\cup  \\mathcal{B}  =@A_unija_B$, $ \\mathcal{C} ^{\\mathsf{c} }=@C_komplement$,  $ \\mathcal{B}  -  \\mathcal{A}  =@B_brez_A$"
 
     class Meta:
         verbose_name = "Množice / operacije na izpeljanih množicah"

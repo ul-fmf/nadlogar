@@ -54,3 +54,8 @@ class GeneratorTest(TestCase):
                         NOT_PROVIDED,
                         f"{generator.__name__}, {field.name}",
                     )
+
+    def test_default_text(self):
+        for generator in Problem.__subclasses__():
+            self.assertIsNotNone(generator.default_instruction)
+            self.assertIsNotNone(generator.default_solution)

@@ -9,6 +9,9 @@ from .meta import GeneratedDataIncorrect, Problem
 class DeliteljVeckratnik(Problem):
     """Problem za izračun največjega skupnega delitelja in najmanjšega skupnega večkratnika danega števila."""
 
+    default_instruction = "Določi največji skupni delitelj in najmanjši skupni večkratnik števil $@stevilo1$ in $@stevilo2$."
+    default_solution = "$D( @stevilo1,@stevilo2 )=@najvecji_delitelj$, $v( @stevilo1,@stevilo2 )=@najmanjsi_veckratnik$"
+
     minimalna_vrednost = models.PositiveSmallIntegerField(
         "minimalna vrednost",
         help_text="Najmanjša možna vrednost katerega izmed števil",
@@ -52,6 +55,9 @@ class DeliteljVeckratnik(Problem):
 
 class EvklidovAlgoritem(Problem):
     """Problem za izračun največjega skupnega delitelja dveh števil z evklidovim algoritmom."""
+
+    default_instruction = "Z Evklidovim algoritmom poišči največji skupni delitelj števil $@stevilo1$ in $@stevilo2$."
+    default_solution = "$D(@stevilo1,@stevilo2)=@najvecji_delitelj$"
 
     class Meta:
         verbose_name = "Naravna števila / Evklidov algoritem"
