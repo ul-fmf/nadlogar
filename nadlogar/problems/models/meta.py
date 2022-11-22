@@ -73,11 +73,7 @@ class Problem(models.Model):
         if issubclass(Problem, type(self)):
             raise ValidationError("Problems must have a non-trivial generator")
         self.content_type = ContentType.objects.get_for_model(type(self))
-        if (
-            hasattr(self, "text")
-            and self.text is not None
-            and self.content_type != self.text.content_type
-        ):
+        if self.text is not None and self.content_type != self.text.content_type:
             raise ValidationError("Generators of the problem and its text must match")
 
     def save(self, *args, **kwargs):
