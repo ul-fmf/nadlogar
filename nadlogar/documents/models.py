@@ -155,14 +155,14 @@ class Document(models.Model):
         for problem in self.problems.all():
             problem = problem.downcast()
             for student in students:
-                _data, rendered_text = problem.generate_data_and_text(student)
+                rendered_text = problem.student_text(student)
                 student_problem_texts[student].append(rendered_text)
         return student_problem_texts
 
     def problem_examples(self):
         for problem in self.problems.all():
             problem = problem.downcast()
-            _, rendered_text = problem.generate_data_and_text()
+            rendered_text = problem.example_text()
             yield (problem, rendered_text)
 
     def tex_files(self):

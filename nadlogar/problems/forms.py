@@ -8,7 +8,7 @@ from .models import ProblemText
 def problem_form(content_type, *args, **kwargs):
     Generator = content_type.model_class()
     example_problem = kwargs.get("instance", Generator())
-    example_data = example_problem.generate_data(None, 1)
+    example_data = example_problem.example_data()
 
     class ProblemTextChoiceIterator(ModelChoiceIterator):
         def choice(self, obj):

@@ -93,9 +93,9 @@ class Problem(models.Model):
         if not condition:
             raise GeneratedDataIncorrect
 
-    def generate_data(self, seed, count):
+    def _generate_data(self, seed):
         data = []
-        for i in range(count):
+        for i in range(self.number_of_subproblems):
             random.seed(f"{i}-{seed}")
             while True:
                 try:
@@ -105,15 +105,6 @@ class Problem(models.Model):
                     pass
         return data
 
-    def generate_data_and_text(self, student=None):
-        seed = (self.id, None if student is None else student.id)
-        data = self.generate_data(seed, self.number_of_subproblems)
-        if self.text is None:
-            rendered_text = self.default_text().render(data)
-        else:
-            rendered_text = self.text.render(data)
-        return data, rendered_text
-
     @classmethod
     def default_text(cls):
         return ProblemText(
@@ -122,13 +113,24 @@ class Problem(models.Model):
             solution=cls.default_solution,
         )
 
-    @classmethod
-    def example_data_and_text(cls):
-        problem = cls()
-        data = problem.generate_data(None, 1)
-        text = cls.default_text()
-        rendered_text = text.render(data)
-        return data[0], rendered_text
+    def _render_text(self, data):
+        if self.text is None:
+            return self.default_text().render(data)
+        else:
+            return self.text.render(data)
+
+    def example_data(self):
+        return self._generate_data(None)
+
+    def example_text(self):
+        data = self.example_data()
+        return self._render_text(data)
+
+    def student_text(self, student):
+        seed = f"{self.id}-{student.id}"
+        data = self._generate_data(seed)
+        rendered_text = self._render_text(data)
+        return rendered_text
 
     def copy(self, document):
         self = self.downcast()
