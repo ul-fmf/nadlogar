@@ -64,11 +64,11 @@ class PotencnaMnozica(Problem):
     def generate(self):
         velikost = random.randint(2, 3)
         mnozice = [
-            ["a", "b", "c"],
+            [sympy.Symbol("a"), sympy.Symbol("b"), sympy.Symbol("c")],
             [1, 2, 3],
-            ["x", "y", "z"],
-            ["alpha", "beta", "gamma"],
-            ["Pi", "Phi", "Xi"],
+            [sympy.Symbol("x"), sympy.Symbol("y"), sympy.Symbol("z")],
+            [sympy.Symbol("alpha"), sympy.Symbol("beta"), sympy.Symbol("gamma")],
+            [sympy.Symbol("Pi"), sympy.Symbol("Phi"), sympy.Symbol("Xi")],
             [3, 6, 9],
             [3, 7, 42],
         ]
