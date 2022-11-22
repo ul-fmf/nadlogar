@@ -26,10 +26,13 @@ def choose_problem(request, group_id: int, document_id: int):
     problem_groups = {}
     for generator, content_type in problem_content_types().items():
         group, description = generator._meta.verbose_name.split(" / ")
+        Generator = content_type.model_class()
+        example_problem = Generator()
+        _, example_text = example_problem.example_data_and_text()
         problem_groups.setdefault(group, []).append(
             (
                 content_type.id,
-                content_type.model_class().example_data_and_text()[1],
+                example_text,
                 description,
             )
         )
@@ -49,7 +52,10 @@ def choose_problem(request, group_id: int, document_id: int):
 def create_problem(request, group_id: int, document_id: int, content_type_id: int):
     content_type = get_object_or_404(ContentType, id=content_type_id)
     document = _get_document_if_allowed(request, group_id, document_id)
-    example_data, example_text = content_type.model_class().example_data_and_text()
+    Generator = content_type.model_class()
+    example_problem = Generator()
+    example_data, _ = example_problem.example_data_and_text()
+    default_text = example_problem.default_text().render(example_data)
     form = problem_form(content_type, request.POST or None)
     if form.is_valid():
         problem: Problem = form.save(commit=False)
@@ -62,8 +68,8 @@ def create_problem(request, group_id: int, document_id: int, content_type_id: in
         {
             "document": document,
             "form": form,
-            "example_data": example_data,
-            "example_text": example_text,
+            "example_datum": example_data[0],
+            "default_text": default_text,
         },
     )
 
@@ -77,16 +83,16 @@ def edit_problem(request, group_id: int, document_id: int, problem_id: int):
     if form.is_valid():
         problem: Problem = form.save()
         return redirect(problem.document.get_absolute_url())
-    example_data = problem.generate_data_and_text()[0]
-    example_text = problem.default_text().render(example_data)
+    example_data, _ = problem.problem.example_data_and_text()
+    default_text = problem.default_text().render(example_data)
     return render(
         request,
         "problems/edit_problem.html",
         {
             "problem": problem,
             "form": form,
-            "example_data": example_data,
-            "example_text": example_text,
+            "example_datum": example_data[0],
+            "default_text": default_text,
         },
     )
 
