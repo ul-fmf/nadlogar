@@ -41,10 +41,9 @@ Po prvem uspešno sprejetem PRju boste tudi dodani na seznam razvijalcev.
 
 Za dodajanje nove vrste problema je potrebno:
 
-
 - V datoteko `nadlogar/problems/<ime_datoteke>.py` dodati nov podrazred razreda `Problem`.
 - V dokumentacijski niz razreda napisati en stavek, ki opisuje vrsto problema. Ta stavek naj bo golo besedilo (brez LaTeXa, HTMLja, …), ki se bo prikazalo uporabnikom ob izbiri problema.
-- V razrednih atributih `default_instruction` in `default_solution` podati privzeti predlogi za navodilo in rešitev naloge.
+- V razrednih atributih `default_instruction` in `default_solution` podati privzeti predlogi za navodilo in rešitev naloge. V predlogah smete uporabljati spremenljivke, ki jih vrne metoda `generate`. To naredite z znakom @. Če hočete, da se besedilo prikaže kot LaTeXova formula, ga vstavite med $$.
 - Vsem parametrom kot prvi argument podati niz s pravilnim prikazom imena (s šumniki in morebitnimi velikimi začetnicami).
 - Vsem parametrom podati argument `help_text` z besedilom, ki opisuje namen parametra.
 - V podrazredu `Meta` definirati spremenljivko `verbose_name` s pravilnim prikazom imena problema.
@@ -57,25 +56,6 @@ Potem ko uspešno napišete tak razred, poženite ukaza:
 `python manage.py makemigrations`
 
 `python manage.py migrate`
-
-Tako posodobite vašo podatkovno bazo. Da pa bo stvar pravilno delovala, morate še prek adminskega vmesnika **dodati novo besedilo naloge, ki pripada temu razredu**. To storite pod "Problem texts + Dodaj". Za Content type izberite ustrezen `verbose_name`.
-V besedilih navodila in rešitev smete uporabljati spremenljivke, ki jih generira posamezen razred naloge. To naredite z znakom @. Če hočete, da del besedila izgleda kot LaTeXa formula, besedilo vstavite med $$.
-
-**Primer dodajanja besedila prek adminskega vmesnika**:
-
-- _Content type_: (tukaj izberete ustrezno ime iz seznama)
-- _Instruction_: "Dani sta števili \$@prvo_stevilo$ in \$@drugo_stevilo$. Poišči njuno vsoto!"
-- _Solution_: "Njuna vsota je \$@vsota$.".
-
-Še več konkretnih primerov lahko najdete na adminskem vmesniku pod "Problem texts"
-
-**Opomba:** Trenutno besedil **ne** morete spreminjati prek python datotek, ampak samo prek adminskega vmesnika!!
-
-Ko prek vmesnika dodate besedilo naloge, spremenite podatkovno bazo. Vendar ostane datoteka `nadlogar\problems\fixtures\initial.json` nespremenjena! Zato je treba v terminalu pognati naslednji ukaz (zagotovo dela za Windows):
-
-`python -Xutf8 manage.py dumpdata --output 'problems\fixtures\initial.json' --indent 4`
-
-Veliko problemov je v okviru svoje magistrske naloge že naredila _Urša Pertot_. Večina jih še ni implementiranih v Nadlogarja, so pa dostopni na [njenem repozitoriju](https://github.com/ursa16180/generiranje-nalog).
 
 ## Nekaj ne dela pravilno?!?
 
