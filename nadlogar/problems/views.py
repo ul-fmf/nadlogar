@@ -83,7 +83,7 @@ def edit_problem(request, group_id: int, document_id: int, problem_id: int):
     if form.is_valid():
         problem: Problem = form.save()
         return redirect(problem.document.get_absolute_url())
-    example_data = problem.problem.example_data()
+    example_data = problem.example_data()
     default_text = problem.default_text().render(example_data)
     return render(
         request,
