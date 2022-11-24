@@ -55,7 +55,7 @@ Po namestitvi je koristno pognati
 
     python manage.py loaddata documents/fixtures/initial.json
 
-Tako naložite nekaj koristinih LaTeX predlog.
+Tako naložite nekaj koristnih LaTeX predlog.
 
 ## Kako poženete Nadlogarja?
 

@@ -1,10 +1,10 @@
-# OSNOVNA NAVODILA ZA RAZVIJALCE NADLOGARJA
+# Osnovna navodila za razvijalce Nadlogarja
 
 Tukaj se nahajajo osnovna navodila za uporabo Nadlogarja. Če želite pri projektu sodelovati ali kakorkoli pomagati, vam toplo priporočamo, da si jih preberete.
 
 ## Namestitev Nadlogarja
 
-Za namestitev Nadlogarja je potrebno upoštevati navodila, ki jih najdemo na [githubu](https://github.com/ul-fmf/nadlogar).
+Za namestitev Nadlogarja je potrebno upoštevati navodila, ki jih najdemo na [GitHubu](https://github.com/ul-fmf/nadlogar).
 
 ## Dodajanje novih funkcionalnosti s pull requesti
 
@@ -37,17 +37,17 @@ popravi vse napake). Enako velja za spremembe med procesom pregleda.
 
 Po prvem uspešno sprejetem PRju boste tudi dodani na seznam razvijalcev.
 
-## Dodajanje nove naloge
+## Dodajanje novih vrst problemov
 
-Za dodajanje novega problema je potrebno:
+Za dodajanje nove vrste problema je potrebno:
 
 
 - V datoteko `nadlogar/problems/<ime_datoteke>.py` dodati nov podrazred razreda `Problem`.
 - V dokumentacijski niz razreda napisati en stavek, ki opisuje vrsto problema. Ta stavek naj bo golo besedilo (brez LaTeXa, HTMLja, …), ki se bo prikazalo uporabnikom ob izbiri problema.
 - V razrednih atributih `default_instruction` in `default_solution` podati privzeti predlogi za navodilo in rešitev naloge.
-- Vsem parametrom je treba kot prvi argument podati niz s pravilnim prikazom imena (s šumniki in morebitnimi velikimi začetnicami).
-- Vsem parametrom je treba podati argument `help_text` z besedilom, ki opisuje namen parametra.
-- V podrazredu `Meta` je treba definirati spremenljivko `verbose_name` s pravilnim prikazom imena problema.
+- Vsem parametrom kot prvi argument podati niz s pravilnim prikazom imena (s šumniki in morebitnimi velikimi začetnicami).
+- Vsem parametrom podati argument `help_text` z besedilom, ki opisuje namen parametra.
+- V podrazredu `Meta` definirati spremenljivko `verbose_name` s pravilnim prikazom imena problema.
 - Definirati metodo `generate`, ki vrne slovar podatkov, ki jih lahko kasneje uporabite v navodilu in rešitvi naloge.
 
 V metodi `generate` naključne vrednosti izbirate s pomočjo funkcij iz knjižnice `random`. Za nastavitev semena generatorja psevdonaključnih števil vam ni treba skrbeti. Če želite v problemu delati s simbolnimi izrazi, uporabite knjižnico `sympy`. Če želite lepo rešitev, je običajno bolje, da generirate najprej rešitev in nato nalogo, na primer najprej ničle polinoma in iz njih koeficiente ter ne obratno. Včasih se to ne da in za generiranje lepe rešitve potrebujete več poskusov. V tem primeru uporabite izjemo `GeneratedDataIncorrect`, ki jo sprožite, kadar podatki niso ustrezni. V tem primeru bo program izbral novo seme generatorja ter nalogo poskusil sestaviti znova.
