@@ -1,7 +1,6 @@
 import random
 from string import Template as PythonTemplate
 
-import sympy
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -47,13 +46,17 @@ class GeneratedDataIncorrect(Exception):
 
 
 class Problem(models.Model):
+    default_instruction = None
+    default_solution = None
     document = models.ForeignKey("documents.Document", on_delete=models.CASCADE)
     content_type = models.ForeignKey(
         ContentType,
         on_delete=models.PROTECT,
         limit_choices_to=limit_content_type_choices,
     )
-    text = models.ForeignKey("problems.ProblemText", on_delete=models.PROTECT)
+    text = models.ForeignKey(
+        "problems.ProblemText", on_delete=models.SET_NULL, blank=True, null=True
+    )
     number_of_subproblems = models.PositiveSmallIntegerField(
         "število podnalog",
         help_text="Če je izbrana več kot ena naloga, bodo navodila našteta v seznamu.",
@@ -70,7 +73,7 @@ class Problem(models.Model):
         if issubclass(Problem, type(self)):
             raise ValidationError("Problems must have a non-trivial generator")
         self.content_type = ContentType.objects.get_for_model(type(self))
-        if hasattr(self, "text") and self.content_type != self.text.content_type:
+        if self.text is not None and self.content_type != self.text.content_type:
             raise ValidationError("Generators of the problem and its text must match")
 
     def save(self, *args, **kwargs):
@@ -90,10 +93,10 @@ class Problem(models.Model):
         if not condition:
             raise GeneratedDataIncorrect
 
-    def generate_data(self, seed, count):
+    def _generate_data(self, seed):
         data = []
-        for i in range(count):
-            random.seed((i, seed))
+        for i in range(self.number_of_subproblems):
+            random.seed(f"{i}-{seed}")
             while True:
                 try:
                     data.append(self.generate())
@@ -102,19 +105,32 @@ class Problem(models.Model):
                     pass
         return data
 
-    def generate_data_and_text(self, student=None):
-        seed = (self.id, None if student is None else student.id)
-        data = self.generate_data(seed, self.number_of_subproblems)
-        rendered_text = self.text.render(data)
-        return data, rendered_text
+    @classmethod
+    def default_text(cls):
+        return ProblemText(
+            content_type=ContentType.objects.get_for_model(cls),
+            instruction=cls.default_instruction,
+            solution=cls.default_solution,
+        )
 
-    @staticmethod
-    def example_data_and_text(content_type):
-        problem = content_type.model_class()()
-        data = problem.generate_data(None, 1)
-        text = ProblemText.objects.filter(content_type=content_type).first()
-        rendered_text = text.render(data)
-        return data[0], rendered_text
+    def _render_text(self, data):
+        if self.text is None:
+            return self.default_text().render(data)
+        else:
+            return self.text.render(data)
+
+    def example_data(self):
+        return self._generate_data(None)
+
+    def example_text(self):
+        data = self.example_data()
+        return self._render_text(data)
+
+    def student_text(self, student):
+        seed = f"{self.id}-{student.id}"
+        data = self._generate_data(seed)
+        rendered_text = self._render_text(data)
+        return rendered_text
 
     def copy(self, document):
         self = self.downcast()

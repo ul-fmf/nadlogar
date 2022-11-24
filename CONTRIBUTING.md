@@ -41,8 +41,10 @@ Po prvem uspešno sprejetem PRju boste tudi dodani na seznam razvijalcev.
 
 Za dodajanje novega problema je potrebno:
 
+
 - V datoteko `nadlogar/problems/<ime_datoteke>.py` dodati nov podrazred razreda `Problem`.
 - V dokumentacijski niz razreda napisati en stavek, ki opisuje vrsto problema. Ta stavek naj bo golo besedilo (brez LaTeXa, HTMLja, …), ki se bo prikazalo uporabnikom ob izbiri problema.
+- V razrednih atributih `default_instruction` in `default_solution` podati privzeti predlogi za navodilo in rešitev naloge.
 - Vsem parametrom je treba kot prvi argument podati niz s pravilnim prikazom imena (s šumniki in morebitnimi velikimi začetnicami).
 - Vsem parametrom je treba podati argument `help_text` z besedilom, ki opisuje namen parametra.
 - V podrazredu `Meta` je treba definirati spremenljivko `verbose_name` s pravilnim prikazom imena problema.

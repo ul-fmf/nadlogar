@@ -1,8 +1,15 @@
-from .meta import *
+import random
+
+from django.db import models
+
+from .meta import Problem
 
 
 class ProstoBesedilo(Problem):
     """Problem s poljubnim fiksnim besedilom navodila in rešitve, namenjen ročno sestavljenim nalogam."""
+
+    default_instruction = "@navodilo"
+    default_solution = "@resitev"
 
     navodilo = models.TextField(
         "navodilo",
@@ -25,6 +32,11 @@ class ProstoBesedilo(Problem):
 
 class KrajsanjeUlomkov(Problem):
     """Problem, v katerem je treba okrajšati dani ulomek."""
+
+    default_instruction = (
+        "Okrajšaj ulomek $\\frac{@neokrajsan_stevec}{@neokrajsan_imenovalec}$."
+    )
+    default_solution = "$\\frac{@okrajsan_stevec}{@okrajsan_imenovalec}$"
 
     najvecji_stevec = models.PositiveSmallIntegerField(
         "največji števec",
@@ -59,6 +71,9 @@ class KrajsanjeUlomkov(Problem):
 
 class IskanjeNicelPolinoma(Problem):
     """Problem, v katerem je treba poiskati ničle danega polinoma."""
+
+    default_instruction = "Poišči vse ničle polonoma $@polinom$."
+    default_solution = "$\\{@nicle\\}$"
 
     stevilo_nicel = models.PositiveSmallIntegerField(
         "število ničel",

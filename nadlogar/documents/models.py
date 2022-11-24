@@ -125,7 +125,7 @@ class Document(models.Model):
     name = models.CharField("ime", max_length=255)
     date = models.DateField(
         "datum dokumenta",
-        help_text="Datum, ki bo v glavi dokumenta in po katerem bodo urejeni dokumenti.",
+        help_text="Datum v glavi dokumenta in po katerem so urejeni dokumenti.",
     )
     sort = models.ForeignKey(
         "documents.DocumentSort", verbose_name="oblika", on_delete=models.PROTECT
@@ -155,15 +155,15 @@ class Document(models.Model):
         for problem in self.problems.all():
             problem = problem.downcast()
             for student in students:
-                _data, rendered_text = problem.generate_data_and_text(student)
+                rendered_text = problem.student_text(student)
                 student_problem_texts[student].append(rendered_text)
         return student_problem_texts
 
     def problem_examples(self):
         for problem in self.problems.all():
             problem = problem.downcast()
-            data, rendered_text = problem.generate_data_and_text()
-            yield (problem, data, rendered_text)
+            rendered_text = problem.example_text()
+            yield (problem, rendered_text)
 
     def tex_files(self):
         student_problem_texts = self.generate_student_problem_texts()

@@ -232,7 +232,7 @@ cls = r"""
     \@navodila
   }%
   }%
-  
+
   \addvspace{\v@mednalogami}
   \@afterindentfalse%
   \@afterheading%
@@ -276,7 +276,7 @@ cls = r"""
   \@ifthen{\boolean{@celostranske} \and \not \boolean{@dodana}}{\newpage}%
   % Ce ne bomo rekli eksplicitno, naslednja naloga ne bo dodana na isto stran.
   \setboolean{@dodana}{false}%
-  
+
   % Sedaj izpisemo nalogo.
   \oblikanaloge{%
     % Izpisemo oznako naloge.
@@ -328,7 +328,7 @@ cls = r"""
 \newcommand{\podnaloga}[1][]{%
   % Najprej povecamo stevec podnaloge.
   \stepcounter{podnaloga}%
-  
+
   % Sedaj izpisemo nalogo.
   \oblikapodnaloge{%
     % Izpisemo oznako naloge.

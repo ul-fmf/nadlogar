@@ -29,13 +29,12 @@ Dobiti bi morali sledečo strukturo datotek:
         venv/
             ...
 
-Po prvi namestitvi, pa tudi na vsake toliko časa, greste v mapo `nadlogar/nadlogar/` ter s sledečimi ukazi kodo posodobite, aktivirate virtualno okolje, namestite potrebne pakete, posodobite bazo in naložite besedila nalog:
+Po prvi namestitvi, pa tudi na vsake toliko časa, greste v mapo `nadlogar/nadlogar/` ter s sledečimi ukazi kodo posodobite, aktivirate virtualno okolje, namestite potrebne pakete in posodobite bazo:
 
     git pull
     source venv/bin/activate
     pip install -r requirements/local.txt
     python manage.py migrate
-    python manage.py loaddata problems/fixtures/initial.json
 
 Če uporabljate Windowse, je drugi ukaz drugačen
 
@@ -43,7 +42,6 @@ Po prvi namestitvi, pa tudi na vsake toliko časa, greste v mapo `nadlogar/nadlo
     venv\Scripts\activate
     pip install -r requirements\local.txt
     python manage.py migrate
-    python manage.py loaddata problems\fixtures\initial.json
 
 Strežnik nato poženete z
 

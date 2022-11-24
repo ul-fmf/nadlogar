@@ -13,6 +13,27 @@
         <h3>Besedilo naloge</h3>
         <div class="field">
             <div class="control">
+                <article class="media">
+                    <div class="media-left">
+                        <label class="radio">
+                            {% if form.initial.text == None %}
+                            <input type="radio" name="{{ form.text.html_name }}" checked>
+                            {% else %}
+                            <input type="radio" name="{{ form.text.html_name }}">
+                            {% endif %}
+                        </label>
+                    </div>
+                    <div class="media-content">
+                        <div class="content">
+                            <h4>Privzeto besedilo</h4>
+                            {{ form.generator }}
+                            {% include "problems/_rendered_text.html" with rendered_text=default_text %}
+                        </div>
+                        <div class="content help">
+                            <strong>Pozor:</strong> privzeto besedilo naloge se s posodobitvami spletne storitve lahko spreminja.
+                            Če tega ne želite, si spodaj ustvarite novo besedilo na osnovi privzetega.
+                        </div>
+                </article>
                 {% for value, rendered_text in form.fields.text.choices %}
                 <article class="media">
                     <div class="media-left">
@@ -34,7 +55,7 @@
                 <article class="media">
                     <div class="media-left">
                         <label class="radio">
-                            <input type="radio" name="{{ form.text.html_name }}">
+                            <input type="radio" name="{{ form.text.html_name }}" value="new">
                         </label>
                     </div>
                     <div class="media-content">
@@ -46,7 +67,7 @@
                         <div class="content help">
                             Pri pisanju navodila in rešitve so vam na voljo sledeči podatki:
                             <ul>
-                                {% for key, value in example_data.items %}
+                                {% for key, value in example_datum.items %}
                                 <li><strong>@{{ key }}</strong>: <code>{{ value }}</code></li>
                                 {% endfor %}
                             </ul>
