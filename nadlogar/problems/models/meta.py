@@ -20,27 +20,6 @@ class Template(PythonTemplate):
     delimiter = "@"
 
 
-class ProblemText(models.Model):
-    content_type = models.ForeignKey(
-        ContentType,
-        on_delete=models.PROTECT,
-        limit_choices_to=limit_content_type_choices,
-    )
-    instruction = models.TextField()
-    solution = models.TextField()
-
-    def __str__(self):
-        return f"{self.content_type.name}: {self.instruction} / {self.solution}"
-
-    def render(self, data):
-        rendered_texts = []
-        for datum in data:
-            instruction = Template(self.instruction).substitute(**datum)
-            solution = Template(self.solution).substitute(**datum)
-            rendered_texts.append({"instruction": instruction, "solution": solution})
-        return rendered_texts
-
-
 class GeneratedDataIncorrect(Exception):
     pass
 
@@ -54,14 +33,13 @@ class Problem(models.Model):
         on_delete=models.PROTECT,
         limit_choices_to=limit_content_type_choices,
     )
-    text = models.ForeignKey(
-        "problems.ProblemText", on_delete=models.SET_NULL, blank=True, null=True
-    )
     number_of_subproblems = models.PositiveSmallIntegerField(
         "število podnalog",
         help_text="Če je izbrana več kot ena naloga, bodo navodila našteta v seznamu.",
         default=1,
     )
+    instruction = models.TextField("navodilo", blank=True)
+    solution = models.TextField("rešitev", blank=True)
 
     class Meta:
         default_related_name = "problems"
@@ -73,8 +51,6 @@ class Problem(models.Model):
         if issubclass(Problem, type(self)):
             raise ValidationError("Problems must have a non-trivial generator")
         self.content_type = ContentType.objects.get_for_model(type(self))
-        if self.text is not None and self.content_type != self.text.content_type:
-            raise ValidationError("Generators of the problem and its text must match")
 
     def save(self, *args, **kwargs):
         self.content_type = ContentType.objects.get_for_model(type(self))
@@ -105,31 +81,36 @@ class Problem(models.Model):
                     pass
         return data
 
-    @classmethod
-    def default_text(cls):
-        return ProblemText(
-            content_type=ContentType.objects.get_for_model(cls),
-            instruction=cls.default_instruction,
-            solution=cls.default_solution,
-        )
+    def uses_custom_text(self):
+        return bool(self.instruction or self.solution)
 
-    def _render_text(self, data):
-        if self.text is None:
-            return self.default_text().render(data)
+    def render(self, data, default_text=False):
+        if not default_text and self.uses_custom_text():
+            instruction = self.instruction
+            solution = self.solution
         else:
-            return self.text.render(data)
+            instruction = self.default_instruction
+            solution = self.default_solution
+        rendered_texts = []
+        for datum in data:
+            rendered_instruction = Template(instruction).substitute(**datum)
+            rendered_solution = Template(solution).substitute(**datum)
+            rendered_texts.append(
+                {"instruction": rendered_instruction, "solution": rendered_solution}
+            )
+        return rendered_texts
 
     def example_data(self):
         return self._generate_data(None)
 
     def example_text(self):
         data = self.example_data()
-        return self._render_text(data)
+        return self.render(data)
 
     def student_text(self, student):
         seed = f"{self.id}-{student.id}"
         data = self._generate_data(seed)
-        rendered_text = self._render_text(data)
+        rendered_text = self.render(data)
         return rendered_text
 
     def copy(self, document):

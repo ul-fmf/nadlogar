@@ -55,7 +55,7 @@ def create_problem(request, group_id: int, document_id: int, content_type_id: in
     Generator = content_type.model_class()
     example_problem = Generator()
     example_data = example_problem.example_data()
-    default_text = example_problem.default_text().render(example_data)
+    default_text = example_problem.render(example_data, default_text=True)
     form = problem_form(content_type, request.POST or None)
     if form.is_valid():
         problem: Problem = form.save(commit=False)
@@ -84,7 +84,7 @@ def edit_problem(request, group_id: int, document_id: int, problem_id: int):
         problem: Problem = form.save()
         return redirect(problem.document.get_absolute_url())
     example_data = problem.example_data()
-    default_text = problem.default_text().render(example_data)
+    default_text = problem.render(example_data, default_text=True)
     return render(
         request,
         "problems/edit_problem.html",
