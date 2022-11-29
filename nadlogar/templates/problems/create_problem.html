@@ -16,10 +16,10 @@
                 <article class="media">
                     <div class="media-left">
                         <label class="radio">
-                            {% if form.initial.text == None %}
-                            <input type="radio" name="{{ form.text.html_name }}" checked>
+                            {% if form.initial.uses_custom_text %}
+                            <input type="radio" name="{{ form.uses_custom_text.html_name }}" value="false">
                             {% else %}
-                            <input type="radio" name="{{ form.text.html_name }}">
+                            <input type="radio" name="{{ form.uses_custom_text.html_name }}" value="false" checked>
                             {% endif %}
                         </label>
                     </div>
@@ -34,33 +34,19 @@
                             Če tega ne želite, si spodaj ustvarite novo besedilo na osnovi privzetega.
                         </div>
                 </article>
-                {% for value, rendered_text in form.fields.text.choices %}
                 <article class="media">
                     <div class="media-left">
                         <label class="radio">
-                            {% if form.initial.text == value %}
-                            <input type="radio" name="{{ form.text.html_name }}" value="{{ value }}" checked>
+                            {% if form.initial.uses_custom_text %}
+                            <input type="radio" name="{{ form.uses_custom_text.html_name }}" value="true" checked>
                             {% else %}
-                            <input type="radio" name="{{ form.text.html_name }}" value="{{ value }}">
+                            <input type="radio" name="{{ form.uses_custom_text.html_name }}" value="true">
                             {% endif %}
                         </label>
                     </div>
                     <div class="media-content">
                         <div class="content">
-                            {% include "problems/_rendered_text.html" %}
-                        </div>
-                    </div>
-                </article>
-                {% endfor %}
-                <article class="media">
-                    <div class="media-left">
-                        <label class="radio">
-                            <input type="radio" name="{{ form.text.html_name }}" value="new">
-                        </label>
-                    </div>
-                    <div class="media-content">
-                        <div class="content">
-                            <h4>Novo besedilo</h4>
+                            <h4>Lastno besedilo</h4>
                             {% include "_field.html" with field=form.instruction %}
                             {% include "_field.html" with field=form.solution %}
                         </div>

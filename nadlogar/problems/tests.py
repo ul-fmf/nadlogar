@@ -43,8 +43,9 @@ class GeneratorTest(TestCase):
                     "id",
                     "document",
                     "content_type",
-                    "text",
                     "problem_ptr",
+                    "instruction",
+                    "solution",
                 ]:
                     self.assertNotEqual(
                         field.default,
