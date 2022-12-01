@@ -9,12 +9,12 @@ from .meta import Problem
 class SplosniClenZaporedja(Problem):
     """Naloga za iskanje splošnega člena poljubnega zaporedja."""
 
-    default_instruction = "Poišči predpis za splošni člen, ki mu zadoščajo začetni členi zaporedja $@cleni$"
-    default_solution = "$a_n = @resitev$"
+    default_instruction = r"Poišči predpis za splošni člen, ki mu zadoščajo začetni členi zaporedja $@cleni, \ldots$"
+    default_solution = r"$a_n = @resitev$"
 
     zamik_alternirajoce = models.BooleanField(
         "zamaknjeno in alternirajoče zaporedje",
-        help_text="Določa, če so v izbor predpisa vljučena zamaknjena zaporedja iz kvadratov in  kubov ter alternirajoča zaporedja.",
+        help_text="So v izbor predpisa vljučena zamaknjena zaporedja iz kvadratov in  kubov ter alternirajoča zaporedja?",
         choices=[(True, "Da"), (False, "Ne")],
         default=False,
     )
@@ -44,13 +44,12 @@ class SplosniClenZaporedja(Problem):
                 n**2 - a,
                 n**3 - a,
                 (-1) ** n * a * b ** (n - 1),
-            ]  # , a+sum(range(2,n+1)) #TODO kako podati predpis za rekurzivne
+            ]
         predpis = random.choice(predpisi)
         cleni = []
         for x in range(1, 6):
             cleni.append(predpis.subs(n, x))
         return {
-            "cleni": ", ".join([sympy.latex(c) for i, c in enumerate(cleni)])
-            + r", \ ...",
+            "cleni": ", ".join([sympy.latex(c) for c in cleni]),
             "resitev": sympy.latex(predpis),
         }
