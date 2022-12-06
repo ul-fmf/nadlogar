@@ -29,8 +29,8 @@ def niz_clenov(cleni, imena_clenov=False):
     :param imena_clenov: ali člene zapiše v obliki a_i = ...
     """
     niz = r", ".join(
-        (f"a_{i+1} = " if imena_clenov else "") + sympy.latex(c)
-        for i, c in enumerate(cleni)
+        (f"a_{i} = " if imena_clenov else "") + sympy.latex(c)
+        for i, c in enumerate(cleni, 1)
     )
     return niz
 
