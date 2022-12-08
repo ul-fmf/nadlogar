@@ -6,3 +6,4 @@ from .razno import *
 from .razstavljanje import *
 from .veccleniki import *
 from .zaporedja import *
+from .eksponentna_funkcija import *
