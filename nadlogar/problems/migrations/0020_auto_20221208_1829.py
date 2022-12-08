@@ -7,42 +7,72 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('problems', '0019_auto_20221201_1528'),
+        ("problems", "0019_auto_20221201_1528"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='GrafEksponentne',
+            name="GrafEksponentne",
             fields=[
-                ('problem_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='problems.problem')),
+                (
+                    "problem_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="problems.problem",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Eksponentna funkcija / risanje grafa',
+                "verbose_name": "Eksponentna funkcija / risanje grafa",
             },
-            bases=('problems.problem',),
+            bases=("problems.problem",),
         ),
         migrations.CreateModel(
-            name='ResevanjeEksponentneEnacbe',
+            name="ResevanjeEksponentneEnacbe",
             fields=[
-                ('problem_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='problems.problem')),
+                (
+                    "problem_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="problems.problem",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Eksponentna funkcija / reševanje eksponentne enačbe z eno osnovo',
+                "verbose_name": "Eksponentna funkcija / reševanje eksponentne enačbe z eno osnovo",
             },
-            bases=('problems.problem',),
+            bases=("problems.problem",),
         ),
         migrations.CreateModel(
-            name='ResevanjeEksponentneEnacbeZDvemaOsnovama',
+            name="ResevanjeEksponentneEnacbeZDvemaOsnovama",
             fields=[
-                ('problem_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='problems.problem')),
+                (
+                    "problem_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="problems.problem",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Eksponentna funkcija / reševanje eksponentne enačbe z različnima osnovama',
+                "verbose_name": "Eksponentna funkcija / reševanje eksponentne enačbe z različnima osnovama",
             },
-            bases=('problems.problem',),
+            bases=("problems.problem",),
         ),
         migrations.AlterModelOptions(
-            name='prvicleniaritmeticnega',
-            options={'verbose_name': 'Zaporedja / prvi člen aritmetičnega'},
+            name="prvicleniaritmeticnega",
+            options={"verbose_name": "Zaporedja / prvi člen aritmetičnega"},
         ),
     ]
