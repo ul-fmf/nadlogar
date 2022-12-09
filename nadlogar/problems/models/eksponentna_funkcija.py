@@ -34,9 +34,9 @@ class GrafEksponentne(Problem):
     \begin{minipage}{\linewidth}
     \centering
     \begin{tikzpicture}[baseline]
-    \begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$, 
+    \begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$,
     xtick={-5,-4,...,5}, ytick={-5,-4,...,5},
-    restrict y to domain=-5.5:5.5, 
+    restrict y to domain=-5.5:5.5,
     xmin=-5.5, xmax=5.5, ymin=-5.5, ymax=5.5,]
     \addplot[domain =-5.5:5.5, color=black, smooth]{ {{naloga.narisi_eksponentna1}} } node[right, pos=1]{ {{latex(naloga.eksponentna1)}} };
     \addplot[domain =-5.5:5.5, color=black, smooth]{ {{naloga.narisi_eksponentna2}} } node[right, pos=0.98]{ {{latex(naloga.eksponentna2)}}};
