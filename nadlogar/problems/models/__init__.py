@@ -1,3 +1,4 @@
+from .eksponentna_funkcija import *
 from .kompleksna import *
 from .meta import *
 from .mnozice import *
@@ -6,4 +7,3 @@ from .razno import *
 from .razstavljanje import *
 from .veccleniki import *
 from .zaporedja import *
-from .eksponentna_funkcija import *
