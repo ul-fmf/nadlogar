@@ -23,52 +23,52 @@ def naredi_eksponentno(do=3, cela_osnova=False, premik=0):
     return (osnova, premik, sympy.Add(sympy.Pow(osnova, x), premik, evaluate=False))
 
 
-class GrafEksponentne(Problem):
-    """
-    Naloga iz risanja dveh grafov eksponentne funkcije.
-    """
+# class GrafEksponentne(Problem):
+#     """
+#     Naloga iz risanja dveh grafov eksponentne funkcije.
+#     """
 
-    default_instruction = r"""V isti koordinatni sistem nariši grafa funkcij $f(x)=@eksponentna_prva$ in $g(x)=@eksponentna_druga$."""
-    # TODO izpisovanje imena funkcij na grafu
-    default_solution = r"""$f(x)=@eksponentna_prva$, $g(x)=@eksponentna_druga$ $\par
-    \begin{minipage}{\linewidth}
-    \centering
-    \begin{tikzpicture}[baseline]
-    \begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$,
-    xtick={-5,-4,...,5}, ytick={-5,-4,...,5},
-    restrict y to domain=-5.5:5.5,
-    xmin=-5.5, xmax=5.5, ymin=-5.5, ymax=5.5,]
-    \addplot[domain =-5.5:5.5, color=black, smooth]{ {{naloga.narisi_eksponentna1}} } node[right, pos=1]{ {{latex(naloga.eksponentna1)}} };
-    \addplot[domain =-5.5:5.5, color=black, smooth]{ {{naloga.narisi_eksponentna2}} } node[right, pos=0.98]{ {{latex(naloga.eksponentna2)}}};
-    \addplot[domain =-5.5:5.5, color=black, dashed]{ {{naloga.premik2}} };
-    \end{axis}
-    \end{tikzpicture}
-    \end{minipage}$"""
+#     default_instruction = r"""V isti koordinatni sistem nariši grafa funkcij $f(x)=@eksponentna_prva$ in $g(x)=@eksponentna_druga$."""
+#     # TODO izpisovanje imena funkcij na grafu
+#     default_solution = r"""$f(x)=@eksponentna_prva$, $g(x)=@eksponentna_druga$ $\par
+#     \begin{minipage}{\linewidth}
+#     \centering
+#     \begin{tikzpicture}[baseline]
+#     \begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$,
+#     xtick={-5,-4,...,5}, ytick={-5,-4,...,5},
+#     restrict y to domain=-5.5:5.5,
+#     xmin=-5.5, xmax=5.5, ymin=-5.5, ymax=5.5,]
+#     \addplot[domain =-5.5:5.5, color=black, smooth]{ {{naloga.narisi_eksponentna1}} } node[right, pos=1]{ {{latex(naloga.eksponentna1)}} };
+#     \addplot[domain =-5.5:5.5, color=black, smooth]{ {{naloga.narisi_eksponentna2}} } node[right, pos=0.98]{ {{latex(naloga.eksponentna2)}}};
+#     \addplot[domain =-5.5:5.5, color=black, dashed]{ {{naloga.premik2}} };
+#     \end{axis}
+#     \end{tikzpicture}
+#     \end{minipage}$"""
 
-    class Meta:
-        verbose_name = "Eksponentna funkcija / risanje grafa"
+#     class Meta:
+#         verbose_name = "Eksponentna funkcija / risanje grafa"
 
-    def generate(self):
-        x = sympy.symbols("x")
-        osnova, premik, eksponentna_prva = naredi_eksponentno(
-            premik=random.choice([i for i in range(-3, 4) if i != 0]), cela_osnova=True
-        )
-        predznak = random.choice([1, -1])
-        premik_drugi = random.choice([x for x in range(-3, 4) if x != 0])
-        eksponentna_druga = sympy.Add(
-            predznak * sympy.Pow(osnova, x, evaluate=False),
-            premik_drugi,
-            evaluate=False,
-        )
-        narisi_eksponentna_prva = str(eksponentna_prva).replace("**", "^")
-        narisi_eksponentna_druga = str(eksponentna_druga).replace("**", "^")
-        return {
-            "eksponentna_prva": sympy.latex(eksponentna_prva),
-            "eksponentna_druga": sympy.latex(eksponentna_druga),
-            "narisi_eksponentna_prva": sympy.latex(narisi_eksponentna_prva),
-            "narisi_eksponentna_druga": sympy.latex(narisi_eksponentna_druga),
-            "premik_drugi": sympy.latex(premik_drugi),
-        }
+#     def generate(self):
+#         x = sympy.symbols("x")
+#         osnova, premik, eksponentna_prva = naredi_eksponentno(
+#             premik=random.choice([i for i in range(-3, 4) if i != 0]), cela_osnova=True
+#         )
+#         predznak = random.choice([1, -1])
+#         premik_drugi = random.choice([x for x in range(-3, 4) if x != 0])
+#         eksponentna_druga = sympy.Add(
+#             predznak * sympy.Pow(osnova, x, evaluate=False),
+#             premik_drugi,
+#             evaluate=False,
+#         )
+#         narisi_eksponentna_prva = str(eksponentna_prva).replace("**", "^")
+#         narisi_eksponentna_druga = str(eksponentna_druga).replace("**", "^")
+#         return {
+#             "eksponentna_prva": sympy.latex(eksponentna_prva),
+#             "eksponentna_druga": sympy.latex(eksponentna_druga),
+#             "narisi_eksponentna_prva": sympy.latex(narisi_eksponentna_prva),
+#             "narisi_eksponentna_druga": sympy.latex(narisi_eksponentna_druga),
+#             "premik_drugi": sympy.latex(premik_drugi),
+#         }
 
 
 class ResevanjeEksponentneEnacbe(Problem):
