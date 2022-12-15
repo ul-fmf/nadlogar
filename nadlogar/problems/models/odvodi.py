@@ -1,6 +1,6 @@
 import enum
-
 import random
+
 import sympy
 
 from .meta import GeneratedDataIncorrect, Problem
