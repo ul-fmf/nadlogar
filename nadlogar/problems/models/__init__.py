@@ -1,3 +1,4 @@
+from .eksponentna_funkcija import *
 from .kompleksna import *
 from .meta import *
 from .mnozice import *

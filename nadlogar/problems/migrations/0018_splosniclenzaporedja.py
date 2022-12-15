@@ -7,19 +7,37 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('problems', '0017_alter_problem_text'),
+        ("problems", "0017_alter_problem_text"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='SplosniClenZaporedja',
+            name="SplosniClenZaporedja",
             fields=[
-                ('problem_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='problems.problem')),
-                ('zamik_alternirajoce', models.BooleanField(choices=[(True, 'Da'), (False, 'Ne')], default=False, help_text='Določa, če so v izbor predpisa vljučena zamaknjena zaporedja iz kvadratov in  kubov ter alternirajoča zaporedja.', verbose_name='zamaknjeno in alternirajoče zaporedje')),
+                (
+                    "problem_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="problems.problem",
+                    ),
+                ),
+                (
+                    "zamik_alternirajoce",
+                    models.BooleanField(
+                        choices=[(True, "Da"), (False, "Ne")],
+                        default=False,
+                        help_text="Določa, če so v izbor predpisa vljučena zamaknjena zaporedja iz kvadratov in  kubov ter alternirajoča zaporedja.",
+                        verbose_name="zamaknjeno in alternirajoče zaporedje",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Zaporedja / splošni člen zaporedja',
+                "verbose_name": "Zaporedja / splošni člen zaporedja",
             },
-            bases=('problems.problem',),
+            bases=("problems.problem",),
         ),
     ]
