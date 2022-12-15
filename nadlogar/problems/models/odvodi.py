@@ -1,6 +1,7 @@
 import enum
 import random
 import sympy
+
 from .meta import GeneratedDataIncorrect, Problem
 
 # Premisli, ali je ta razred smiselen, ker se tak tip podatkov načeloma shranjuje v slovarjih
