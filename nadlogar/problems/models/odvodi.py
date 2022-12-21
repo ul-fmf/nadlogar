@@ -102,8 +102,6 @@ def izberi_logaritem_z_nakljucno_osnovo(osnove=[sympy.E, 2, 3, 4, 5, 10]):
         logaritem = sympy.simplify(sympy.log(x, osnova))
     return logaritem
 
-    # Todo latex naj namesto log izpiše ln, to lahko popravimo kar ročno z regex izrazom
-
 
 def izberi_nakljucno_kotno_funkcijo():
     """
@@ -192,7 +190,9 @@ class OdvodKompozitumaElementarnih(Problem):
             if vrsta.value == "polinom":
                 vrsti_dveh_elementarnih[vrsta] = generiraj_polinom()
             elif vrsta.value == "racionalna":
-                vrsti_dveh_elementarnih[vrsta] = generiraj_racionalno()
+                vrsti_dveh_elementarnih[vrsta] = generiraj_racionalno(
+                    max_stopnja_stevca=2, max_stopnja_imenovalca=2
+                )
             elif vrsta.value == "eksponentna":
                 vrsti_dveh_elementarnih[vrsta] = generiraj_eksponentno()
             elif vrsta.value == "logaritem":
@@ -256,7 +256,9 @@ class OdvodSestavljene(Problem):
                     min_stopnja=1, max_stopnja=2
                 )
             elif vrsta.value == "racionalna":
-                vrsti_dveh_elementarnih[vrsta] = generiraj_racionalno()
+                vrsti_dveh_elementarnih[vrsta] = generiraj_racionalno(
+                    max_stopnja_stevca=2, max_stopnja_imenovalca=2
+                )
             elif vrsta.value == "eksponentna":
                 vrsti_dveh_elementarnih[vrsta] = generiraj_eksponentno()
             elif vrsta.value == "logaritem":
@@ -278,7 +280,7 @@ class OdvodSestavljene(Problem):
             raise GeneratedDataIncorrect
 
         funkcija = operator(zunanja_funkcija, notranja_funkcija)
-        odvod = sympy.simplify(funkcija).diff(x)
+        odvod = sympy.simplify(sympy.simplify(funkcija).diff(x))
         return {
             "funkcija": sympy.latex(funkcija, ln_notation=True),
             "odvod": sympy.latex(odvod, ln_notation=True),
@@ -313,8 +315,8 @@ class Tangenta(Problem):
             x0 = random.randint(-2, 2)
 
         if izbrana.value == "racionalna":
-            stopnja_stevca = random.randint(2, 3)
-            stopnja_imenovalca = 3 - stopnja_stevca
+            stopnja_stevca = random.randint(1, 2)
+            stopnja_imenovalca = 2 - stopnja_stevca
             funkcija = generiraj_racionalno(
                 min_stopnja_stevca=stopnja_stevca,
                 max_stopnja_stevca=stopnja_stevca,
@@ -387,13 +389,13 @@ class KotMedGrafomaElementarnihFunkcij(Problem):
         if izbor == "kvadratna":
             x0 = random.choice([-2, -1, 1, 2])
             y0 = random.randint(-2, 2)
-            a = random.choice([1, 2])
+            a = random.randint(1, 2)
             c1 = random.randint(-4, -1)
             c2 = random.randint(0, 4)
-            b1 = (y0 - a * x0**2 - c1) / x0
-            b2 = (y0 - a * x0**2 - c2) / x0
-            funkcija1 = sympy.Poly([int(a), int(b1), int(c1)], x).as_expr()
-            funkcija2 = sympy.Poly([int(a), int(b2), int(c2)], x).as_expr()
+            b1 = (y0 - a * x0**2 - c1) // x0
+            b2 = (y0 - a * x0**2 - c2) // x0
+            funkcija1 = sympy.Poly([a, b1, c1], x).as_expr()
+            funkcija2 = sympy.Poly([a, b2, c2], x).as_expr()
             presek = sympy.solve((funkcija1 - funkcija2), x)
         if len(presek) != 1:
             raise GeneratedDataIncorrect
