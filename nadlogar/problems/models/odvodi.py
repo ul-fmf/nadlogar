@@ -91,13 +91,15 @@ def generiraj_eksponentno(osnove=[sympy.E, 2, 3, 5]):
 def izberi_logaritem_z_nakljucno_osnovo(osnove=[sympy.E, 2, 3, 4, 5, 10]):
     """
     Vrne naključno logaritemsko funkcijo z eno izmed podanih osnov.
-    Opomba: Program vse logaritme spremeni v logaritme z osnovo :math:`e` in naravni logaritem izpiše kot :math:`log(x)`.
-    izberi_logaritem_z_nakljucno_osnovo(osnove=[3,5])
+    >>> izberi_logaritem_z_nakljucno_osnovo(osnove=[3,5])
     log(x)/log(5)
     """
     x = sympy.symbols("x")
     osnova = random.choice(osnove)
-    logaritem = sympy.log(x, osnova)
+    if osnova == sympy.E:
+        logaritem = sympy.ln(x)
+    else:
+        logaritem = sympy.simplify(sympy.log(x, osnova))
     return logaritem
 
     # Todo latex naj namesto log izpiše ln, to lahko popravimo kar ročno z regex izrazom
@@ -132,8 +134,8 @@ class KotMedPremicama(Problem):
     Naloga za izračun kota med dvema premicama.
     """
 
-    default_instruction = r"Izračunaj kot, ki ga oklepata $y=@premica1$ in @premica2."
-    default_solution = r"$\varphi =@stopinje\degree@minute' $"
+    default_instruction = r"Izračunaj kot, ki ga oklepata $y=@premica1$ in $@premica2$."
+    default_solution = r"$\varphi =@stopinje^{\circ}@minute' $"
 
     class Meta:
         verbose_name = "Odvodi / računanje kota med premicama"
@@ -144,8 +146,7 @@ class KotMedPremicama(Problem):
         k1, k2 = random.sample([x for x in range(-6, 7) if x != 0], 2)
         n1, n2 = random.sample([x for x in range(-10, 11) if x != 0], 2)
         premica1 = k1 * x + n1
-        premica2 = f"${sympy.latex(sympy.Eq(y, k2 * x + n2))}$"
-
+        premica2 = sympy.Eq(y, k2 * x + n2)
         kot = sympy.N(sympy.deg(kot_med_premicama(k1, k2)))
         stopinje = kot // 1
         minute = round(kot % 1 * 60)
@@ -179,7 +180,6 @@ class OdvodKompozitumaElementarnih(Problem):
     def generate(self):
         x = sympy.symbols("x")
         prva_elementarna = random.choice(self.funkcije)
-
         druga_elementarna = random.choice(
             [x for x in self.funkcije if x != VrstaElementarneFunkcije.RACIONALNA]
         )
@@ -209,9 +209,12 @@ class OdvodKompozitumaElementarnih(Problem):
         kompozitum_funkcij = zunanja_funkcija.subs(x, notranja_funkcija)
         odvod_kompozituma = kompozitum_funkcij.diff(x)
         return {
-            "kompozitum_funkcij": sympy.latex(kompozitum_funkcij),
-            "odvod_kompozituma": sympy.latex(odvod_kompozituma),
+            "kompozitum_funkcij": sympy.latex(kompozitum_funkcij, ln_notation=True),
+            "odvod_kompozituma": sympy.latex(odvod_kompozituma, ln_notation=True),
         }
+
+
+# Tale naloga z odvodi ne dela prav, verižno pravilo ni prav sprogramirano
 
 
 class OdvodSestavljene(Problem):
@@ -276,7 +279,10 @@ class OdvodSestavljene(Problem):
 
         funkcija = operator(zunanja_funkcija, notranja_funkcija)
         odvod = sympy.simplify(funkcija).diff(x)
-        return {"funkcija": sympy.latex(funkcija), "odvod": sympy.latex(odvod)}
+        return {
+            "funkcija": sympy.latex(funkcija, ln_notation=True),
+            "odvod": sympy.latex(odvod, ln_notation=True),
+        }
 
 
 class Tangenta(Problem):
@@ -350,7 +356,7 @@ class KotMedGrafomaElementarnihFunkcij(Problem):
     """
 
     default_instruction = r"Na minuto natančno izračunaj kot med grafoma funkcij $f(x)=@funkcija1$ in $g(x)=@funkcija2$."
-    default_solution = r"$\varphi =@stopinje\degree@minute'$"
+    default_solution = r"$\varphi =@stopinje^{\circ}@minute'$"
 
     class Meta:
         verbose_name = "Odvodi / računanje kota med elementarnimi funkcijami"
