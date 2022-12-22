@@ -251,24 +251,25 @@ class OdvodSestavljene(Problem):
 
         vrsti_dveh_elementarnih = {prva_elementarna: None, druga_elementarna: None}
         for vrsta in vrsti_dveh_elementarnih:
-            if vrsta.value == "polinom":
-                vrsti_dveh_elementarnih[vrsta] = generiraj_polinom(
-                    min_stopnja=1, max_stopnja=2
-                )
-            elif vrsta.value == "racionalna":
-                vrsti_dveh_elementarnih[vrsta] = generiraj_racionalno(
-                    max_stopnja_stevca=2, max_stopnja_imenovalca=2
-                )
-            elif vrsta.value == "eksponentna":
-                vrsti_dveh_elementarnih[vrsta] = generiraj_eksponentno()
-            elif vrsta.value == "logaritem":
-                vrsti_dveh_elementarnih[vrsta] = izberi_logaritem_z_nakljucno_osnovo(
-                    osnove=[sympy.E]
-                )
-            elif vrsta.value == "kotna":
-                vrsti_dveh_elementarnih[vrsta] = izberi_nakljucno_kotno_funkcijo()
-            elif vrsta.value == "krozna":
-                vrsti_dveh_elementarnih[vrsta] = izberi_nakljucno_krozno_funkcijo()
+            match vrsta.value:
+                case "polinom":
+                    vrsti_dveh_elementarnih[vrsta] = generiraj_polinom(
+                        min_stopnja=1, max_stopnja=2
+                    )
+                case "racionalna":
+                    vrsti_dveh_elementarnih[vrsta] = generiraj_racionalno(
+                        max_stopnja_stevca=2, max_stopnja_imenovalca=2
+                    )
+                case "eksponentna":
+                    vrsti_dveh_elementarnih[vrsta] = generiraj_eksponentno()
+                case "logaritem":
+                    vrsti_dveh_elementarnih[vrsta] = izberi_logaritem_z_nakljucno_osnovo(
+                        osnove=[sympy.E]
+                    )
+                case "kotna":
+                    vrsti_dveh_elementarnih[vrsta] = izberi_nakljucno_kotno_funkcijo()
+                case "krozna":
+                    vrsti_dveh_elementarnih[vrsta] = izberi_nakljucno_krozno_funkcijo()
 
         zunanja_funkcija = vrsti_dveh_elementarnih[prva_elementarna]
         notranja_funkcija = vrsti_dveh_elementarnih[druga_elementarna]
@@ -310,36 +311,36 @@ class Tangenta(Problem):
         x = sympy.symbols("x")
         izbrana = random.choice(self.funkcije)
 
-        if izbrana.value == "polinom":
-            funkcija = generiraj_polinom()
-            x0 = random.randint(-2, 2)
+        match izbrana.value:
+            case "polinom":
+                funkcija = generiraj_polinom()
+                x0 = random.randint(-2, 2)
+            case "racionalna":
+                stopnja_stevca = random.randint(1, 2)
+                stopnja_imenovalca = 2 - stopnja_stevca
+                funkcija = generiraj_racionalno(
+                    min_stopnja_stevca=stopnja_stevca,
+                    max_stopnja_stevca=stopnja_stevca,
+                    min_stopnja_imenovalca=stopnja_imenovalca,
+                    max_stopnja_imenovalca=stopnja_imenovalca,
+                )
+                x0 = random.randint(-2, 2)
+            case "eksponentna":
+                osnova = random.choice([sympy.E, 2, 3, 5])
+                funkcija = generiraj_eksponentno(osnove=[osnova])
+                x0 = random.choice([sympy.log(n, osnova) for n in [1, 2, 3]])
 
-        if izbrana.value == "racionalna":
-            stopnja_stevca = random.randint(1, 2)
-            stopnja_imenovalca = 2 - stopnja_stevca
-            funkcija = generiraj_racionalno(
-                min_stopnja_stevca=stopnja_stevca,
-                max_stopnja_stevca=stopnja_stevca,
-                min_stopnja_imenovalca=stopnja_imenovalca,
-                max_stopnja_imenovalca=stopnja_imenovalca,
-            )
-            x0 = random.randint(-2, 2)
-        if izbrana.value == "eksponentna":
-            osnova = random.choice([sympy.E, 2, 3, 5])
-            funkcija = generiraj_eksponentno(osnove=[osnova])
-            x0 = random.choice([sympy.log(n, osnova) for n in [1, 2, 3]])
-
-        if izbrana.value == "logaritem":
-            funkcija = izberi_logaritem_z_nakljucno_osnovo(osnove=[sympy.E])
-            x0 = sympy.E ** (random.randint(-1, 2))
-        if izbrana.value == "kotna":
-            funkcija = izberi_nakljucno_kotno_funkcijo()
-            x0 = random.choice([sympy.pi / x for x in [6, 3, 4, 2]])
-        if izbrana.value == "krozna":
-            arcus_kosinus = sympy.acos(x)
-            arcus_sinus = sympy.asin(x)
-            x0 = random.choice([0, 1 / 2, sympy.sqrt(2) / 2, sympy.sqrt(3) / 2, 1])
-            funkcija = random.choice([arcus_kosinus, arcus_sinus])
+            case "logaritem":
+                funkcija = izberi_logaritem_z_nakljucno_osnovo(osnove=[sympy.E])
+                x0 = sympy.E ** (random.randint(-1, 2))
+            case "kotna":
+                funkcija = izberi_nakljucno_kotno_funkcijo()
+                x0 = random.choice([sympy.pi / x for x in [6, 3, 4, 2]])
+            case "krozna":
+                arcus_kosinus = sympy.acos(x)
+                arcus_sinus = sympy.asin(x)
+                x0 = random.choice([0, 1 / 2, sympy.sqrt(2) / 2, sympy.sqrt(3) / 2, 1])
+                funkcija = random.choice([arcus_kosinus, arcus_sinus])
         odvod = sympy.simplify(funkcija).diff(x)
         y0 = funkcija.subs(x, x0)
         k = odvod.subs(x, x0)
@@ -366,37 +367,38 @@ class KotMedGrafomaElementarnihFunkcij(Problem):
     def generate(self):
         x = sympy.symbols("x", real=True)
         izbor = random.choice(["kvadratna", "eksponentna", "logaritem"])
-        if izbor == "eksponentna":
-            osnova = random.choice([sympy.E, 2, 3, 5])
-            eksponentna = osnova**x
-            a = random.randint(1, 2)
-            eksponent1 = sympy.Poly([a, random.randint(-3, 3)], x).as_expr()
-            eksponent2 = sympy.Poly([-a, random.randint(-3, 3)], x).as_expr()
-            funkcija1 = eksponentna.subs(x, eksponent1)
-            funkcija2 = eksponentna.subs(x, eksponent2)
-            presek = sympy.solve((eksponent1 - eksponent2), x)
-            # Poenostavljen presek, ker sympy ne zna izračunati vseh eksponentnih enačb
-        if izbor == "logaritem":
-            naravni_logaritem = sympy.ln(x)
-            a = random.randint(1, 2)
-            funkcija1 = naravni_logaritem.subs(
-                x, sympy.Poly([a, random.randint(-3, 3)], x).as_expr()
-            )
-            funkcija2 = naravni_logaritem.subs(
-                x, sympy.Poly([-a, random.randint(-3, 3)], x).as_expr()
-            )
-            presek = sympy.solve((funkcija1 - funkcija2), x)
-        if izbor == "kvadratna":
-            x0 = random.choice([-2, -1, 1, 2])
-            y0 = random.randint(-2, 2)
-            a = random.randint(1, 2)
-            c1 = random.randint(-4, -1)
-            c2 = random.randint(0, 4)
-            b1 = (y0 - a * x0**2 - c1) // x0
-            b2 = (y0 - a * x0**2 - c2) // x0
-            funkcija1 = sympy.Poly([a, b1, c1], x).as_expr()
-            funkcija2 = sympy.Poly([a, b2, c2], x).as_expr()
-            presek = sympy.solve((funkcija1 - funkcija2), x)
+        match izbor:
+            case "eksponentna":
+                osnova = random.choice([sympy.E, 2, 3, 5])
+                eksponentna = osnova**x
+                a = random.randint(1, 2)
+                eksponent1 = sympy.Poly([a, random.randint(-3, 3)], x).as_expr()
+                eksponent2 = sympy.Poly([-a, random.randint(-3, 3)], x).as_expr()
+                funkcija1 = eksponentna.subs(x, eksponent1)
+                funkcija2 = eksponentna.subs(x, eksponent2)
+                presek = sympy.solve((eksponent1 - eksponent2), x)
+                # Poenostavljen presek, ker sympy ne zna izračunati vseh eksponentnih enačb
+            case "logaritem":
+                naravni_logaritem = sympy.ln(x)
+                a = random.randint(1, 2)
+                funkcija1 = naravni_logaritem.subs(
+                    x, sympy.Poly([a, random.randint(-3, 3)], x).as_expr()
+                )
+                funkcija2 = naravni_logaritem.subs(
+                    x, sympy.Poly([-a, random.randint(-3, 3)], x).as_expr()
+                )
+                presek = sympy.solve((funkcija1 - funkcija2), x)
+            case "kvadratna":
+                x0 = random.choice([-2, -1, 1, 2])
+                y0 = random.randint(-2, 2)
+                a = random.randint(1, 2)
+                c1 = random.randint(-4, -1)
+                c2 = random.randint(0, 4)
+                b1 = (y0 - a * x0**2 - c1) // x0
+                b2 = (y0 - a * x0**2 - c2) // x0
+                funkcija1 = sympy.Poly([a, b1, c1], x).as_expr()
+                funkcija2 = sympy.Poly([a, b2, c2], x).as_expr()
+                presek = sympy.solve((funkcija1 - funkcija2), x)
         if len(presek) != 1:
             raise GeneratedDataIncorrect
         k1 = funkcija1.diff().subs(x, *presek)
