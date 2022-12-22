@@ -7,18 +7,28 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('problems', '0021_resevanjeeksponentneenacbe_and_more'),
+        ("problems", "0021_resevanjeeksponentneenacbe_and_more"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='IzracunNicelVPrimeruDvojneNicle',
+            name="IzracunNicelVPrimeruDvojneNicle",
             fields=[
-                ('problem_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='problems.problem')),
+                (
+                    "problem_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="problems.problem",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Polinomi / iskanje ničel v primeru dvojne ničle',
+                "verbose_name": "Polinomi / iskanje ničel v primeru dvojne ničle",
             },
-            bases=('problems.problem',),
+            bases=("problems.problem",),
         ),
     ]

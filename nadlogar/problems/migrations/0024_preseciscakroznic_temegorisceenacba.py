@@ -7,28 +7,51 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('problems', '0023_kotmedgrafomaelementarnihfunkcij_kotmedpremicama_odvodkompozitumaelementarnih_odvodsestavljene_tange'),
+        (
+            "problems",
+            "0023_kotmedgrafomaelementarnihfunkcij_kotmedpremicama_odvodkompozitumaelementarnih_odvodsestavljene_tange",
+        ),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='PreseciscaKroznic',
+            name="PreseciscaKroznic",
             fields=[
-                ('problem_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='problems.problem')),
+                (
+                    "problem_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="problems.problem",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Stožnice / iskanje presečišča dveh krožnic',
+                "verbose_name": "Stožnice / iskanje presečišča dveh krožnic",
             },
-            bases=('problems.problem',),
+            bases=("problems.problem",),
         ),
         migrations.CreateModel(
-            name='TemeGorisceEnacba',
+            name="TemeGorisceEnacba",
             fields=[
-                ('problem_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='problems.problem')),
+                (
+                    "problem_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="problems.problem",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Stožnice / iskanje predpisa elipse',
+                "verbose_name": "Stožnice / iskanje predpisa elipse",
             },
-            bases=('problems.problem',),
+            bases=("problems.problem",),
         ),
     ]
