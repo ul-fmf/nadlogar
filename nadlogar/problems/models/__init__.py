@@ -7,5 +7,6 @@ from .odvodi import *
 from .polinomi import *
 from .razno import *
 from .razstavljanje import *
+from .stoznice import *
 from .veccleniki import *
 from .zaporedja import *
