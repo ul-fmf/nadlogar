@@ -263,9 +263,9 @@ class OdvodSestavljene(Problem):
                 case "eksponentna":
                     vrsti_dveh_elementarnih[vrsta] = generiraj_eksponentno()
                 case "logaritem":
-                    vrsti_dveh_elementarnih[vrsta] = izberi_logaritem_z_nakljucno_osnovo(
-                        osnove=[sympy.E]
-                    )
+                    vrsti_dveh_elementarnih[
+                        vrsta
+                    ] = izberi_logaritem_z_nakljucno_osnovo(osnove=[sympy.E])
                 case "kotna":
                     vrsti_dveh_elementarnih[vrsta] = izberi_nakljucno_kotno_funkcijo()
                 case "krozna":
