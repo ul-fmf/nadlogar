@@ -3,6 +3,7 @@ from .kompleksna import *
 from .meta import *
 from .mnozice import *
 from .naravna import *
+from .odvodi import *
 from .polinomi import *
 from .razno import *
 from .razstavljanje import *
