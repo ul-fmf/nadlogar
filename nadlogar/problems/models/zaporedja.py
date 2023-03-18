@@ -123,3 +123,46 @@ class PrviCleniAritmeticnega(Problem):
             "d": sympy.latex(d),
             "splosni": sympy.latex(splosni),
         }
+
+
+class SplosniClenAritmeticnegaZaporedja(Problem):
+    """Naloga za zapis splošnega člena aritmetičnega zaporedja, če poznaš dva člena zaporedja"""
+
+    default_instruction = r"""Določi splošni člen aritmetičnega zaporedja, če je $a_{@n1}=@an1$ in $a_{@n2}=@an2$."""
+    default_solution = r"""$a_n=@splosni$"""
+
+    class Meta:
+        verbose_name = "Zaporedja / dva člena aritmetičnega"
+
+    od = models.IntegerField(
+        "najmanjša možna vrednost za prvi člen in diferenco",
+        help_text="",
+        default=1,
+    )
+
+    do = models.IntegerField(
+        "največja možna vrednost za prvi člen in diferenco",
+        help_text="",
+        default=10,
+    )
+
+    def generate(self):
+        seznam_polovick = [
+            sympy.Rational(x, 2) for x in range(2 * self.od, 2 * self.do + 1) if x != 0
+        ]
+        a1 = random.choice(seznam_polovick)
+        d = random.choice(seznam_polovick)
+        n1 = random.randint(2, 10)
+        n2 = random.randint(n1 + 1, 15)
+        an1 = clen_aritmeticnega(a1, d, n1)
+        an2 = clen_aritmeticnega(a1, d, n2)
+
+        n = sympy.symbols("n")
+        splosni = sympy.Add(a1, sympy.Mul(d, (n - 1), evaluate=False), evaluate=False)
+        return {
+            "n1": sympy.latex(n1),
+            "an1": sympy.latex(an1),
+            "n2": sympy.latex(n2),
+            "an2": sympy.latex(an2),
+            "splosni": sympy.latex(splosni),
+        }
