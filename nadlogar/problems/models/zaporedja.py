@@ -166,3 +166,47 @@ class SplosniClenAritmeticnegaZaporedja(Problem):
             "an2": sympy.latex(an2),
             "splosni": sympy.latex(splosni),
         }
+
+
+class SplosniClenAritmeticnegaEnacbi(Problem):
+    """Naloga za zapis splošnega člena aritmetičnega zaporedja, če imaš podani dve enačbi z različnimi členi zaporedja."""
+
+    default_instruction = r"""Določi prvi člen in diferenco artimetičnega zaporedja, pri katerem je $a_{@n1}+a_{@n2}=@vrednost1$ in $a_{@n3} @operator a_{@n4}=@vrednost2$."""
+    default_solution = r"""$a_1=@a1$, $d=@d$"""
+
+    class Meta:
+        verbose_name = "Zaporedja / enačbi aritmetičnega"
+
+    def generate(self):
+        a1 = random.choice(
+            [x for x in range(-8, 8) if x != 0]
+            + [-sympy.Rational(1, 2), sympy.Rational(1, 2)]
+        )
+        d = random.choice(
+            [x for x in range(-3, 3) if x != 0]
+            + [-sympy.Rational(1, 2), sympy.Rational(1, 2)]
+        )
+        n1, n2, n3, n4 = random.sample(list(range(2, 20)), 4)
+        vrednost1 = clen_aritmeticnega(a1, d, n1) + clen_aritmeticnega(a1, d, n2)
+        operatorji = {
+            "+": lambda a, b: a + b,
+            "-": lambda a, b: a - b,
+            "\\cdot": lambda a, b: a * b,
+        }
+
+        operator = random.choice(list(operatorji.keys()))
+        vrednost2 = operatorji[operator](
+            clen_aritmeticnega(a1, d, n3), clen_aritmeticnega(a1, d, n4)
+        )
+
+        return {
+            "n1": sympy.latex(n1),
+            "n2": sympy.latex(n2),
+            "n3": sympy.latex(n3),
+            "n4": sympy.latex(n4),
+            "operator": operator,
+            "vrednost1": sympy.latex(vrednost1),
+            "vrednost2": sympy.latex(vrednost2),
+            "a1": sympy.latex(a1),
+            "d": sympy.latex(d),
+        }
