@@ -1,5 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
+from django.utils.text import normalize_newlines
 
 
 def problem_form(content_type, *args, **kwargs):
@@ -59,10 +60,14 @@ def problem_form(content_type, *args, **kwargs):
                 # If the user does not want to use custom text, we ensure that the
                 # instruction and solution fields are empty or equal to the default
                 # values.
-                if self.cleaned_data["instruction"] == Generator.default_instruction:
-                    self.cleaned_data["instruction"] = ""
-                if self.cleaned_data["solution"] == Generator.default_solution:
-                    self.cleaned_data["solution"] = ""
+                def _erase_if_equal(field, default):
+                    normalized_value = normalize_newlines(self.cleaned_data[field])
+                    normalized_default = normalize_newlines(default)
+                    if normalized_value == normalized_default:
+                        self.cleaned_data[field] = ""
+
+                _erase_if_equal("instruction", Generator.default_instruction)
+                _erase_if_equal("solution", Generator.default_solution)
                 for field_name in ["instruction", "solution"]:
                     if self.cleaned_data[field_name]:
                         errors[field_name] = (
