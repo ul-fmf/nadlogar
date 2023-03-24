@@ -6,7 +6,6 @@ from django.db import models
 from .meta import GeneratedDataIncorrect, Problem
 
 
-# ~~~~~Pomožne funkcije
 def seznam_polovick(od=-10, do=10):
     """
     Funkcija sestavi seznam vseh celih iz polovic med vrednostima od in do (brez 0).
@@ -120,11 +119,7 @@ def razdalja_med_tockama(x1, y1, x2, y2):
     """
 
     razdalja = sympy.Point(x1, y1).distance(sympy.Point(x2, y2))
-    # razdalja =sympy.simplify(sympy.sqrt(((x1 - x2) ** 2 + (y1 - y2) ** 2)))
     return razdalja
-
-
-# ~~~~~Posamezne naloge iz poglavja Linearna funkcija
 
 
 class PremicaSkoziTocki(Problem):
@@ -166,9 +161,7 @@ class PremicaSkoziTocki(Problem):
         }
 
 
-class RazdaljaMedTockama(
-    Problem
-):  # Todo težja racionalne koordinate? #TODO preveri jinja latex
+class RazdaljaMedTockama(Problem):
     """
     Naloga za računanje razdalje med dvema točkama v koordinatenm sistemu.
     """
@@ -198,7 +191,7 @@ class RazdaljaMedTockama(
         }
 
 
-class OblikeEnacbPremice(Problem):  # TODO preveri jinja latex
+class OblikeEnacbPremice(Problem):
     """
     Naloga za pretvarjanje med različnimi oblikami enačbe premice.
     """
@@ -240,7 +233,7 @@ class OblikeEnacbPremice(Problem):  # TODO preveri jinja latex
         }
 
 
-class PremiceTrikotnik(Problem):  # TODO preveri jinja latex
+class PremiceTrikotnik(Problem):
     """
     Naloga za računanje ploščine trikotnika, ki ga dve premici oklepata z abscisno osjo.
     """

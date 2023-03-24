@@ -26,7 +26,6 @@ def nicelna_oblika(od=-5, do=5, risanje=False):
     x1 = random.choice(seznam_polovick(od, do) + seznam_tretinj(od, do))
     x2 = random.choice(seznam_polovick(od, do) + seznam_tretinj(od, do))
     x = sympy.symbols("x")
-    # nicelna = a * (x - x1) * (x - x2)
     nicelna = sympy.Mul(a, x - x1, x - x2, evaluate=False)
     return (a, x1, x2, nicelna)
 
@@ -108,9 +107,6 @@ def diskriminanta(a, b, c):
     return b**2 - 4 * a * c
 
 
-# ~~~~~Naloge iz sklopa: Kvadratna funkcija
-
-
 class KvadratnaIzracunajNicle(Problem):
     """
     Naloga za računanje ničel kvadratne funkcije.
@@ -173,7 +169,7 @@ class KvadratnaIzracunajNicle(Problem):
 #     class Meta:
 #         verbose_name = "Kvadratna funkcija / Graf kvadratne funkcije"
 
-#     def generate(self):  # TODO expand v jinji? potem spremeni kot primer v 03-grafi
+#     def generate(self):
 #         x = sympy.symbols("x")
 #         (a, x1, x2, nicelna) = nicelna_oblika(-3, 3, risanje=True)
 #         funkcija = sympy.expand(nicelna)
@@ -212,7 +208,7 @@ class TemenskaOblika(Problem):
         return {"splosna": sympy.latex(splosna), "p": p, "q": q, "a": a}
 
 
-class Presecisce(Problem):  # TODO zagotovi lepše rezultate
+class Presecisce(Problem):
     """
     Naloga za računanje presečišč parabole in premice.
     """
@@ -275,7 +271,7 @@ class KvadratnaNeenacba(Problem):
     class Meta:
         verbose_name = "Kvadratna funkcija / Reševanje kvadratnih neenačb"
 
-    def generate(self):  # TODO ali želimo lepše rešitve
+    def generate(self):
         x = sympy.symbols("x")
         splosna1 = splosna_oblika(risanje=True)[-1]
         if self.primerjava_s_stevilom:
@@ -289,7 +285,7 @@ class KvadratnaNeenacba(Problem):
         neenacaj = random.choice(["<", "<=", ">", ">="])
         neenakost = sympy.Rel(splosna1, primerjava, neenacaj)
         nicli = sympy.solve(sympy.Eq(splosna1, primerjava), x)
-        if len(nicli) == 0:  # TODO preveri da dela
+        if len(nicli) == 0:
             pass
         else:
             if not (
@@ -300,7 +296,6 @@ class KvadratnaNeenacba(Problem):
                 raise GeneratedDataIncorrect
 
         resitev = sympy.solveset(neenakost, domain=sympy.S.Reals)
-        # print(nicli, sympy.denom(max(nicli, key=sympy.denom)))
         return {"neenakost": sympy.latex(neenakost), "resitev": sympy.latex(resitev)}
 
 
@@ -347,4 +342,4 @@ class SkoziTocke(Problem):
             "y2": sympy.latex(y2),
             "y3": sympy.latex(y3),
             "funkcija": sympy.latex(sympy.expand(funkcija)),
-        }  # Todo expand v besedilu
+        }
