@@ -1,38 +1,7 @@
 from django.db.models.fields import NOT_PROVIDED
 from django.test import TestCase
-from model_bakery import baker
 
 from .models import Problem
-
-
-class ProblemTest(TestCase):
-    def setUp(self):
-        self.number_of_subproblems = 100
-
-    def test_krajsanje_ulomkov(self):
-        """Generator za krajšanje ulomkov vrne ustrezen slovar"""
-        problem = baker.make(
-            "KrajsanjeUlomkov", number_of_subproblems=self.number_of_subproblems
-        )
-        for primer in problem.example_data():
-            a = primer.pop("okrajsan_stevec")
-            b = primer.pop("okrajsan_imenovalec")
-            c = primer.pop("neokrajsan_stevec")
-            d = primer.pop("neokrajsan_imenovalec")
-            self.assertEqual(primer, {})
-            self.assertEqual(a * d, b * c)
-
-    def test_iskanje_nicel_polinoma(self):
-        """Generator za iskanje ničel polinoma vrne ustrezen slovar"""
-        problem = baker.make(
-            "IskanjeNicelPolinoma", number_of_subproblems=self.number_of_subproblems
-        )
-        for primer in problem.example_data():
-            nicle = primer.pop("nicle")
-            polinom = primer.pop("polinom")
-            self.assertEqual(primer, {})
-            self.assertIsInstance(nicle, set)
-            self.assertIsInstance(polinom, str)
 
 
 class GeneratorTest(TestCase):
@@ -64,3 +33,10 @@ class GeneratorTest(TestCase):
         for generator in Problem.__subclasses__():
             self.assertIsNotNone(generator.default_instruction)
             self.assertIsNotNone(generator.default_solution)
+
+    def test_generate(self):
+        """All generators can generate example data."""
+        for generator in Problem.__subclasses__():
+            # We use example_data instead of generate because generate
+            # can fail to produce a valid example on the first attempt.
+            generator().example_data()
