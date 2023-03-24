@@ -63,14 +63,10 @@ class Template(string.Template):
     delimiter = "@"
 
 
-class GeneratedDataIncorrect(Exception):
-    """An exception that is raised when a generator failed to produce proper problem data.
-
-    Sometimes we can determine only after a few steps that the problem data in not suitable.
-    For example, the zeroes of a polynomial may be sufficiently small, but after expanding the
-    polynomial, the coefficients end up too large. In this case, we can raise
-    GeneratedDataIncorrect to restart the generator with a different random seed.
-    """
+class _GeneratedDataIncorrect(Exception):
+    # This is a private exception that is used to restart the generator with a different
+    # random seed. It is not meant to be used directly, but rather through the
+    # validate method.
 
     pass
 
@@ -146,15 +142,16 @@ class Problem(models.Model):
         # generate anything.
         raise NotImplementedError
 
+    @classmethod
     def validate(self, condition):
-        """Raises GeneratedDataIncorrect if the condition is not met.
+        """Validates the generated data.
 
-        This is used to validate the generated data. If the data is not suitable, we
-        raise GeneratedDataIncorrect to restart the generator with a different random
-        seed. If the data is suitable, we do nothing.
-        """
+        Sometimes we can determine only after a few steps that the problem data in not suitable.
+        For example, the zeroes of a polynomial may be sufficiently small, but after expanding the
+        polynomial, the coefficients end up too large. In this case, we can raise a private exception
+        to restart the generator with a different random seed."""
         if not condition:
-            raise GeneratedDataIncorrect
+            raise _GeneratedDataIncorrect
 
     def _generate_data(self, seed):
         """Generates a list of problem data for all subproblems.
@@ -177,7 +174,7 @@ class Problem(models.Model):
                     if new_data not in data:
                         data.append(new_data)
                         break
-                except GeneratedDataIncorrect:
+                except _GeneratedDataIncorrect:
                     pass
         return data
 

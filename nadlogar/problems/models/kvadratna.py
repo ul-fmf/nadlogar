@@ -4,7 +4,7 @@ import sympy
 from django.db import models
 
 from .linearna import seznam_polovick, seznam_tretinj, skozi_tocki
-from .meta import GeneratedDataIncorrect, Problem
+from .meta import Problem
 
 
 def nicelna_oblika(od=-5, do=5, risanje=False):
@@ -127,12 +127,12 @@ class KvadratnaIzracunajNicle(Problem):
 
     def generate(self):
         (a, b, c, splosna) = splosna_oblika()
-        if not self.kompleksni_nicli:
-            if not (diskriminanta(a, b, c) >= 0 and abs(diskriminanta(a, b, c)) <= 200):
-                raise GeneratedDataIncorrect
+        D = diskriminanta(a, b, c)
+        self.validate(abs(D) <= 200)
+        if self.kompleksni_nicli:
+            self.validate(D < 0)
         else:
-            if not (diskriminanta(a, b, c) < 0 and abs(diskriminanta(a, b, c)) <= 200):
-                raise GeneratedDataIncorrect
+            self.validate(D >= 0)
         [x1, x2] = nicle(a, b, c)
         return {
             "splosna": sympy.latex(splosna),
@@ -174,8 +174,7 @@ class KvadratnaIzracunajNicle(Problem):
 #         (a, x1, x2, nicelna) = nicelna_oblika(-3, 3, risanje=True)
 #         funkcija = sympy.expand(nicelna)
 #         [p, q] = izracunaj_teme(a, -a * (x1 + x2), a * x1 * x2)
-#         if not (abs(q) <= 5):
-#             raise GeneratedDataIncorrect
+#         self.validate(abs(q) <= 5)
 #         zacetna = funkcija.subs(x, 0)
 #         return {
 #             "funkcija": sympy.latex(funkcija),
@@ -202,8 +201,8 @@ class TemenskaOblika(Problem):
     def generate(self):
         (a, b, c, splosna) = splosna_oblika()
         D = diskriminanta(a, b, c)
-        if not (D >= 0 and abs(D) <= 200):
-            raise GeneratedDataIncorrect
+        self.validate(D >= 0)
+        self.validate(abs(D) <= 200)
         (p, q) = izracunaj_teme(a, b, c)
         return {"splosna": sympy.latex(splosna), "p": p, "q": q, "a": a}
 
@@ -234,14 +233,12 @@ class Presecisce(Problem):
         koeficienta = sympy.solve(
             (a * x1**2 + b * x1 + c - y1, a * x2**2 + b * x2 + c - y2), b, c
         )
-        if not (
-            koeficienta != []
-        ):  # Če ni rešitve vrne prazen seznam in ne praznega slovarja
-            raise GeneratedDataIncorrect
-        if not (abs(koeficienta[b]) < 5 and abs(koeficienta[c]) < 5):
-            raise GeneratedDataIncorrect
-        if not (abs(koeficienta[b]).q < 5 and abs(koeficienta[c]).q < 5):
-            raise GeneratedDataIncorrect
+        # Če ni rešitve vrne prazen seznam in ne praznega slovarja
+        self.validate(koeficienta != [])
+        self.validate(abs(koeficienta[b]) < 5)
+        self.validate(abs(koeficienta[c]) < 5)
+        self.validate(abs(koeficienta[b]).q < 5)
+        self.validate(abs(koeficienta[c]).q < 5)
         kvadratna = a * x**2 + koeficienta[b] * x + koeficienta[c]
         return {
             "parabola": sympy.latex(kvadratna),
@@ -280,20 +277,16 @@ class KvadratnaNeenacba(Problem):
             )
         else:
             primerjava = splosna_oblika()[-1]
-        if not (splosna1 != primerjava):
-            raise GeneratedDataIncorrect
+        self.validate(splosna1 != primerjava)
         neenacaj = random.choice(["<", "<=", ">", ">="])
         neenakost = sympy.Rel(splosna1, primerjava, neenacaj)
         nicli = sympy.solve(sympy.Eq(splosna1, primerjava), x)
         if len(nicli) == 0:
             pass
         else:
-            if not (
-                nicli[0].is_real
-                and abs(max(nicli, key=abs)) < 10
-                and sympy.denom(max(nicli, key=sympy.denom)) < 20
-            ):
-                raise GeneratedDataIncorrect
+            self.validate(nicli[0].is_real)
+            self.validate(abs(max(nicli, key=abs)) < 10)
+            self.validate(sympy.denom(max(nicli, key=sympy.denom)) < 20)
 
         resitev = sympy.solveset(neenakost, domain=sympy.S.Reals)
         return {"neenakost": sympy.latex(neenakost), "resitev": sympy.latex(resitev)}
@@ -328,8 +321,7 @@ class SkoziTocke(Problem):
             x2 = random.randint(-5, 5)
 
         x3 = random.randint(-5, 5)
-        if not (len({x1, x2, x3}) == 3):
-            raise GeneratedDataIncorrect
+        self.validate(len({x1, x2, x3}) == 3)
         y1 = funkcija.subs(x, x1)
         y2 = funkcija.subs(x, x2)
         y3 = funkcija.subs(x, x3)

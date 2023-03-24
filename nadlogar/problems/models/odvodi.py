@@ -3,7 +3,7 @@ import random
 
 import sympy
 
-from .meta import GeneratedDataIncorrect, Problem
+from .meta import Problem
 
 # Premisli, ali je ta razred smiselen, ker se tak tip podatkov načeloma shranjuje v slovarjih
 
@@ -277,8 +277,7 @@ class OdvodSestavljene(Problem):
         zunanja_funkcija = zunanja_funkcija.subs(
             x, random.choice([-3, -2, -1, 2, 3, 4, 5]) * x
         )
-        if zunanja_funkcija == notranja_funkcija:
-            raise GeneratedDataIncorrect
+        self.validate(zunanja_funkcija != notranja_funkcija)
 
         funkcija = operator(zunanja_funkcija, notranja_funkcija)
         odvod = sympy.simplify(sympy.simplify(funkcija).diff(x))
@@ -399,8 +398,7 @@ class KotMedGrafomaElementarnihFunkcij(Problem):
                 funkcija1 = sympy.Poly([a, b1, c1], x).as_expr()
                 funkcija2 = sympy.Poly([a, b2, c2], x).as_expr()
                 presek = sympy.solve((funkcija1 - funkcija2), x)
-        if len(presek) != 1:
-            raise GeneratedDataIncorrect
+        self.validate(len(presek) == 1)
         k1 = funkcija1.diff().subs(x, *presek)
         k2 = funkcija2.diff().subs(x, *presek)
         kot = sympy.N(sympy.deg(kot_med_premicama(k1, k2)))

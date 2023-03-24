@@ -3,7 +3,7 @@ import random
 import sympy
 from django.db import models
 
-from .meta import GeneratedDataIncorrect, Problem
+from .meta import Problem
 
 
 class DeliteljVeckratnik(Problem):
@@ -36,12 +36,11 @@ class DeliteljVeckratnik(Problem):
     def generate(self):
         stevilo1 = random.randint(self.minimalna_vrednost, self.maksimalna_vrednost)
         stevilo2 = random.randint(self.minimalna_vrednost, self.maksimalna_vrednost)
-        if not (
+        self.validate(stevilo1 != stevilo2)
+        self.validate(
             max(*sympy.factorint(stevilo1).keys(), *sympy.factorint(stevilo2).keys())
             <= self.maksimalni_prafaktor
-            and stevilo1 != stevilo2
-        ):
-            raise GeneratedDataIncorrect
+        )
         najvecji_delitelj = sympy.gcd(stevilo1, stevilo2)
         najmanjsi_veckratnik = sympy.lcm(stevilo1, stevilo2)
 
@@ -65,11 +64,9 @@ class EvklidovAlgoritem(Problem):
     def generate(self):
         stevilo_malo = random.randint(50, 199)
         stevilo_veliko = random.randint(200, 1000)
-        if not (
-            stevilo_veliko % stevilo_malo != 0
-            and stevilo_malo % (stevilo_veliko % stevilo_malo) != 0
-        ):  # Da se ne konča že v prvih dveh korakih
-            raise GeneratedDataIncorrect
+        # Da se ne konča že v prvih dveh korakih
+        self.validate(stevilo_veliko % stevilo_malo != 0)
+        self.validate(stevilo_malo % (stevilo_veliko % stevilo_malo) != 0)
         najvecji_delitelj = sympy.gcd(stevilo_malo, stevilo_veliko)
         return {
             "stevilo1": stevilo_malo,

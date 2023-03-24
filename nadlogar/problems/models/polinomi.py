@@ -2,7 +2,7 @@ import random
 
 import sympy
 
-from .meta import GeneratedDataIncorrect, Problem
+from .meta import Problem
 
 
 def seznam_polovic(od=-10, do=10):
@@ -103,8 +103,8 @@ class IzracunNicelVPrimeruDvojneNicle(Problem):
         [a, b, c, splosna] = generiraj_splosno_obliko_kvadratne()
         [tretja_nicla, cetrta_nicla] = izracunaj_nicle_splosne_kvadratne(a, b, c)
 
-        if not (tretja_nicla != dvojna_nicla and cetrta_nicla != dvojna_nicla):
-            raise GeneratedDataIncorrect
+        self.validate(tretja_nicla != dvojna_nicla)
+        self.validate(cetrta_nicla != dvojna_nicla)
 
         polinom = sympy.expand(sympy.Mul((x - dvojna_nicla) ** 2, splosna))
         return {

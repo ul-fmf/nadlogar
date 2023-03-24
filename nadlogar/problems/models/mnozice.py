@@ -3,7 +3,7 @@ import random
 import sympy
 from django.db import models
 
-from .meta import GeneratedDataIncorrect, Problem
+from .meta import Problem
 
 
 class ElementiMnozice(Problem):
@@ -123,10 +123,10 @@ class IzpeljaneMnozice(Problem):
         k = sympy.symbols("k")
         a = random.randint(2, 5)
         b = random.randint(-4, 4)
+        self.validate(abs(b) != a)
         c = random.randint(2, 5)
         d = random.randint(-4, 4)
-        if abs(b) == a or abs(d) == c:
-            raise GeneratedDataIncorrect
+        self.validate(abs(d) != c)
         velikost_univerzalne = random.randint(12, 20)
         univerzalna = sympy.FiniteSet(*range(1, velikost_univerzalne + 1))
         navodilo_A = a * k + b
