@@ -2,7 +2,7 @@ import random
 
 import sympy
 
-from .meta import GeneratedDataIncorrect, Problem
+from .meta import Problem
 
 
 def naredi_eksponentno(do=3, cela_osnova=False, premik=0):
@@ -93,8 +93,8 @@ class ResevanjeEksponentneEnacbe(Problem):
         zamik_clena2 = random.choice([-3, -2, -1, 1, 2, 3])
         k_clena2 = random.choice([1, 2, 3, -1, -2, -3])
         resitev = random.choice([-1, 0, 1, 2, 3])
-        if not (-2 < (resitev + zamik_clena1) and -2 < (resitev + zamik_clena2)):
-            raise GeneratedDataIncorrect
+        self.validate(-2 < (resitev + zamik_clena1))
+        self.validate(-2 < (resitev + zamik_clena2))
         vrednost = sympy.Rational(
             osnova ** (resitev + zamik_clena1)
             + k_clena2 * (osnova) ** (resitev + zamik_clena2)
@@ -161,6 +161,6 @@ class ResevanjeEksponentneEnacbeZDvemaOsnovama(Problem):
                 rational=True,
             ),
         )
-        if not (max([abs(k_osnove2_levi), abs(k_osnove2_desni)]) < 50):
-            raise GeneratedDataIncorrect  # Zagotovi, da v enačbi ne nastopajo prevelike vrednosti.
+        # Zagotovi, da v enačbi ne nastopajo prevelike vrednosti.
+        self.validate(max([abs(k_osnove2_levi), abs(k_osnove2_desni)]) < 50)
         return {"enacba": sympy.latex(enacba), "resitev": sympy.latex(resitev)}

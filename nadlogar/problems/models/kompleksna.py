@@ -3,7 +3,7 @@ import random
 import sympy
 from django.db import models
 
-from .meta import GeneratedDataIncorrect, Problem
+from .meta import Problem
 
 
 def generiraj_kompleksna_stevila(kolicina):
@@ -17,10 +17,8 @@ def generiraj_kompleksna_stevila(kolicina):
     )
     stevila = [r + i * sympy.I for r, i in zip(stevila_r, stevila_i)]
 
-    if len(stevila) != len(
-        set(stevila)
-    ):  # preveri, da so vsa števila medsebojno različna
-        raise GeneratedDataIncorrect
+    # preveri, da so vsa števila medsebojno različna
+    Problem.validate(len(stevila) == len(set(stevila)))
 
     if kolicina == 1:
         stevila = stevila[0]

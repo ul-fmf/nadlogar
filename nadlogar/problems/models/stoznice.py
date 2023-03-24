@@ -3,7 +3,7 @@ import random
 import sympy
 from django.db import models
 
-from .meta import GeneratedDataIncorrect, Problem
+from .meta import Problem
 
 
 def razdalja_med_tockama(x1, y1, x2, y2):
@@ -34,16 +34,14 @@ class PreseciscaKroznic(Problem):
         q2 = random.randint(-5, 5)
         x0 = random.randint(-5, 5)
         y0 = random.randint(-5, 5)
-        if (p1, q1) == (p2, q2):
-            raise GeneratedDataIncorrect
+        self.validate((p1, q1) != (p2, q2))
         r1 = razdalja_med_tockama(x0, y0, p1, q1)
         r2 = razdalja_med_tockama(x0, y0, p2, q2)
         kroznica1 = sympy.Circle(sympy.Point(p1, q1), r1)
         kroznica2 = sympy.Circle(sympy.Point(p2, q2), r2)
         presek_kroznic = kroznica1.intersection(kroznica2)
         tocke_preseka = [(A.x, A.y) for A in presek_kroznic]
-        if (x0, y0) not in tocke_preseka:
-            raise GeneratedDataIncorrect
+        self.validate((x0, y0) in tocke_preseka)
         latex_zapis_tock = ""
         for id, tocka in enumerate(tocke_preseka):
             latex_zapis_tock += f"T_{id + 1} = {sympy.latex(tocka)}, "
@@ -83,8 +81,7 @@ class TemeGorisceEnacba(Problem):
             sredisce_elipse = sympy.Point(0, 0)
         vodoravna_polos = random.randint(1, 5)
         navpicna_polos = random.randint(1, 5)
-        if vodoravna_polos == navpicna_polos:
-            raise GeneratedDataIncorrect
+        self.validate(vodoravna_polos != navpicna_polos)
         teme = random.choice(
             [
                 sredisce_elipse.translate(x=vodoravna_polos),
@@ -153,8 +150,7 @@ class TemeGorisceEnacba(Problem):
 #             b = random.randint(1, 4)
 #             r = 1  # definiran r zaradi različnega izpisa krivulj
 #             krivulja = ((x - p) ** 2) / a**2 + ((y - q) ** 2) / b**2
-#             if a == b:
-#                 raise GeneratedDataIncorrect
+#             self.validate(a != b)
 
 #         razsirjena = a**2 * b**2 * krivulja.expand() - a**2 * b**2
 #         return {

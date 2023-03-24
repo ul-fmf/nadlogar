@@ -3,7 +3,7 @@ import random
 import sympy
 from django.db import models
 
-from .meta import GeneratedDataIncorrect, Problem
+from .meta import Problem
 
 
 def seznam_polovick(od=-10, do=10):
@@ -140,17 +140,19 @@ class PremicaSkoziTocki(Problem):
         y1 = random.choice(seznam_polovick(-5, 5) + seznam_tretinj(-5, 5))
         x2 = random.randint(-10, 10)
         y2 = random.randint(-10, 10)
-        if not (
-            x1 != x2 and y1 != y2
-        ):  # Preveri, da sta 2 različni točki in nista vzporedni osem
-            raise GeneratedDataIncorrect
-        if not skozi_tocki(x1, y1, x2, y2)[0] in [
-            sympy.Rational(x, y)
-            for x in range(0, 6)
-            for y in range(0, 2 * 10)
-            if (x != 0 and y != 0)
-        ]:  # Lepše rešitve
-            raise GeneratedDataIncorrect
+        # Preveri, da sta 2 različni točki in nista vzporedni osem
+        self.validate(x1 != x2)
+        self.validate(y1 != y2)
+        # Lepše rešitve
+        self.validate(
+            skozi_tocki(x1, y1, x2, y2)[0]
+            in [
+                sympy.Rational(x, y)
+                for x in range(0, 6)
+                for y in range(0, 2 * 10)
+                if (x != 0 and y != 0)
+            ]
+        )
         premica = sympy.latex(skozi_tocki(x1, y1, x2, y2)[-1])
         return {
             "x1": sympy.latex(x1),
@@ -179,8 +181,8 @@ class RazdaljaMedTockama(Problem):
         y1 = izberi_koordinato()
         x2 = izberi_koordinato()
         y2 = izberi_koordinato()
-        if not (x1 != x2 and y1 != y2):
-            raise GeneratedDataIncorrect
+        self.validate(x1 != x2)
+        self.validate(y1 != y2)
         razdalja = sympy.latex(razdalja_med_tockama(x1, y1, x2, y2))
         return {
             "x1": sympy.latex(x1),
@@ -256,8 +258,9 @@ class PremiceTrikotnik(Problem):
         y3 = 0
         x = sympy.symbols("x")
         y = sympy.symbols("y")
-        if not (x2 != x1 and x2 != x3):  # premici sta vzporedni
-            raise GeneratedDataIncorrect
+        # premici sta vzporedni
+        self.validate(x2 != x1)
+        self.validate(x2 != x3)
         if x2 == x1:
             premica1 = sympy.Eq(x, x1)
         else:
@@ -347,8 +350,7 @@ class VrednostiLinearne(Problem):
 
         x1 = random.choice(seznam_polovick(-3, 3) + seznam_tretinj(-3, 3))
         x2 = random.choice(seznam_polovick(-3, 3) + seznam_tretinj(-3, 3))
-        if not (x1 != x2):
-            raise GeneratedDataIncorrect
+        self.validate(x1 != x2)
         y1 = k * x1 + n
         y2 = k * x2 + n
 
@@ -443,8 +445,8 @@ class SistemDvehEnacb(Problem):
         b = random.choice(izborCela)
         d = random.choice(izborCela)
         e = random.choice(izborCela)
-        if not ((a, b) != (d, e) and (x1 != 0 or y1 != 0)):
-            raise GeneratedDataIncorrect
+        self.validate((a, b) != (d, e))
+        self.validate((x1 != 0 or y1 != 0))
         c = a * x1 + b * y1
         f = d * x1 + e * y1
         enacba1 = a * x + b * y
@@ -498,7 +500,7 @@ class SistemTrehEnacb(Problem):
         koef_y3 = random.choice(izborCela)
         koef_z3 = random.choice(izborCela)
 
-        if not (
+        self.validate(
             len(
                 {
                     (koef_x1, koef_y1, koef_z1),
@@ -507,9 +509,8 @@ class SistemTrehEnacb(Problem):
                 }
             )
             == 3
-            and (x1 != 0 or y1 != 0 or z1 != 0)
-        ):
-            raise GeneratedDataIncorrect
+        )
+        self.validate((x1 != 0 or y1 != 0 or z1 != 0))
 
         # vrednosti enačb in enačbe
         vrednost1 = koef_x1 * x1 + koef_y1 * y1 + koef_z1 * z1
