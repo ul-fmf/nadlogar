@@ -1,5 +1,7 @@
 from .eksponentna_funkcija import *
 from .kompleksna import *
+from .kvadratna import *
+from .linearna import *
 from .meta import *
 from .mnozice import *
 from .naravna import *
