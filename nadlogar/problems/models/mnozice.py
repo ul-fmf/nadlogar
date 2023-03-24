@@ -143,7 +143,7 @@ class IzpeljaneMnozice(Problem):
         ]
         A = sympy.FiniteSet(*mnozica_A)
         B = sympy.FiniteSet(*mnozica_B)
-        C = sympy.FiniteSet(*random.sample(set(univerzalna), 8))
+        C = sympy.FiniteSet(*random.sample(sorted(univerzalna), 8))
         A_unija_B = A.union(B)
         C_komplement = sympy.Complement(univerzalna, C)
         B_brez_A = sympy.Complement(B, A)
