@@ -56,9 +56,10 @@ def limit_content_type_choices():
 
 
 class Template(string.Template):
-    # Python standard library includes string.Template that can be used for string
-    # templates in which $xyz can be substituted for a variable xyz. Since $ is
-    # a common LaTeX symbol, we opt for @ instead so we override the class.
+    """A string template that uses @ instead of $ as a delimiter.
+
+    This is to avoid conflicts with LaTeX, which uses $ for math mode."""
+
     delimiter = "@"
 
 
@@ -75,8 +76,18 @@ class GeneratedDataIncorrect(Exception):
 
 
 class Problem(models.Model):
+    """A parent class for all problem kinds.
+
+    This class is not meant to be used directly, but rather as a parent class for
+    particular problem kinds. Each problem kind is represented by a separate subclass
+    of this class. Each subclass must implement a generate method that produces a
+    dictionary of problem data, and string template attributes with default values
+    for instruction and solution.
+    """
+
     # Each problem has a default instruction and solution that are used unless specified
-    # otherwise by the user.
+    # otherwise by the user. These are set by the subclasses and we use tests to ensure
+    # that they are set.
     default_instruction = None
     default_solution = None
     document = models.ForeignKey("documents.Document", on_delete=models.CASCADE)
@@ -110,6 +121,8 @@ class Problem(models.Model):
 
     def save(self, *args, **kwargs):
         # The content type is set automatically from the class.
+        # We do this in save in addition to clean, because clean is not called when
+        # creating a new object.
         self.content_type = ContentType.objects.get_for_model(type(self))
         super().save(*args, **kwargs)
 
@@ -119,11 +132,13 @@ class Problem(models.Model):
         This works even if we start with a problem from the parent table.
         """
         content_type = self.content_type
-        # If the current type matches the content type, there is nothing to convert
+        # We check if the problem is already in the child table
         if content_type.model_class() == type(self):
+            # If it is, we just return it
             return self
-        # Otherwise, we look up the object in the child table
-        return content_type.get_object_for_this_type(problem_ptr_id=self.id)
+        else:
+            # Otherwise, we look up the object in the child table
+            return content_type.get_object_for_this_type(problem_ptr_id=self.id)
 
     def generate(self):
         """Does a single attempt of generating problem data."""
@@ -132,11 +147,22 @@ class Problem(models.Model):
         raise NotImplementedError
 
     def validate(self, condition):
-        """An auxiliary method to raise GeneratedDataIncorrect if a condition fails."""
+        """Raises GeneratedDataIncorrect if the condition is not met.
+
+        This is used to validate the generated data. If the data is not suitable, we
+        raise GeneratedDataIncorrect to restart the generator with a different random
+        seed. If the data is suitable, we do nothing.
+        """
         if not condition:
             raise GeneratedDataIncorrect
 
     def _generate_data(self, seed):
+        """Generates a list of problem data for all subproblems.
+
+        The data is generated using a given seed, which is used to initialize the
+        random number generator. The data is generated in a loop, and if the generated
+        data is not suitable, the loop is restarted with a different seed.
+        """
         data = []
         for i in range(self.number_of_subproblems):
             # Ensure that the generated data is predictable, but still different
@@ -145,6 +171,7 @@ class Problem(models.Model):
             while True:
                 # Repeat until suitable data is found
                 try:
+                    # Generate the data and break the loop if it is suitable
                     data.append(self.generate())
                     break
                 except GeneratedDataIncorrect:
@@ -152,9 +179,17 @@ class Problem(models.Model):
         return data
 
     def uses_custom_text(self):
+        """Returns True if the problem uses custom instruction or solution."""
         return bool(self.instruction or self.solution)
 
     def render(self, data, default_text=False):
+        """Renders the problem text using the given data.
+
+        The data is a list of dictionaries, each containing the variables that are
+        substituted in the instruction and solution. If default_text is True, the
+        default instruction and solution are used instead of the custom ones. This is
+        used to display how the default text looks with custom data.
+        """
         if not default_text and self.uses_custom_text():
             instruction = self.instruction
             solution = self.solution
@@ -171,13 +206,16 @@ class Problem(models.Model):
         return rendered_texts
 
     def example_data(self):
+        """Generates example data for the problem."""
         return self._generate_data(None)
 
     def example_text(self):
+        """Renders the problem text using the example data."""
         data = self.example_data()
         return self.render(data)
 
     def student_text(self, student):
+        """Renders the problem text for a given student."""
         seed = f"{self.id}-{student.id}"
         data = self._generate_data(seed)
         rendered_text = self.render(data)
