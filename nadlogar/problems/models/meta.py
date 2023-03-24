@@ -172,8 +172,11 @@ class Problem(models.Model):
                 # Repeat until suitable data is found
                 try:
                     # Generate the data and break the loop if it is suitable
-                    data.append(self.generate())
-                    break
+                    # and not already generated.
+                    new_data = self.generate()
+                    if new_data not in data:
+                        data.append(new_data)
+                        break
                 except GeneratedDataIncorrect:
                     pass
         return data
