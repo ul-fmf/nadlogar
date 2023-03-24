@@ -86,7 +86,16 @@ def copy_document(request, group_id: int, document_id: int, new_group_id: int):
 def _zip_archive(archive_name, files):
     string_buffer = io.BytesIO()
     archive = zipfile.ZipFile(string_buffer, "w", zipfile.ZIP_DEFLATED)
+    name_counter = {}
     for file_name, file_contents in files:
+        # If there are multiple files with the same name, add a number
+        # before the file extension.
+        if file_name in name_counter:
+            name_counter[file_name] += 1
+            base_name, extension = file_name.rsplit(".", 1)
+            file_name = f"{base_name}_{name_counter[file_name]}.{extension}"
+        else:
+            name_counter[file_name] = 1
         archive.writestr(file_name, file_contents)
     archive.close()
     response = HttpResponse(string_buffer.getvalue(), content_type="application/zip")
